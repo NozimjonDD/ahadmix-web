@@ -230,7 +230,7 @@ dialog::backdrop{background:#0b1426ad;backdrop-filter:blur(5px)}
 .tlangs{gap:14px}
 .tlangs label{gap:6px;color:#526580}
 .titem.dirty{border-color:#efa45b;box-shadow:0 0 0 2px #efa45b22}
-.savebar{bottom:68px;padding:14px 18px;border:1px solid #384965;background:linear-gradient(110deg,#182540,#253650);box-shadow:0 18px 38px #0f1b3450}
+.savebar{bottom:20px;padding:14px 18px;border:1px solid #384965;background:linear-gradient(110deg,#182540,#253650);box-shadow:0 18px 38px #0f1b3450}
 .note{background:#f7f9fc;border-color:#dfe7f0;color:#52627a;line-height:1.6}
 .login{background:radial-gradient(circle at 75% 20%,#314c75 0,transparent 35%),radial-gradient(circle at 20% 90%,#283e61 0,transparent 35%),#10192d}
 .login .box{border:1px solid #ffffff45;border-radius:22px;padding:34px;gap:21px;box-shadow:0 28px 70px #090f1d55}
@@ -265,10 +265,54 @@ dialog::backdrop{background:#0b1426ad;backdrop-filter:blur(5px)}
   .df>.bar{width:100%;justify-content:flex-end}
   .photo{grid-template-columns:1fr}
   .photo img{width:100%;height:auto;max-height:200px}
-  .savebar{flex-wrap:wrap;bottom:64px}
+  .savebar{flex-wrap:wrap;bottom:16px}
   .admin-language{right:12px;bottom:10px}
 }
 @media(prefers-reduced-motion:reduce){.btn,.icon-btn,.acard,tbody tr,#toast{transition:none}}
+
+/* Shared navigation and language control */
+.top .in{max-width:1600px;min-height:72px;padding:0 185px 0 24px;display:flex;align-items:center;gap:24px}
+.top .brand{flex:none;font-size:15px;gap:8px}
+.top .brand img{width:32px;height:32px}
+.top .brand small{font-size:10px;padding-left:9px;margin-left:3px;letter-spacing:.08em}
+.tabs{flex:1;align-self:stretch;align-items:center;gap:2px;overflow-x:auto}
+.tabs button{align-self:stretch;border-radius:0;padding:0 12px;font-size:12px}
+.tabs button[aria-selected="true"]{background:#ffffff10;color:#fff}
+.tabs button[aria-selected="true"]:before{left:12px;right:12px}
+.top .act{flex:none;justify-self:auto;gap:6px}
+.top .act a,.top .act button{padding:7px 9px;font-size:11px}
+.admin-language{position:fixed;top:17px;right:24px;bottom:auto;z-index:30;display:flex;gap:2px;padding:4px;border-radius:999px;border:1px solid #53627b;background:#1f2c44;box-shadow:none;color:#fff}
+.admin-language button{border:0;border-radius:999px;background:transparent;color:#aab8cd;padding:9px 10px;font:700 11px/1 var(--m);letter-spacing:.07em}
+.admin-language button:hover{color:#fff}
+.admin-language button[aria-pressed="true"]{background:var(--red);color:#fff}
+.admin-language button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.login .brand small{display:block}
+@media(max-width:1100px){
+  .top .in{height:auto;min-height:100px;display:grid;grid-template-columns:1fr auto;grid-template-areas:"brand actions" "tabs tabs";padding:11px 180px 0 18px;row-gap:6px}
+  .tabs{margin-right:-162px;min-height:43px}
+  .tabs button{padding:0 12px}
+  .top .act{justify-self:end}
+  .admin-language{top:12px;right:18px}
+}
+@media(max-width:640px){
+  .top .in{min-height:0;grid-template-columns:1fr;grid-template-areas:"brand" "actions" "tabs";padding:12px 170px 0 14px;row-gap:7px}
+  .top .brand{font-size:13px}
+  .top .brand small{font-size:9px}
+  .top .act{justify-self:start}
+  .tabs{margin:0 -170px 0 -14px;padding:0 10px;min-height:43px}
+  .tabs button{padding:0 10px;font-size:11px}
+  .admin-language{top:11px;right:12px}
+}
+.rich-field{min-width:0;display:grid;grid-template-rows:auto auto 1fr;border:1px solid var(--line2);border-radius:12px;background:#fff;overflow:hidden}
+.rich-label{padding:10px 12px;font-size:11px;font-weight:700;letter-spacing:.08em;color:#526580;background:#f8fafd;border-bottom:1px solid var(--line)}
+.rich-tools{display:flex;flex-wrap:wrap;align-items:center;gap:3px;padding:6px;border-bottom:1px solid var(--line);background:#fbfcfe}
+.rich-tools button{border:0;border-radius:7px;background:transparent;color:#34445d;min-width:29px;min-height:29px;padding:4px 6px;font-size:11px;font-weight:600}
+.rich-tools button:hover,.rich-tools button:focus-visible{background:#eaf0f8;color:#172947}
+.rich-tools .r,.rich-editor .r{color:var(--red)}
+.rich-divider{width:1px;height:20px;background:var(--line2);margin:0 3px}
+.rich-editor{min-height:112px;max-height:320px;overflow:auto;padding:12px 13px;outline:none;line-height:1.55;white-space:normal;overflow-wrap:anywhere}
+.rich-editor:focus{box-shadow:inset 0 0 0 2px #526985}
+.rich-editor:empty:before{content:attr(data-placeholder);color:#98a5b7}
 </style>
 </head>
 <body>
@@ -428,7 +472,7 @@ dialog::backdrop{background:#0b1426ad;backdrop-filter:blur(5px)}
 </dialog>
 
 <div id="toast" role="status" aria-live="polite"></div>
-<div class="admin-language"><label for="adminLanguage">Til / Language</label><select id="adminLanguage" aria-label="Admin language"><option value="uz">UZ</option><option value="en">EN</option><option value="ru">RU</option></select></div>
+<div class="admin-language" id="adminLanguage" role="group" aria-label="Язык / Til"><button type="button" data-admin-lang="ru" aria-pressed="false">РУС</button><button type="button" data-admin-lang="uz" aria-pressed="false">UZB</button><button type="button" data-admin-lang="en" aria-pressed="false">ENG</button></div>
 <script src="/assets/js/admin-i18n.js"></script>
 
 {% verbatim %}
@@ -440,13 +484,17 @@ const $$ = (s, r=document) => [...r.querySelectorAll(s)];
 const esc = t => String(t ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt = n => Number(n).toLocaleString('ru-RU').replace(/ | /g,' ');
 let CSRF = '', D = null, TAB = 'screens';
-$('#adminLanguage').value = window.adminI18n.language;
-$('#adminLanguage').addEventListener('change', e => {
-  window.adminI18n.setLanguage(e.target.value);
+function syncAdminLanguage(){
+  $$('[data-admin-lang]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.adminLang===window.adminI18n.language)));
+}
+syncAdminLanguage();
+$$('[data-admin-lang]').forEach(button=>button.addEventListener('click', () => {
+  window.adminI18n.setLanguage(button.dataset.adminLang);
+  syncAdminLanguage();
   if(D) render();
   if($('#scrDlg').open) upd();
   if($('#airDlg').open) updAir();
-});
+}));
 
 /* ---------- API ---------- */
 async function api(a, {body, file, form} = {}){
@@ -743,22 +791,69 @@ function vTexts(){
   $('#view').innerHTML = `
   <div class="head"><div><h1>Тексты сайта</h1><p class="sub">Все надписи страницы на трёх языках. Цены, названия экранов и форматы меняются в своих вкладках.</p></div>
     <input class="inp search" id="tq" placeholder="Поиск по тексту" value="${esc(txQ)}"></div>
-  <p class="note">Можно использовать теги <code>&lt;br&gt;</code> (перенос строки), <code>&lt;strong&gt;</code>, <code>&lt;b&gt;</code>, <code>&lt;em&gt;</code>, <code>&lt;span class="r"&gt;</code> (красный цвет).
-  Подстановки: <code>{screens}</code> — число экранов, <code>{airport}</code> — число носителей в аэропорту, <code>{usdRate}</code> — курс доллара.</p>
+  <p class="note">Выделите текст и выберите оформление. Кнопки с числами вставляют данные, которые обновляются на сайте автоматически.</p>
   ${Object.entries(groups).map(([g,ks])=>`<div class="tsec"><h3>${g}</h3>${ks.map(k=>{ const v=dirtyTexts[k]||T[k]; return `<div class="card titem ${dirtyTexts[k]?'dirty':''}" data-k="${k}">
     <div class="k"><span>${esc(T[k].ru.replace(/<[^>]+>/g,'').slice(0,70))}</span><code>${k}</code></div>
-    <div class="tlangs">${['ru','uz','en'].map(lg=>`<label>${{ru:'РУС',uz:'UZB',en:'ENG'}[lg]}<textarea class="inp" data-lg="${lg}" rows="${Math.min(6,Math.max(1,Math.ceil(v[lg].length/60)))}">${esc(v[lg])}</textarea></label>`).join('')}</div>
+    <div class="tlangs">${['ru','uz','en'].map(lg=>`<div class="rich-field"><div class="rich-label">${{ru:'РУС',uz:'UZB',en:'ENG'}[lg]}</div>
+      <div class="rich-tools" role="toolbar" aria-label="Оформление текста">
+        <button type="button" data-rich="strong" title="Жирный текст" aria-label="Жирный текст"><b>B</b></button>
+        <button type="button" data-rich="em" title="Курсив" aria-label="Курсив"><i>I</i></button>
+        <button type="button" data-rich="red" title="Красный акцент" aria-label="Красный акцент"><span class="r">A</span></button>
+        <button type="button" data-rich="br" title="Новая строка" aria-label="Новая строка">↵</button>
+        <span class="rich-divider" aria-hidden="true"></span>
+        <button type="button" data-insert="{screens}" title="Число экранов"># Экраны</button>
+        <button type="button" data-insert="{airport}" title="Число носителей в аэропорту"># Аэропорт</button>
+        <button type="button" data-insert="{usdRate}" title="Курс доллара">$ Курс</button>
+      </div>
+      <div class="rich-editor" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Текст сайта" data-placeholder="Введите текст…" data-lg="${lg}" spellcheck="true">${v[lg]}</div>
+    </div>`).join('')}</div>
   </div>`; }).join('')}</div>`).join('') || '<div class="empty">Ничего не найдено</div>'}
   <div class="savebar" ${n?'':'hidden'} id="txBar"><span id="txN">Изменено текстов: ${n}</span><div class="bar"><button class="btn" id="txReset">Отменить изменения</button><button class="btn pri" id="txSave">Сохранить тексты</button></div></div>`;
   $('#tq').addEventListener('input',e=>{ txQ=e.target.value.trim().toLowerCase(); const p=e.target.selectionStart; vTexts(); $('#tq').focus(); $('#tq').setSelectionRange(p,p); });
-  $$('.titem textarea').forEach(ta=>ta.addEventListener('input',()=>{
-    const it=ta.closest('.titem'), k=it.dataset.k, cur={...(dirtyTexts[k]||T[k])}; cur[ta.dataset.lg]=ta.value;
+  $$('.rich-editor').forEach(editor=>{
+    editor.addEventListener('input',()=>{
+    const it=editor.closest('.titem'), k=it.dataset.k, cur={...(dirtyTexts[k]||T[k])}; cur[editor.dataset.lg]=editor.innerHTML;
     if(cur.ru===T[k].ru && cur.uz===T[k].uz && cur.en===T[k].en) delete dirtyTexts[k]; else dirtyTexts[k]=cur;
     it.classList.toggle('dirty', !!dirtyTexts[k]);
     const c=Object.keys(dirtyTexts).length; $('#txBar').hidden=!c; $('#txN').textContent=`Изменено текстов: ${c}`;
-  }));
+    });
+    editor.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); insertRich(editor,document.createElement('br')); } });
+    editor.addEventListener('paste',e=>{
+      e.preventDefault();
+      const text=e.clipboardData.getData('text/plain');
+      const parts=text.split(/\r?\n/);
+      parts.forEach((part,i)=>{ if(i) insertRich(editor,document.createElement('br')); if(part) insertRich(editor,document.createTextNode(part)); });
+    });
+  });
+  $$('.rich-tools button').forEach(button=>{
+    button.addEventListener('mousedown',e=>e.preventDefault());
+    button.addEventListener('click',()=>{
+      const editor=button.closest('.rich-field').querySelector('.rich-editor');
+      const action=button.dataset.rich;
+      if(action==='br') insertRich(editor,document.createElement('br'));
+      else if(button.dataset.insert) insertRich(editor,document.createTextNode(button.dataset.insert));
+      else wrapRich(editor,action==='red'?'span':action,action==='red'?'r':'');
+    });
+  });
   $('#txReset').addEventListener('click',()=>{ dirtyTexts={}; vTexts(); });
   $('#txSave').addEventListener('click', async e=>{ await save('texts', dirtyTexts, e.currentTarget); dirtyTexts={}; vTexts(); });
+}
+function richRange(editor){
+  const selection=window.getSelection();
+  if(selection.rangeCount){ const range=selection.getRangeAt(0); if(editor.contains(range.commonAncestorContainer)) return range; }
+  const range=document.createRange(); range.selectNodeContents(editor); range.collapse(false); return range;
+}
+function insertRich(editor,node){
+  const selection=window.getSelection(), range=richRange(editor);
+  range.deleteContents(); range.insertNode(node); range.setStartAfter(node); range.collapse(true);
+  selection.removeAllRanges(); selection.addRange(range); editor.focus(); editor.dispatchEvent(new Event('input',{bubbles:true}));
+}
+function wrapRich(editor,tag,className){
+  const selection=window.getSelection(), range=richRange(editor);
+  if(range.collapsed){ toast('Сначала выделите текст'); editor.focus(); return; }
+  const wrapper=document.createElement(tag); if(className) wrapper.className=className;
+  wrapper.appendChild(range.extractContents()); range.insertNode(wrapper); range.selectNodeContents(wrapper);
+  selection.removeAllRanges(); selection.addRange(range); editor.focus(); editor.dispatchEvent(new Event('input',{bubbles:true}));
 }
 addEventListener('beforeunload', e=>{ if(Object.keys(dirtyTexts).length){ e.preventDefault(); e.returnValue=''; } });
 

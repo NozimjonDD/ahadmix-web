@@ -92,7 +92,22 @@
     'Контакты':['Kontaktlar','Contacts'], 'Условия оплаты':['To‘lov shartlari','Payment terms'],
     'Подвал':['Pastki qism','Footer'], 'Панель медиаплана':['Media reja paneli','Media plan panel'],
     'Прочее':['Boshqa','Other'], 'Отменить изменения':['O‘zgarishlarni bekor qilish','Discard changes'],
-    'Сохранить тексты':['Matnlarni saqlash','Save text']
+    'Сохранить тексты':['Matnlarni saqlash','Save text'],
+    'Выделите текст и выберите оформление. Кнопки с числами вставляют данные, которые обновляются на сайте автоматически.':['Matnni belgilang va ko‘rinishini tanlang. Raqamli tugmalar saytda avtomatik yangilanadigan ma’lumotlarni qo‘shadi.','Select text and choose its style. Number buttons insert values that update automatically on the site.'],
+    'Оформление текста':['Matnni bezash','Text formatting'],
+    'Жирный текст':['Qalin matn','Bold text'],
+    'Курсив':['Qiya matn','Italic'],
+    'Красный акцент':['Qizil urg‘u','Red accent'],
+    'Новая строка':['Yangi qator','New line'],
+    'Число экранов':['Ekranlar soni','Number of screens'],
+    'Число носителей в аэропорту':['Aeroportdagi tashuvchilar soni','Number of airport displays'],
+    'Курс доллара':['Dollar kursi','Dollar exchange rate'],
+    'Текст сайта':['Sayt matni','Site text'],
+    'Введите текст…':['Matn kiriting…','Enter text…'],
+    '# Экраны':['# Ekranlar','# Screens'],
+    '# Аэропорт':['# Aeroport','# Airport'],
+    '$ Курс':['$ Kurs','$ Rate'],
+    'Сначала выделите текст':['Avval matnni belgilang','Select text first']
   };
   const patterns = [
     [/^(\d+) экранов в городе\. Цены в сумах за месяц без НДС\.$/, n => [`Shaharda ${n} ta ekran. Oylik narxlar so‘mda, QQSsiz.`, `${n} city screens. Monthly prices in UZS excluding VAT.`]],
@@ -126,19 +141,19 @@
   }
   function walk(root) {
     if (root.nodeType === Node.TEXT_NODE) {
-      if (root.parentElement?.closest('script,style,textarea')) return;
+      if (root.parentElement?.closest('script,style,textarea,[contenteditable]')) return;
       if (!source.has(root)) source.set(root, root.textContent);
       const value = translate(source.get(root));
       if (root.textContent !== value) root.textContent = value;
       return;
     }
     if (root.nodeType !== Node.ELEMENT_NODE || root.matches('script,style,textarea')) return;
-    if (!attributes.has(root)) attributes.set(root, Object.fromEntries(['title','placeholder','aria-label'].filter(a => root.hasAttribute(a)).map(a => [a, root.getAttribute(a)])));
+    if (!attributes.has(root)) attributes.set(root, Object.fromEntries(['title','placeholder','aria-label','data-placeholder'].filter(a => root.hasAttribute(a)).map(a => [a, root.getAttribute(a)])));
     for (const [name, value] of Object.entries(attributes.get(root))) {
       const translated = translate(value);
       if (root.getAttribute(name) !== translated) root.setAttribute(name, translated);
     }
-    for (const child of [...root.childNodes]) walk(child);
+    if (!root.matches('[contenteditable]')) for (const child of [...root.childNodes]) walk(child);
   }
   function refresh() {
     document.documentElement.lang = language === 'uz' ? 'uz-Latn' : language;
