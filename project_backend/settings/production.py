@@ -21,8 +21,8 @@ X_FRAME_OPTIONS = "DENY"
 
 CSRF_TRUSTED_ORIGINS = [
     "https://ahadmix.nozim-dev.uz",
-    "http://localhost:3002",
-    "http://localhost:3000",
+    "http://localhost:8002",
+    "http://localhost:8000",
     "https://www.ahadmix.nozim-dev.uz",
 ]
 

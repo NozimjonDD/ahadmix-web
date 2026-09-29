@@ -74,7 +74,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'project_backend.wsgi.application'
 
 if os.environ.get("POSTGRES") == "TRUE":
-    print(4444444444444448888)
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
