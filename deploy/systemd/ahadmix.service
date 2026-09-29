@@ -1,0 +1,29 @@
+[Unit]
+Description=Ahadmix Gunicorn Daemon
+After=network.target postgresql.service redis.service
+
+[Service]
+Type=notify
+User=ahadmix
+Group=www-data
+
+# Automatically creates /run/ahadmix/ with correct permissions on boot
+RuntimeDirectory=ahadmix
+
+WorkingDirectory=/var/www/ahadmix/ahadmix-web
+EnvironmentFile=/var/www/ahadmix/ahadmix-web/.env
+
+ExecStart=/var/www/ahadmix/venv/bin/gunicorn \
+    --config deploy/gunicorn/gunicorn.conf.py \
+    project_backend.wsgi:application
+
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

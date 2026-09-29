@@ -1,4 +1,4 @@
-FROM python:3.12.9-slim
+FROM python:3.12-slim
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1
@@ -10,15 +10,16 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-#RUN useradd --create-home django
-#USER django
+RUN useradd --create-home --shell /bin/bash ahadmix
 
-COPY requirements.txt .
+COPY requirements/production.txt requirements.txt
 RUN pip install --no-cache-dir --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt
 
-RUN pip install gunicorn
+COPY --chown=ahadmix:ahadmix . .
 
-COPY --chown=django:django . .
+USER ahadmix
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "beauty_clinic.wsgi:application"]
+CMD ["gunicorn", \
+     "--config", "deploy/gunicorn/gunicorn.conf.py", \
+     "project_backend.wsgi:application"]

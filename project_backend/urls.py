@@ -11,8 +11,9 @@ from django.views.static import serve
 
 # from .swagger_conf import swagger_urlpatterns
 
-# Base templates directory (where index.html lives)
+# Base templates and docs directories
 _TEMPLATES_DIR = Path(__file__).resolve().parent.parent / "templates"
+_DOCS_DIR = Path(__file__).resolve().parent.parent / "docs"
 
 # Non-i18n URL patterns
 urlpatterns = [
@@ -35,12 +36,15 @@ urlpatterns += [
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-# Serve /assets/ and /data/ from the templates/ directory (dev convenience,
-# so index.html's relative paths work without any template-tag changes).
+# Serve /assets/, /data/, and /docs/ in dev convenience mode,
+# so index.html's relative paths and PDF downloads work without template-tag changes.
 if settings.DEBUG:
     urlpatterns += [
         re_path(r'^assets/(?P<path>.*)$', serve,
                 {'document_root': _TEMPLATES_DIR / 'assets'}),
         re_path(r'^data/(?P<path>.*)$', serve,
                 {'document_root': _TEMPLATES_DIR / 'data'}),
+        re_path(r'^docs/(?P<path>.*)$', serve,
+                {'document_root': _DOCS_DIR}),
     ]
+
