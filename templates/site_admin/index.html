@@ -313,6 +313,12 @@ dialog::backdrop{background:#0b1426ad;backdrop-filter:blur(5px)}
 .rich-editor{min-height:112px;max-height:320px;overflow:auto;padding:12px 13px;outline:none;line-height:1.55;white-space:normal;overflow-wrap:anywhere}
 .rich-editor:focus{box-shadow:inset 0 0 0 2px #526985}
 .rich-editor:empty:before{content:attr(data-placeholder);color:#98a5b7}
+.screen-head{display:grid;grid-template-columns:max-content minmax(0,1fr) minmax(220px,320px) max-content;align-items:center;gap:16px}
+.screen-head .sub{margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.screen-head .search{max-width:none;min-width:0}
+.screen-head .btn{white-space:nowrap}
+@media(max-width:1000px){.screen-head{grid-template-columns:max-content 1fr}.screen-head .search{grid-column:1}.screen-head .btn{grid-column:2;justify-self:start}}
+@media(max-width:640px){.screen-head{grid-template-columns:1fr}.screen-head .sub{white-space:normal;overflow:visible}.screen-head .search,.screen-head .btn{grid-column:1}}
 </style>
 </head>
 <body>
@@ -567,9 +573,9 @@ function vScreens(){
     .filter(l => !scrQ || [l.n,l.nu,l.ne,l.size,l.addr,String(l.id)].join(' ').toLowerCase().includes(scrQ));
   const fl = new Set(D.settings.flagships);
   $('#view').innerHTML = `
-  <div class="head">
-    <div><h1>Экраны</h1><p class="sub">${D.screens.length} экранов в городе. Цены в сумах за месяц без НДС.</p></div>
-    <div class="bar"><input class="inp search" id="q" placeholder="Поиск по названию, адресу, ID" value="${esc(scrQ)}"><button class="btn pri" id="addScr">+ Добавить экран</button></div>
+  <div class="head screen-head">
+    <h1>Экраны</h1><p class="sub">${D.screens.length} экранов в городе. Цены в сумах за месяц без НДС.</p>
+    <input class="inp search" id="q" placeholder="Поиск по названию, адресу, ID" value="${esc(scrQ)}"><button class="btn pri" id="addScr">+ Добавить экран</button>
   </div>
   <div class="card tbl-wrap"><table>
     <thead><tr><th></th><th>ID</th><th>Название</th><th>Размер</th><th>Категория</th><th class="num">5 сек</th><th class="num">10 сек</th><th class="num">15 сек</th><th class="num">20 сек</th><th></th></tr></thead>
