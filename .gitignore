@@ -2,7 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=django,python,linux,pycharm+all,jetbrains+all,windows,visualstudiocode,vuejs,redis
 
 delete_ignore
-
+restart.sh
 ### Django ###
 *.log
 *.pot
