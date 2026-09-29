@@ -347,7 +347,7 @@ dialog.dd[open]{animation:pop .45s var(--ease)}
       <li><a href="#contact" data-go data-i18n="nav5">Контакты</a></li>
     </ul>
     <div class="navr">
-      <a class="call" href="#contact" data-go>+998 94 657-33-33</a>
+      <a class="call" href="#contact" data-go data-cfg="phone">+998 94 657-33-33</a>
       <div class="lang" role="group" aria-label="Язык / Til"><button data-lang="ru" aria-pressed="true">РУС</button><button data-lang="uz" aria-pressed="false">UZB</button><button data-lang="en" aria-pressed="false">ENG</button></div>
     </div>
   </div>
@@ -383,8 +383,8 @@ dialog.dd[open]{animation:pop .45s var(--ease)}
       </div>
 
       <div class="stats">
-        <div class="stat"><b class="num">75</b><span data-i18n="st1">LED-экранов в городе</span></div>
-        <div class="stat"><b class="num">54</b><span data-i18n="st2">носителя в аэропорту «Ташкент»</span></div>
+        <div class="stat"><b class="num" data-count="screens">75</b><span data-i18n="st1">LED-экранов в городе</span></div>
+        <div class="stat"><b class="num" data-count="airport">54</b><span data-i18n="st2">носителя в аэропорту «Ташкент»</span></div>
         <div class="stat"><b class="num">4<sup>M+</sup></b><span data-i18n="st3">пассажиров аэропорта в год</span></div>
         <div class="stat"><b class="num">9 000</b><span data-i18n="st4">показов в месяц на ряде экранов</span></div>
       </div>
@@ -491,12 +491,12 @@ dialog.dd[open]{animation:pop .45s var(--ease)}
         <p data-i18n="d_p">Полные предложения в PDF: фото каждого экрана, карта расположения, технические параметры и прайс-лист.</p>
       </div>
       <div class="dgrid">
-        <a class="doc" href="../docs/ahadmix-led-city.pdf" target="_blank" rel="noopener" download data-dl="docs/ahadmix-led-city.pdf" data-name="AHADMIX LED CITY — экраны Ташкента.pdf">
+        <a class="doc" href="docs/ahadmix-led-city.pdf" target="_blank" rel="noopener" download data-dl="docs/ahadmix-led-city.pdf" data-name="AHADMIX LED CITY — экраны Ташкента.pdf">
           <div class="dph"><img src="assets/img/c1.jpg" alt="Обложка презентации LED CITY" loading="lazy" decoding="async"></div>
           <div class="dmeta"><div><h3 data-i18n="d1_h">LED CITY · экраны Ташкента</h3><p data-i18n="d1_p">75 LED-экранов: фото, карта, размеры и цены</p></div><span class="dsz" data-i18n="d1_s">PDF · 78 стр. · 13 МБ</span></div>
           <span class="dbtn" data-i18n="d_btn">Скачать PDF <span class="ar">↓</span></span>
         </a>
-        <a class="doc" href="../docs/ahadmix-airport.pdf" target="_blank" rel="noopener" download data-dl="docs/ahadmix-airport.pdf" data-name="AHADMIX — реклама в аэропорту Ташкента.pdf">
+        <a class="doc" href="docs/ahadmix-airport.pdf" target="_blank" rel="noopener" download data-dl="docs/ahadmix-airport.pdf" data-name="AHADMIX — реклама в аэропорту Ташкента.pdf">
           <div class="dph"><img src="assets/img/a0.jpg" alt="Обложка презентации рекламы в аэропорту" loading="lazy" decoding="async"></div>
           <div class="dmeta"><div><h3 data-i18n="d2_h">Аэропорт «Ташкент»</h3><p data-i18n="d2_p">6 форматов, 54 носителя, охват и цены</p></div><span class="dsz" data-i18n="d2_s">PDF · 9 стр. · 2,4 МБ</span></div>
           <span class="dbtn" data-i18n="d_btn">Скачать PDF <span class="ar">↓</span></span>
@@ -511,10 +511,10 @@ dialog.dd[open]{animation:pop .45s var(--ease)}
       <h2 data-i18n="ct_h2">Обсудим<br>ваш <span class="r">проект.</span></h2>
       <p style="color:var(--mute-d);max-width:44ch;margin-top:28px;font-size:17px" data-i18n="ct_p">Напишите или позвоните менеджеру. Индивидуальное предложение под ваш бренд подготовим в течение 24 часов.</p>
       <div class="cgrid">
-        <a class="ci" href="https://linktr.ee/ahadmix_group" target="_blank" rel="noopener"><span class="dt" data-i18n="ct_l1">Телефон</span><span class="dd num">+998 94 657-33-33</span></a>
-        <a class="ci" href="https://linktr.ee/ahadmix_group" target="_blank" rel="noopener"><span class="dt">E-mail</span><span class="dd">info@ahadmix.uz</span></a>
-        <a class="ci" href="https://linktr.ee/ahadmix_group" target="_blank" rel="noopener"><span class="dt">Instagram</span><span class="dd">@ahadmix_group</span></a>
-        <a class="ci" href="https://linktr.ee/ahadmix_group" target="_blank" rel="noopener"><span class="dt" data-i18n="ct_l4">Адрес</span><span class="dd" data-i18n="ct_addr">г. Ташкент,<br>Бунёдкор, 8А</span></a>
+        <a class="ci" data-cfg-href="linktree" href="https://linktr.ee/ahadmix_group" target="_blank" rel="noopener"><span class="dt" data-i18n="ct_l1">Телефон</span><span class="dd num" data-cfg="phone">+998 94 657-33-33</span></a>
+        <a class="ci" data-cfg-href="linktree" href="https://linktr.ee/ahadmix_group" target="_blank" rel="noopener"><span class="dt">E-mail</span><span class="dd" data-cfg="email">info@ahadmix.uz</span></a>
+        <a class="ci" data-cfg-href="linktree" href="https://linktr.ee/ahadmix_group" target="_blank" rel="noopener"><span class="dt">Instagram</span><span class="dd" data-cfg="instagram">@ahadmix_group</span></a>
+        <a class="ci" data-cfg-href="linktree" href="https://linktr.ee/ahadmix_group" target="_blank" rel="noopener"><span class="dt" data-i18n="ct_l4">Адрес</span><span class="dd" data-i18n="ct_addr">г. Ташкент,<br>Бунёдкор, 8А</span></a>
       </div>
       <div class="terms">
         <div class="ti"><span class="dt" data-i18n="t1l">Цены</span><span class="dd" data-i18n="t1">Без НДС</span></div>
@@ -529,7 +529,7 @@ dialog.dd[open]{animation:pop .45s var(--ease)}
 <footer>
   <div class="wrap">
     <div class="fbrand"><img src="assets/img/logo-w.png" alt="AHADMIX GROUP"><div><b><i>LED</i> CITY</b><small data-i18n="ft1">AHADMIX GROUP · наружная реклама с 2010 года</small></div></div>
-    <div class="fline"><span data-i18n="ft2">Ташкент, Бунёдкор, 8А</span><span>+998 94 657-33-33</span><span>info@ahadmix.uz</span></div>
+    <div class="fline"><span data-i18n="ft2">Ташкент, Бунёдкор, 8А</span><span data-cfg="phone">+998 94 657-33-33</span><span data-cfg="email">info@ahadmix.uz</span></div>
     <div class="fcopy" data-i18n="ft3">© AHADMIX GROUP. Все права защищены.</div>
   </div>
 </footer>
@@ -554,10 +554,9 @@ dialog.dd[open]{animation:pop .45s var(--ease)}
 <script>
 (async () => {
 const getJSON = u => fetch(u, {cache:'no-cache'}).then(r => { if(!r.ok) throw new Error(u); return r.json(); });
-const [LOC, AIR, CFG] = await Promise.all([getJSON('data/screens.json'), getJSON('data/airport.json'), getJSON('data/settings.json')]);
-const FLAG = CFG.flagships;
-const EN = {"nav1": "Flagships", "nav2": "All screens", "nav3": "Airport", "nav4": "Mobile LED", "nav5": "Contacts", "h_eb": "Outdoor advertising · Tashkent · since 2010", "h_h1": "<em><span class=\"r\">LED</span> City.</em><br>Your brand across the whole city.", "h_lede": "<strong>75 LED screens</strong> at the main intersections of Tashkent and <strong>54 displays</strong> at the international airport. From a 48-metre media façade to 6 × 3 m city screens.", "h_c1": "Choose screens <span class=\"ar\">→</span>", "h_c2": "PDF presentations <span class=\"ar\">↓</span>", "h_c3": "Get in touch", "h_cap1": "Board ratio 8 : 1, same as the <b style=\"color:var(--txt-d);font-weight:500\">PIRAMIT · 48 × 6 m · 9408 × 1152 px</b> screen", "h_cap2": "On air 7:00 – 23:00", "st1": "LED screens across the city", "st2": "displays at Tashkent Airport", "st3": "airport passengers a year", "st4": "plays a month on selected screens", "f_eb": "Flagship network", "f_h2": "Screens that become landmarks.", "f_p": "The largest media façades in the city. They are visible blocks away, and people arrange to meet by them: “at the Pyramid”, “by GUM”.", "c_eb": "Catalogue · monthly price list", "c_h2": "Build your city media plan.", "c_p": "Choose the spot length and prices update. Mark screens with +: the total appears below, with a button that builds a commercial offer in Excel.", "c_dur": "Spot", "c_size": "Size", "c_note": "Prices are in US dollars per 1 month of placement, including tax and all fees. Converted from UZS at 11,000 UZS per USD and rounded. 100% prepayment by bank transfer. If broadcasting stops for technical or other reasons, the placement is compensated separately.", "a_eb": "Tashkent International Airport · Terminals 2 and 3", "a_h2": "The first thing a visitor to the country sees.", "a_p": "6 formats on 54 LED displays, from the car park to passport control and the waiting halls. Passengers watch the screens while waiting calmly, away from street clutter.", "a_a1": "Citizens of Uzbekistan <b>65%</b>", "a_a2": "Foreign visitors <b>35%</b>", "a_a3": "Men <b>68%</b>", "a_a4": "Women <b>32%</b>", "m_eb": "Mobile LED", "m_h2": "A screen that drives to your audience.", "m_p": "A vehicle with a double-sided LED screen moving through city traffic. We designed every detail of its look, because the vehicle is the face of your advertising.", "m_f1": "Wide screen on both sides<span>4 × 2.5 m</span>", "m_f2": "Image quality<span>Full HD 1080</span>", "m_f3": "3D sound<span>audio</span>", "m_f4": "LED lights<span>light</span>", "m_f5": "Matte finish, lowered body, black wheels<span>style</span>", "m_f6": "Custom themed licence plate<span>01 717 LED</span>", "m_x_eb": "Exclusive", "m_x_h3": "“Your Ad”", "m_x_p": "Only your spot on the screen, 5 hours a day.", "m_x_m": "5 hours · 1 day · price on request", "d_eb": "Commercial offers", "d_h2": "Presentations to download.", "d_p": "Full offers in PDF: a photo of every screen, location map, specifications and price list (in Russian, prices in UZS).", "d1_h": "LED CITY · Tashkent screens", "d1_p": "75 LED screens: photos, map, sizes and prices", "d1_s": "PDF · 78 pages · 13 MB", "d2_h": "Tashkent Airport", "d2_p": "6 formats, 54 displays, reach and prices", "d2_s": "PDF · 9 pages · 2.4 MB", "d_btn": "Download PDF <span class=\"ar\">↓</span>", "ct_eb": "Ready to start?", "ct_h2": "Let’s talk about<br>your <span class=\"r\">project.</span>", "ct_p": "Write or call our manager. We will prepare a tailored offer for your brand within 24 hours.", "ct_l1": "Phone", "ct_l4": "Address", "ct_addr": "8A Bunyodkor Ave,<br>Tashkent", "t1l": "Prices", "t1": "Including tax and all fees", "t2l": "Payment", "t2": "100% prepayment", "t3l": "Settlement", "t3": "Bank transfer", "t4l": "Guarantee", "t4": "Compensation if broadcasting stops", "ft1": "AHADMIX GROUP · outdoor advertising since 2010", "ft2": "8A Bunyodkor Ave, Tashkent", "ft3": "© AHADMIX GROUP. All rights reserved.", "p_per": "Period", "p_clr": "Clear", "p_kp": "Offer · Excel <span class=\"ar\">↓</span>", "p_m1": "1 mo.", "p_m2": "2 mo.", "p_m3": "3 mo.", "p_m4": "4 mo.", "p_m5": "5 mo.", "p_m6": "6 mo.", "p_m7": "7 mo.", "p_m8": "8 mo.", "p_m9": "9 mo.", "p_m10": "10 mo.", "p_m11": "11 mo.", "p_m12": "12 mo."};
-const UZ = {"nav1": "Flagmanlar", "nav2": "Barcha ekranlar", "nav3": "Aeroport", "nav4": "Mobil LED", "nav5": "Kontaktlar", "h_eb": "Tashqi reklama · Toshkent · 2010-yildan", "h_h1": "<em><span class=\"r\">LED</span> City.</em><br>Brendingiz butun shahar koʻchalarida.", "h_lede": "Toshkentning asosiy chorrahalarida <strong>75 ta LED-ekran</strong> va xalqaro aeroportda <strong>54 ta reklama tashuvchisi</strong>. 48 metrlik media-fasaddan 6 × 3 m shahar ekranlarigacha.", "h_c1": "Ekran tanlash <span class=\"ar\">→</span>", "h_c2": "PDF taqdimotlar <span class=\"ar\">↓</span>", "h_c3": "Bogʻlanish", "h_cap1": "Tablo nisbati 8 : 1, xuddi <b style=\"color:var(--txt-d);font-weight:500\">PIRAMIT · 48 × 6 m · 9408 × 1152 px</b> ekranidagidek", "h_cap2": "Efir 7:00 – 23:00", "st1": "ta LED-ekran shaharda", "st2": "ta tashuvchi «Toshkent» aeroportida", "st3": "yoʻlovchi yiliga aeroportdan oʻtadi", "st4": "ayrim ekranlarda oyiga koʻrsatuv", "f_eb": "Flagman tarmoq", "f_h2": "Moʻljalga aylangan ekranlar.", "f_p": "Shahardagi eng yirik media-fasadlar. Ular bir necha mavze narisidan koʻrinadi, odamlar esa uchrashuvni aynan shu yerda belgilaydi: «Piramida oldida», «GUM yonida».", "c_eb": "Katalog · 1 oylik narxlar", "c_h2": "Shahar boʻylab media-rejangizni tuzing.", "c_p": "Rolik davomiyligini tanlang, narxlar qayta hisoblanadi. Ekranlarni + belgisi bilan belgilang: pastda jami summa va tijorat taklifini Excel faylida tayyorlaydigan tugma paydo boʻladi.", "c_dur": "Rolik", "c_size": "Oʻlcham", "c_note": "Narxlar soʻmda, 1 oylik joylashtirish uchun, QQSsiz koʻrsatilgan. Toʻlov naqd pulsiz, 100% oldindan. Agar efir texnik yoki boshqa sabablarga koʻra toʻxtasa, joylashtirish alohida qoplanadi.", "a_eb": "«Toshkent» xalqaro aeroporti · 2- va 3-terminallar", "a_h2": "Mamlakat mehmoni koʻradigan birinchi manzara.", "a_p": "54 ta LED-tashuvchida 6 ta format: avtoturargohdan pasport nazorati va kutish zallarigacha. Yoʻlovchilar ekranlarni koʻcha shovqinisiz, xotirjam kutish paytida tomosha qiladi.", "a_a1": "Oʻzbekiston fuqarolari <b>65%</b>", "a_a2": "Xorijliklar <b>35%</b>", "a_a3": "Erkaklar <b>68%</b>", "a_a4": "Ayollar <b>32%</b>", "m_eb": "Mobil LED", "m_h2": "Auditoriyangiz sari oʻzi yetib boradigan ekran.", "m_p": "Shahar oqimida harakatlanuvchi ikki tomonlama LED-ekranli avtomobil. Tashqi koʻrinishning har bir detalini oʻylab chiqdik, chunki mashina reklamangizning yuzi hisoblanadi.", "m_f1": "Ikki tomonlama keng ekran<span>4 × 2,5 m</span>", "m_f2": "Tasvir aniqligi<span>Full HD 1080</span>", "m_f3": "3D ovozli hamrohlik<span>audio</span>", "m_f4": "Svetodiodli chiroqlar<span>yorugʻlik</span>", "m_f5": "Mat qoplama, pasaytirilgan kuzov, qora disklar<span>uslub</span>", "m_f6": "Tematik firma davlat raqami<span>01 717 LED</span>", "m_x_eb": "Eksklyuziv", "m_x_h3": "«Sizning reklamangiz»", "m_x_p": "Ekranda faqat sizning rolikingiz, kuniga 5 soat.", "m_x_m": "5 soat · 1 kun · narxi kelishiladi", "d_eb": "Tijorat takliflari", "d_h2": "Yuklab olish uchun taqdimotlar.", "d_p": "PDF formatidagi toʻliq takliflar: har bir ekran surati, joylashuv xaritasi, texnik koʻrsatkichlar va narxlar.", "d1_h": "LED CITY · Toshkent ekranlari", "d1_p": "75 ta LED-ekran: suratlar, xarita, oʻlchamlar va narxlar", "d1_s": "PDF · 78 bet · 13 MB", "d2_h": "«Toshkent» aeroporti", "d2_p": "6 ta format, 54 ta tashuvchi, qamrov va narxlar", "d2_s": "PDF · 9 bet · 2,4 MB", "d_btn": "PDF yuklab olish <span class=\"ar\">↓</span>", "ct_eb": "Boshlashga tayyormisiz?", "ct_h2": "Loyihangizni<br><span class=\"r\">muhokama qilamiz.</span>", "ct_p": "Menejerga yozing yoki qoʻngʻiroq qiling. Brendingiz uchun individual taklifni 24 soat ichida tayyorlaymiz.", "ct_l1": "Telefon", "ct_l4": "Manzil", "ct_addr": "Toshkent sh.,<br>Bunyodkor, 8A", "t1l": "Narxlar", "t1": "QQSsiz", "t2l": "Toʻlov", "t2": "100% oldindan toʻlov", "t3l": "Hisob-kitob", "t3": "Naqd pulsiz", "t4l": "Kafolat", "t4": "Efir toʻxtasa, kompensatsiya", "ft1": "AHADMIX GROUP · 2010-yildan beri tashqi reklama", "ft2": "Toshkent, Bunyodkor, 8A", "ft3": "© AHADMIX GROUP. Barcha huquqlar himoyalangan.", "p_per": "Davr", "p_clr": "Tozalash", "p_kp": "Tijorat taklifi · Excel <span class=\"ar\">↓</span>", "p_m1": "1 oy", "p_m2": "2 oy", "p_m3": "3 oy", "p_m4": "4 oy", "p_m5": "5 oy", "p_m6": "6 oy", "p_m7": "7 oy", "p_m8": "8 oy", "p_m9": "9 oy", "p_m10": "10 oy", "p_m11": "11 oy", "p_m12": "12 oy"};
+const [LOC, AIR, CFG, TX] = await Promise.all([getJSON('data/screens.json'), getJSON('data/airport.json'), getJSON('data/settings.json'), getJSON('data/texts.json')]);
+const FLAG = CFG.flagships.filter(id => LOC.some(l => l.id === id));
+const IMG = l => `assets/img/c${l.id}.jpg?v=${l.v||1}`;
 let LANG='ru';
 try{ const sv=localStorage.getItem('ahx_lang'); if(sv==='uz'||sv==='ru'||sv==='en') LANG=sv; }catch(e){}
 const HS=(location.hash||'').slice(1); if(HS==='uz'||HS==='en'||HS==='ru') LANG=HS;
@@ -572,7 +571,13 @@ const I18N_EL=[...document.querySelectorAll('[data-i18n]')];
 I18N_EL.forEach(el=>{ el.dataset.ru=el.innerHTML; });
 function applyStatic(){
   document.documentElement.lang = LANG==='uz' ? 'uz-Latn' : LANG==='en' ? 'en' : 'ru';
-  I18N_EL.forEach(el=>{ const v = LANG==='uz' ? UZ[el.dataset.i18n] : LANG==='en' ? EN[el.dataset.i18n] : el.dataset.ru; if(v!=null) el.innerHTML=v; });
+  const AIRN = AIR.reduce((a,f)=>a+(+f.q||0),0);
+  const fill = t => String(t).replace(/\{screens\}/g, LOC.length).replace(/\{airport\}/g, AIRN).replace(/\{usdRate\}/g, Number(CFG.usdRate).toLocaleString('en-US'));
+  I18N_EL.forEach(el=>{ const t=TX[el.dataset.i18n]; const v = t ? (t[LANG] || t.ru) : el.dataset.ru; if(v!=null) el.innerHTML=fill(v); });
+  document.querySelectorAll('[data-count="screens"]').forEach(e=>e.textContent=LOC.length);
+  document.querySelectorAll('[data-count="airport"]').forEach(e=>e.textContent=AIRN);
+  document.querySelectorAll('[data-cfg]').forEach(e=>{ const v=CFG[e.dataset.cfg]; if(v) e.textContent=v; });
+  document.querySelectorAll('[data-cfg-href]').forEach(e=>{ const v=CFG[e.dataset.cfgHref]; if(v) e.href=v; });
   document.querySelectorAll('[data-lang]').forEach(b=>b.setAttribute('aria-pressed', String(b.dataset.lang===LANG)));
 }
 applyStatic();
@@ -623,7 +628,7 @@ renderMarquee();
 /* ---------- LED board ---------- */
 (() => {
   const cv = $('#led'), ctx = cv.getContext('2d', {alpha:false});
-  const MSGT = () => [['LED',1],[' CITY',0],['   ●   ',1],[L('ВАШ БРЕНД НА 75 ЭКРАНАХ ТАШКЕНТА','BRENDINGIZ TOSHKENTNING 75 EKRANIDA','YOUR BRAND ON 75 SCREENS IN TASHKENT'),0],['   ●   ',1],['AHADMIX',0],[' GROUP',1],['   ●   ',1]];
+  const MSGT = () => [['LED',1],[' CITY',0],['   ●   ',1],[L(`ВАШ БРЕНД НА ${LOC.length} ЭКРАНАХ ТАШКЕНТА`,`BRENDINGIZ TOSHKENTNING ${LOC.length} EKRANIDA`,`YOUR BRAND ON ${LOC.length} SCREENS IN TASHKENT`),0],['   ●   ',1],['AHADMIX',0],[' GROUP',1],['   ●   ',1]];
   let W=0,H=0,rows,pitch,stripW=0,bg=null,lit=null,off=0,last=0,visible=true,raf=0,dpr=1;
   function build(){
     dpr = Math.min(devicePixelRatio||1, 1.5);
@@ -678,7 +683,7 @@ renderMarquee();
 /* ---------- flagships ---------- */
 function flagHTML(l,i){
   const id=l.id, p5 = l.p['5'] ?? l.p['10'], d5 = l.p['5'] ? 5 : 10;
-  return `<img class="mob" src="assets/img/c${id}.jpg" alt="${NM(l)}" loading="lazy" decoding="async">
+  return `<img class="mob" src="${IMG(l)}" alt="${NM(l)}" loading="lazy" decoding="async">
       <div class="k">${String(i+1).padStart(2,'0')} · ${l.id===2?L('медиафасад','media-fasad','media façade'):L('LED-экран','LED-ekran','LED screen')}</div>
       <h3>${NM(l)}</h3>${l.s?`<div class="s">${SB(l)}</div>`:''}
       <dl class="spec">
@@ -695,7 +700,7 @@ function renderFlags(){ document.querySelectorAll('#flagList .fl').forEach(el=>{
   const stage=$('#stage'), list=$('#flagList');
   FLAG.forEach((id,i)=>{
     const l=byId[id];
-    const img=document.createElement('img'); img.src=`assets/img/c${id}.jpg`; img.alt=NM(l); if(i===0) img.className='on'; 
+    const img=document.createElement('img'); img.src=IMG(l); img.alt=NM(l); if(i===0) img.className='on';
     stage.insertBefore(img, stage.firstChild);
     img.dataset.i=i;
     const el=document.createElement('article'); el.className='fl'+(i===0?' on':''); el.dataset.i=i; el.dataset.id=id;
@@ -745,7 +750,7 @@ function renderGrid(){
   $('#grid').innerHTML = arr.map(l=>{
     const p=priceFor(l), inPlan=state.plan.has(l.id);
     return `<article class="card rv" data-open="${l.id}" tabindex="0" aria-label="${l.n}, ${l.size}">
-      <div class="ph"><img src="assets/img/c${l.id}.jpg" alt="${L('Экран','Ekran','Screen')} ${NM(l)}" loading="lazy" decoding="async">
+      <div class="ph"><img src="${IMG(l)}" alt="${L('Экран','Ekran','Screen')} ${NM(l)}" loading="lazy" decoding="async">
         <span class="tag">${SZ(l.size)}</span>
         <button class="add" data-add="${l.id}" aria-pressed="${inPlan}" aria-label="${inPlan?L('Убрать из плана','Rejadan olib tashlash','Remove from plan'):L('Добавить в план','Rejaga qoʻshish','Add to plan')}: ${NM(l)}">${inPlan?'✓':'+'}</button>
       </div>
@@ -790,7 +795,7 @@ document.querySelectorAll('[data-dl]').forEach(a=>a.addEventListener('click', as
     toast(L('Файл сохранён','Fayl saqlandi','File saved'));
   }catch(err){
     if(err?.code==='declined') toast(L('Скачивание отменено','Yuklab olish bekor qilindi','Download cancelled'));
-    else toast(L('Не удалось скачать. Позвоните: +998 94 657-33-33','Yuklab boʻlmadi. Qoʻngʻiroq qiling: +998 94 657-33-33','Download failed. Call us: +998 94 657-33-33'));
+    else toast(L(`Не удалось скачать. Позвоните: ${CFG.phone}`,`Yuklab boʻlmadi. Qoʻngʻiroq qiling: ${CFG.phone}`,`Download failed. Call us: ${CFG.phone}`));
   }finally{ a.removeAttribute('aria-busy'); }
 }));
 
@@ -832,12 +837,12 @@ async function buildKP(){
     +(EN_KP ? '' : F('J'+T,15,`SUM(J16:J${last})`,tJ)+F('K'+T,15,`SUM(K16:K${last})`,tK))+`</row>`;
   const n=T+2;
   const note = EN_KP
-    ? 'All prices are in US dollars and include tax and all fees (converted at 11,000 UZS per USD). Payment: 100% prepayment by bank transfer. '
+    ? `All prices are in US dollars and include tax and all fees (converted at ${Number(CFG.usdRate).toLocaleString('en-US')} UZS per USD). Payment: 100% prepayment by bank transfer. `
       +'If broadcasting stops for technical or other reasons, the placement is compensated separately. Broadcast hours: 7:00–23:00 (Humo Arena: 18:00–24:00). '
-      +'Contacts: +998 94 657-33-33 · info@ahadmix.uz · linktr.ee/ahadmix_group'
+      +`Contacts: ${CFG.phone} · ${CFG.email} · ${CFG.linktree.replace(/^https?:\/\//,'')}`
     : 'Цены в сумах. Стоимость по прайсу указана без НДС, НДС 12% начислен отдельно. Условия оплаты: безналичный расчёт, 100% предоплата. '
       +'Если вещание остановится по техническим или иным причинам, размещение компенсируется отдельно. Время трансляции: 7:00–23:00 (Хумо Арена: 18:00–24:00). '
-      +'Контакты: +998 94 657-33-33 · info@ahadmix.uz · linktr.ee/ahadmix_group';
+      +`Контакты: ${CFG.phone} · ${CFG.email} · ${CFG.linktree.replace(/^https?:\/\//,'')}`;
   rows+=`<row r="${n}" spans="1:11" ht="46" customHeight="1">`+S('A'+n,16,note)+`</row>`;
   const d=new Date(), dd=`${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()}`;
   const hdr=S('A14',17, EN_KP
@@ -872,7 +877,7 @@ $('#planKP').addEventListener('click', async e=>{
       catch(err){
         if(err?.code==='declined') toast(L('Скачивание отменено','Yuklab olish bekor qilindi','Download cancelled'));
         else if(err?.code==='rate_limited') toast(L('Подождите секунду и попробуйте снова','Bir soniya kuting va qayta urinib koʻring','Wait a second and try again'));
-        else toast(L('Скачивание недоступно. Позвоните: +998 94 657-33-33','Yuklab olish imkoni yoʻq. Qoʻngʻiroq qiling: +998 94 657-33-33','Download is not available here. Call us: +998 94 657-33-33'));
+        else toast(L(`Скачивание недоступно. Позвоните: ${CFG.phone}`,`Yuklab olish imkoni yoʻq. Qoʻngʻiroq qiling: ${CFG.phone}`,`Download is not available here. Call us: ${CFG.phone}`));
       }
     } else {
       const a=document.createElement('a'); a.href=URL.createObjectURL(kp.blob); a.download=kp.name; document.body.appendChild(a); a.click();
@@ -887,7 +892,7 @@ const dlg=$('#dd');
 function openDlg(id){
   dlg.dataset.id=id;
   const l=byId[id]; const inPlan=state.plan.has(id);
-  $('#ddIn').innerHTML = `<img src="assets/img/c${id}.jpg" alt="${L('Экран','Ekran','Screen')} ${NM(l)}">
+  $('#ddIn').innerHTML = `<img src="${IMG(l)}" alt="${L('Экран','Ekran','Screen')} ${NM(l)}">
     <div class="c">
       <div class="eyebrow" style="color:var(--mute-l)">${catOf(l)==='flag'?L('Флагман','Flagman','Flagship'):catOf(l)==='big'?L('Крупный формат','Yirik format','Large format'):L('Городской экран','Shahar ekrani','City screen')}</div>
       <h3>${NM(l)}</h3>${l.s?`<div class="sub">${SB(l)}</div>`:''}
@@ -911,7 +916,7 @@ const op=[...document.querySelectorAll('#fmts details')].findIndex(d=>d.open);
 $('#fmts').innerHTML = AIR.map((f,i)=>`<details class="fmt" name="fmt" ${i===(op<0&&!document.querySelector('#fmts details')?0:op)?'open':''}>
   <summary><span class="n">${L('Формат','Format','Format')} ${String(i+1).padStart(2,'0')}</span><span class="t">${L(f.zn,f.znu,f.zne)}<small>${L(f.t,f.tu,f.te)} · ${L(f.term,f.termu,f.terme)}</small></span><span class="q">${SZ(f.size)} · ${f.q} ${L('шт.','dona','pcs')}</span><span class="pl" aria-hidden="true">+</span></summary>
   <div class="body">
-    <img src="assets/img/${f.img}.jpg" alt="${L(f.t,f.tu,f.te)}: ${L(f.zn,f.znu,f.zne)}" loading="lazy" decoding="async">
+    <img src="assets/img/${f.img}.jpg?v=${f.v||1}" alt="${L(f.t,f.tu,f.te)}: ${L(f.zn,f.znu,f.zne)}" loading="lazy" decoding="async">
     <div>
       <dl class="spec"><div><dt>${L('Размер','Oʻlcham','Size')}</dt><dd>${SZ(f.size)}</dd></div><div><dt>${L('Носителей','Tashuvchilar','Displays')}</dt><dd>${f.q} ${L('шт.','dona','pcs')}</dd></div><div><dt>${L('Разрешение','Ruxsat','Resolution')}</dt><dd>${f.res} px</dd></div><div><dt>${L('Показы','Koʻrsatuvlar','Plays')}</dt><dd>${SZ(f.sh)}</dd></div><div><dt>${L('Ролик','Rolik','Spot')}</dt><dd>${f.d} ${L('сек','soniya','sec')}</dd></div></dl>
       <dl class="reach"><div><dt>${L('Неделя','Hafta','Week')}</dt><dd class="num">${f.r[0]}</dd></div><div><dt>${L('Месяц','Oy','Month')}</dt><dd class="num">${f.r[1]}</dd></div><div><dt>${L('Год','Yil','Year')}</dt><dd class="num">${f.r[2]}</dd></div></dl>

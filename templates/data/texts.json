@@ -1,0 +1,442 @@
+{
+ "nav1": {
+  "ru": "Флагманы",
+  "uz": "Flagmanlar",
+  "en": "Flagships"
+ },
+ "nav2": {
+  "ru": "Все экраны",
+  "uz": "Barcha ekranlar",
+  "en": "All screens"
+ },
+ "nav3": {
+  "ru": "Аэропорт",
+  "uz": "Aeroport",
+  "en": "Airport"
+ },
+ "nav4": {
+  "ru": "Мобильный LED",
+  "uz": "Mobil LED",
+  "en": "Mobile LED"
+ },
+ "nav5": {
+  "ru": "Контакты",
+  "uz": "Kontaktlar",
+  "en": "Contacts"
+ },
+ "h_eb": {
+  "ru": "Наружная реклама · Ташкент · с 2010",
+  "uz": "Tashqi reklama · Toshkent · 2010-yildan",
+  "en": "Outdoor advertising · Tashkent · since 2010"
+ },
+ "h_h1": {
+  "ru": "<em><span class=\"r\">LED</span> City.</em><br>Ваш бренд на улицах всего города.",
+  "uz": "<em><span class=\"r\">LED</span> City.</em><br>Brendingiz butun shahar koʻchalarida.",
+  "en": "<em><span class=\"r\">LED</span> City.</em><br>Your brand across the whole city."
+ },
+ "h_lede": {
+  "ru": "<strong>{screens} LED-экранов</strong> на главных перекрёстках Ташкента и <strong>{airport} носителя</strong> в международном аэропорту. От медиафасада 48 метров до городских экранов 6 × 3 м.",
+  "uz": "Toshkentning asosiy chorrahalarida <strong>{screens} ta LED-ekran</strong> va xalqaro aeroportda <strong>{airport} ta reklama tashuvchisi</strong>. 48 metrlik media-fasaddan 6 × 3 m shahar ekranlarigacha.",
+  "en": "<strong>{screens} LED screens</strong> at the main intersections of Tashkent and <strong>{airport} displays</strong> at the international airport. From a 48-metre media façade to 6 × 3 m city screens."
+ },
+ "h_c1": {
+  "ru": "Подобрать экраны <span class=\"ar\">→</span>",
+  "uz": "Ekran tanlash <span class=\"ar\">→</span>",
+  "en": "Choose screens <span class=\"ar\">→</span>"
+ },
+ "h_c2": {
+  "ru": "Презентации PDF <span class=\"ar\">↓</span>",
+  "uz": "PDF taqdimotlar <span class=\"ar\">↓</span>",
+  "en": "PDF presentations <span class=\"ar\">↓</span>"
+ },
+ "h_c3": {
+  "ru": "Связаться",
+  "uz": "Bogʻlanish",
+  "en": "Get in touch"
+ },
+ "h_cap1": {
+  "ru": "Пропорции табло 8 : 1, как у экрана <b style=\"color:var(--txt-d);font-weight:500\">PIRAMIT · 48 × 6 м · 9408 × 1152 px</b>",
+  "uz": "Tablo nisbati 8 : 1, xuddi <b style=\"color:var(--txt-d);font-weight:500\">PIRAMIT · 48 × 6 m · 9408 × 1152 px</b> ekranidagidek",
+  "en": "Board ratio 8 : 1, same as the <b style=\"color:var(--txt-d);font-weight:500\">PIRAMIT · 48 × 6 m · 9408 × 1152 px</b> screen"
+ },
+ "h_cap2": {
+  "ru": "Трансляция 7:00 – 23:00",
+  "uz": "Efir 7:00 – 23:00",
+  "en": "On air 7:00 – 23:00"
+ },
+ "st1": {
+  "ru": "LED-экранов в городе",
+  "uz": "ta LED-ekran shaharda",
+  "en": "LED screens across the city"
+ },
+ "st2": {
+  "ru": "носителя в аэропорту «Ташкент»",
+  "uz": "ta tashuvchi «Toshkent» aeroportida",
+  "en": "displays at Tashkent Airport"
+ },
+ "st3": {
+  "ru": "пассажиров аэропорта в год",
+  "uz": "yoʻlovchi yiliga aeroportdan oʻtadi",
+  "en": "airport passengers a year"
+ },
+ "st4": {
+  "ru": "показов в месяц на ряде экранов",
+  "uz": "ayrim ekranlarda oyiga koʻrsatuv",
+  "en": "plays a month on selected screens"
+ },
+ "f_eb": {
+  "ru": "Флагманская сеть",
+  "uz": "Flagman tarmoq",
+  "en": "Flagship network"
+ },
+ "f_h2": {
+  "ru": "Экраны, которые становятся ориентирами.",
+  "uz": "Moʻljalga aylangan ekranlar.",
+  "en": "Screens that become landmarks."
+ },
+ "f_p": {
+  "ru": "Крупнейшие медиафасады города. Их видно за несколько кварталов, и о них договариваются встретиться: «у Пирамиды», «у ГУМа».",
+  "uz": "Shahardagi eng yirik media-fasadlar. Ular bir necha mavze narisidan koʻrinadi, odamlar esa uchrashuvni aynan shu yerda belgilaydi: «Piramida oldida», «GUM yonida».",
+  "en": "The largest media façades in the city. They are visible blocks away, and people arrange to meet by them: “at the Pyramid”, “by GUM”."
+ },
+ "c_eb": {
+  "ru": "Каталог · прайс-лист на 1 месяц",
+  "uz": "Katalog · 1 oylik narxlar",
+  "en": "Catalogue · monthly price list"
+ },
+ "c_h2": {
+  "ru": "Соберите медиаплан по городу.",
+  "uz": "Shahar boʻylab media-rejangizni tuzing.",
+  "en": "Build your city media plan."
+ },
+ "c_p": {
+  "ru": "Выберите длительность ролика: цены пересчитаются. Отмечайте экраны знаком +, внизу появится итог и кнопка, которая соберёт коммерческое предложение в Excel.",
+  "uz": "Rolik davomiyligini tanlang, narxlar qayta hisoblanadi. Ekranlarni + belgisi bilan belgilang: pastda jami summa va tijorat taklifini Excel faylida tayyorlaydigan tugma paydo boʻladi.",
+  "en": "Choose the spot length and prices update. Mark screens with +: the total appears below, with a button that builds a commercial offer in Excel."
+ },
+ "c_dur": {
+  "ru": "Ролик",
+  "uz": "Rolik",
+  "en": "Spot"
+ },
+ "c_size": {
+  "ru": "Размер",
+  "uz": "Oʻlcham",
+  "en": "Size"
+ },
+ "c_note": {
+  "ru": "Цены указаны в сумах за 1 месяц размещения, без НДС. Оплата по безналичному расчёту, 100% предоплата. Если вещание остановится по техническим или иным причинам, размещение компенсируется отдельно.",
+  "uz": "Narxlar soʻmda, 1 oylik joylashtirish uchun, QQSsiz koʻrsatilgan. Toʻlov naqd pulsiz, 100% oldindan. Agar efir texnik yoki boshqa sabablarga koʻra toʻxtasa, joylashtirish alohida qoplanadi.",
+  "en": "Prices are in US dollars per 1 month of placement, including tax and all fees. Converted from UZS at {usdRate} UZS per USD and rounded. 100% prepayment by bank transfer. If broadcasting stops for technical or other reasons, the placement is compensated separately."
+ },
+ "a_eb": {
+  "ru": "Международный аэропорт «Ташкент» · Терминалы 2 и 3",
+  "uz": "«Toshkent» xalqaro aeroporti · 2- va 3-terminallar",
+  "en": "Tashkent International Airport · Terminals 2 and 3"
+ },
+ "a_h2": {
+  "ru": "Первое, что видит гость страны.",
+  "uz": "Mamlakat mehmoni koʻradigan birinchi manzara.",
+  "en": "The first thing a visitor to the country sees."
+ },
+ "a_p": {
+  "ru": "6 форматов на {airport} LED-носителях: от парковки до паспортного контроля и залов ожидания. Пассажиры смотрят на экраны в спокойном ожидании, без визуального шума улицы.",
+  "uz": "{airport} ta LED-tashuvchida 6 ta format: avtoturargohdan pasport nazorati va kutish zallarigacha. Yoʻlovchilar ekranlarni koʻcha shovqinisiz, xotirjam kutish paytida tomosha qiladi.",
+  "en": "6 formats on {airport} LED displays, from the car park to passport control and the waiting halls. Passengers watch the screens while waiting calmly, away from street clutter."
+ },
+ "a_a1": {
+  "ru": "Граждане РУз <b>65%</b>",
+  "uz": "Oʻzbekiston fuqarolari <b>65%</b>",
+  "en": "Citizens of Uzbekistan <b>65%</b>"
+ },
+ "a_a2": {
+  "ru": "Иностранцы <b>35%</b>",
+  "uz": "Xorijliklar <b>35%</b>",
+  "en": "Foreign visitors <b>35%</b>"
+ },
+ "a_a3": {
+  "ru": "Мужчины <b>68%</b>",
+  "uz": "Erkaklar <b>68%</b>",
+  "en": "Men <b>68%</b>"
+ },
+ "a_a4": {
+  "ru": "Женщины <b>32%</b>",
+  "uz": "Ayollar <b>32%</b>",
+  "en": "Women <b>32%</b>"
+ },
+ "m_eb": {
+  "ru": "Мобильный LED",
+  "uz": "Mobil LED",
+  "en": "Mobile LED"
+ },
+ "m_h2": {
+  "ru": "Экран, который сам едет к вашей аудитории.",
+  "uz": "Auditoriyangiz sari oʻzi yetib boradigan ekran.",
+  "en": "A screen that drives to your audience."
+ },
+ "m_p": {
+  "ru": "Автомобиль с двусторонним LED-экраном в городском потоке. Мы продумали каждую деталь внешнего вида, потому что машина работает лицом вашей рекламы.",
+  "uz": "Shahar oqimida harakatlanuvchi ikki tomonlama LED-ekranli avtomobil. Tashqi koʻrinishning har bir detalini oʻylab chiqdik, chunki mashina reklamangizning yuzi hisoblanadi.",
+  "en": "A vehicle with a double-sided LED screen moving through city traffic. We designed every detail of its look, because the vehicle is the face of your advertising."
+ },
+ "m_f1": {
+  "ru": "Широкий экран с двух сторон<span>4 × 2,5 м</span>",
+  "uz": "Ikki tomonlama keng ekran<span>4 × 2,5 m</span>",
+  "en": "Wide screen on both sides<span>4 × 2.5 m</span>"
+ },
+ "m_f2": {
+  "ru": "Чёткость изображения<span>Full HD 1080</span>",
+  "uz": "Tasvir aniqligi<span>Full HD 1080</span>",
+  "en": "Image quality<span>Full HD 1080</span>"
+ },
+ "m_f3": {
+  "ru": "3D-звуковое сопровождение<span>аудио</span>",
+  "uz": "3D ovozli hamrohlik<span>audio</span>",
+  "en": "3D sound<span>audio</span>"
+ },
+ "m_f4": {
+  "ru": "Светодиодные фонари<span>свет</span>",
+  "uz": "Svetodiodli chiroqlar<span>yorugʻlik</span>",
+  "en": "LED lights<span>light</span>"
+ },
+ "m_f5": {
+  "ru": "Матовое покрытие, заниженный кузов, чёрные диски<span>стиль</span>",
+  "uz": "Mat qoplama, pasaytirilgan kuzov, qora disklar<span>uslub</span>",
+  "en": "Matte finish, lowered body, black wheels<span>style</span>"
+ },
+ "m_f6": {
+  "ru": "Тематический фирменный номер<span>01 717 LED</span>",
+  "uz": "Tematik firma davlat raqami<span>01 717 LED</span>",
+  "en": "Custom themed licence plate<span>01 717 LED</span>"
+ },
+ "m_x_eb": {
+  "ru": "Эксклюзив",
+  "uz": "Eksklyuziv",
+  "en": "Exclusive"
+ },
+ "m_x_h3": {
+  "ru": "«Твоя Реклама»",
+  "uz": "«Sizning reklamangiz»",
+  "en": "“Your Ad”"
+ },
+ "m_x_p": {
+  "ru": "На экране только ваш ролик, 5 часов в день.",
+  "uz": "Ekranda faqat sizning rolikingiz, kuniga 5 soat.",
+  "en": "Only your spot on the screen, 5 hours a day."
+ },
+ "m_x_m": {
+  "ru": "5 часов · 1 день · цена договорная",
+  "uz": "5 soat · 1 kun · narxi kelishiladi",
+  "en": "5 hours · 1 day · price on request"
+ },
+ "d_eb": {
+  "ru": "Коммерческие предложения",
+  "uz": "Tijorat takliflari",
+  "en": "Commercial offers"
+ },
+ "d_h2": {
+  "ru": "Презентации для скачивания.",
+  "uz": "Yuklab olish uchun taqdimotlar.",
+  "en": "Presentations to download."
+ },
+ "d_p": {
+  "ru": "Полные предложения в PDF: фото каждого экрана, карта расположения, технические параметры и прайс-лист.",
+  "uz": "PDF formatidagi toʻliq takliflar: har bir ekran surati, joylashuv xaritasi, texnik koʻrsatkichlar va narxlar.",
+  "en": "Full offers in PDF: a photo of every screen, location map, specifications and price list (in Russian, prices in UZS)."
+ },
+ "d1_h": {
+  "ru": "LED CITY · экраны Ташкента",
+  "uz": "LED CITY · Toshkent ekranlari",
+  "en": "LED CITY · Tashkent screens"
+ },
+ "d1_p": {
+  "ru": "{screens} LED-экранов: фото, карта, размеры и цены",
+  "uz": "{screens} ta LED-ekran: suratlar, xarita, oʻlchamlar va narxlar",
+  "en": "{screens} LED screens: photos, map, sizes and prices"
+ },
+ "d1_s": {
+  "ru": "PDF · 78 стр. · 13 МБ",
+  "uz": "PDF · 78 bet · 13 MB",
+  "en": "PDF · 78 pages · 13 MB"
+ },
+ "d_btn": {
+  "ru": "Скачать PDF <span class=\"ar\">↓",
+  "uz": "PDF yuklab olish <span class=\"ar\">↓</span>",
+  "en": "Download PDF <span class=\"ar\">↓</span>"
+ },
+ "d2_h": {
+  "ru": "Аэропорт «Ташкент»",
+  "uz": "«Toshkent» aeroporti",
+  "en": "Tashkent Airport"
+ },
+ "d2_p": {
+  "ru": "6 форматов, {airport} носителя, охват и цены",
+  "uz": "6 ta format, {airport} ta tashuvchi, qamrov va narxlar",
+  "en": "6 formats, {airport} displays, reach and prices"
+ },
+ "d2_s": {
+  "ru": "PDF · 9 стр. · 2,4 МБ",
+  "uz": "PDF · 9 bet · 2,4 MB",
+  "en": "PDF · 9 pages · 2.4 MB"
+ },
+ "ct_eb": {
+  "ru": "Готовы начать?",
+  "uz": "Boshlashga tayyormisiz?",
+  "en": "Ready to start?"
+ },
+ "ct_h2": {
+  "ru": "Обсудим<br>ваш <span class=\"r\">проект.</span>",
+  "uz": "Loyihangizni<br><span class=\"r\">muhokama qilamiz.</span>",
+  "en": "Let’s talk about<br>your <span class=\"r\">project.</span>"
+ },
+ "ct_p": {
+  "ru": "Напишите или позвоните менеджеру. Индивидуальное предложение под ваш бренд подготовим в течение 24 часов.",
+  "uz": "Menejerga yozing yoki qoʻngʻiroq qiling. Brendingiz uchun individual taklifni 24 soat ichida tayyorlaymiz.",
+  "en": "Write or call our manager. We will prepare a tailored offer for your brand within 24 hours."
+ },
+ "ct_l1": {
+  "ru": "Телефон",
+  "uz": "Telefon",
+  "en": "Phone"
+ },
+ "ct_l4": {
+  "ru": "Адрес",
+  "uz": "Manzil",
+  "en": "Address"
+ },
+ "ct_addr": {
+  "ru": "г. Ташкент,<br>Бунёдкор, 8А",
+  "uz": "Toshkent sh.,<br>Bunyodkor, 8A",
+  "en": "8A Bunyodkor Ave,<br>Tashkent"
+ },
+ "t1l": {
+  "ru": "Цены",
+  "uz": "Narxlar",
+  "en": "Prices"
+ },
+ "t1": {
+  "ru": "Без НДС",
+  "uz": "QQSsiz",
+  "en": "Including tax and all fees"
+ },
+ "t2l": {
+  "ru": "Оплата",
+  "uz": "Toʻlov",
+  "en": "Payment"
+ },
+ "t2": {
+  "ru": "100% предоплата",
+  "uz": "100% oldindan toʻlov",
+  "en": "100% prepayment"
+ },
+ "t3l": {
+  "ru": "Расчёт",
+  "uz": "Hisob-kitob",
+  "en": "Settlement"
+ },
+ "t3": {
+  "ru": "Безналичный",
+  "uz": "Naqd pulsiz",
+  "en": "Bank transfer"
+ },
+ "t4l": {
+  "ru": "Гарантия",
+  "uz": "Kafolat",
+  "en": "Guarantee"
+ },
+ "t4": {
+  "ru": "Компенсация при остановке вещания",
+  "uz": "Efir toʻxtasa, kompensatsiya",
+  "en": "Compensation if broadcasting stops"
+ },
+ "ft1": {
+  "ru": "AHADMIX GROUP · наружная реклама с 2010 года",
+  "uz": "AHADMIX GROUP · 2010-yildan beri tashqi reklama",
+  "en": "AHADMIX GROUP · outdoor advertising since 2010"
+ },
+ "ft2": {
+  "ru": "Ташкент, Бунёдкор, 8А",
+  "uz": "Toshkent, Bunyodkor, 8A",
+  "en": "8A Bunyodkor Ave, Tashkent"
+ },
+ "ft3": {
+  "ru": "© AHADMIX GROUP. Все права защищены.",
+  "uz": "© AHADMIX GROUP. Barcha huquqlar himoyalangan.",
+  "en": "© AHADMIX GROUP. All rights reserved."
+ },
+ "p_per": {
+  "ru": "Период",
+  "uz": "Davr",
+  "en": "Period"
+ },
+ "p_m1": {
+  "ru": "1 мес.",
+  "uz": "1 oy",
+  "en": "1 mo."
+ },
+ "p_m2": {
+  "ru": "2 мес.",
+  "uz": "2 oy",
+  "en": "2 mo."
+ },
+ "p_m3": {
+  "ru": "3 мес.",
+  "uz": "3 oy",
+  "en": "3 mo."
+ },
+ "p_m4": {
+  "ru": "4 мес.",
+  "uz": "4 oy",
+  "en": "4 mo."
+ },
+ "p_m5": {
+  "ru": "5 мес.",
+  "uz": "5 oy",
+  "en": "5 mo."
+ },
+ "p_m6": {
+  "ru": "6 мес.",
+  "uz": "6 oy",
+  "en": "6 mo."
+ },
+ "p_m7": {
+  "ru": "7 мес.",
+  "uz": "7 oy",
+  "en": "7 mo."
+ },
+ "p_m8": {
+  "ru": "8 мес.",
+  "uz": "8 oy",
+  "en": "8 mo."
+ },
+ "p_m9": {
+  "ru": "9 мес.",
+  "uz": "9 oy",
+  "en": "9 mo."
+ },
+ "p_m10": {
+  "ru": "10 мес.",
+  "uz": "10 oy",
+  "en": "10 mo."
+ },
+ "p_m11": {
+  "ru": "11 мес.",
+  "uz": "11 oy",
+  "en": "11 mo."
+ },
+ "p_m12": {
+  "ru": "12 мес.",
+  "uz": "12 oy",
+  "en": "12 mo."
+ },
+ "p_clr": {
+  "ru": "Очистить",
+  "uz": "Tozalash",
+  "en": "Clear"
+ },
+ "p_kp": {
+  "ru": "Скачать КП · Excel <span class=\"ar\">↓</span>",
+  "uz": "Tijorat taklifi · Excel <span class=\"ar\">↓</span>",
+  "en": "Offer · Excel <span class=\"ar\">↓</span>"
+ }
+}

@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>LED CITY · Админка</title>
+<link rel="icon" type="image/png" href="/assets/img/logo-w.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --navy:#0A1020; --navy2:#141C33; --red:#E3262D; --red-soft:#FDECEC;
+  --bg:#F3F4F7; --card:#FFFFFF; --ink:#131A2C; --mute:#667085; --line:#E3E6EC; --line2:#D0D5DD;
+  --ok:#12805C; --ok-soft:#E7F6EF; --warn:#B54708; --warn-soft:#FEF3E6;
+  --f:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --m:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --r:10px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 14px/1.5 var(--f);-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:inherit}
+.mono{font-family:var(--m);font-variant-numeric:tabular-nums}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff}
+.top .in{max-width:1400px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:24px;height:60px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.12em;font-size:14px;white-space:nowrap}
+.brand img{width:32px;height:32px}
+.brand i{font-style:normal;color:var(--red)}
+.brand small{font-weight:500;letter-spacing:.04em;color:#8D96AC;font-size:12px}
+.tabs{display:flex;gap:2px;overflow-x:auto;flex:1;scrollbar-width:none}
+.tabs button{background:none;border:0;color:#AAB2C5;padding:8px 14px;border-radius:8px;font-weight:500;white-space:nowrap}
+.tabs button:hover{color:#fff;background:var(--navy2)}
+.tabs button[aria-selected="true"]{color:#fff;background:var(--navy2);box-shadow:inset 0 -2px 0 var(--red)}
+.top .act{display:flex;gap:8px;align-items:center}
+.top .act a,.top .act button{background:none;border:1px solid #2A3452;color:#DDE2EE;border-radius:8px;padding:7px 12px;text-decoration:none;font-size:13px;white-space:nowrap}
+.top .act a:hover,.top .act button:hover{border-color:#8D96AC}
+
+main{max-width:1400px;margin:0 auto;padding:24px 20px 80px}
+h1{font-size:22px;margin:0;font-weight:700;letter-spacing:-.01em}
+.sub{color:var(--mute);margin:4px 0 0}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line2);background:var(--card);border-radius:8px;padding:9px 14px;font-weight:500;transition:background .15s,border-color .15s}
+.btn:hover{border-color:#98A2B3}
+.btn.pri{background:var(--red);border-color:var(--red);color:#fff}
+.btn.pri:hover{background:#C91F26}
+.btn.dark{background:var(--navy);border-color:var(--navy);color:#fff}
+.btn.danger{color:#B42318;border-color:#FDA29B}
+.btn.danger:hover{background:#FEF3F2}
+.btn.sm{padding:6px 10px;font-size:13px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.icon-btn{border:1px solid var(--line2);background:var(--card);border-radius:7px;width:32px;height:32px;display:inline-grid;place-items:center}
+.icon-btn:hover{border-color:#98A2B3}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r)}
+.inp,.sel,textarea.inp{width:100%;border:1px solid var(--line2);border-radius:8px;padding:9px 11px;background:#fff;transition:border-color .15s}
+.inp:focus,.sel:focus{border-color:var(--navy);outline:none;box-shadow:0 0 0 3px rgba(10,16,32,.08)}
+textarea.inp{resize:vertical;min-height:64px;line-height:1.45}
+.search{max-width:320px}
+label.f{display:grid;gap:6px;font-size:12px;font-weight:600;color:#344054}
+label.f .hint{font-weight:400;color:var(--mute)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:800px){.grid3,.grid4{grid-template-columns:1fr 1fr}.grid2{grid-template-columns:1fr}}
+fieldset{border:0;padding:0;margin:0 0 22px}
+legend{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-bottom:10px;padding:0}
+
+/* table */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{position:sticky;top:0;text-align:left;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);background:#F9FAFB;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#FAFBFC}
+td.num,th.num{text-align:right;font-family:var(--m);font-variant-numeric:tabular-nums;white-space:nowrap}
+.thumb{width:72px;height:44px;border-radius:6px;object-fit:cover;background:#E9ECF2;display:block}
+.nm b{display:block;font-weight:600}
+.nm span{color:var(--mute);font-size:12px}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;background:#EEF1F6;color:#344054;white-space:nowrap}
+.pill.flag{background:var(--red-soft);color:#B42318}
+.pill.big{background:#EAF0FF;color:#2D4CB3}
+.star{color:var(--red)}
+.na{color:#B0B7C3}
+.empty{padding:40px;text-align:center;color:var(--mute)}
+
+/* dialog */
+dialog{border:0;border-radius:14px;padding:0;width:min(920px,calc(100% - 24px));max-height:calc(100% - 32px);box-shadow:0 30px 80px rgba(10,16,32,.35)}
+dialog::backdrop{background:rgba(10,16,32,.55)}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:2}
+.dh h2{margin:0;font-size:18px}
+.db{padding:22px}
+.df{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:14px 22px;border-top:1px solid var(--line);position:sticky;bottom:0;background:#fff;flex-wrap:wrap}
+.photo{display:grid;grid-template-columns:240px 1fr;gap:16px;align-items:center}
+.photo img{width:240px;height:150px;object-fit:cover;border-radius:8px;background:#E9ECF2;display:block}
+@media (max-width:640px){.photo{grid-template-columns:1fr}.photo img{width:100%}}
+.usd{font-size:12px;color:var(--mute);font-family:var(--m)}
+.confirm{display:flex;gap:8px;align-items:center;background:#FEF3F2;border:1px solid #FECDCA;border-radius:8px;padding:6px 8px;font-size:13px;color:#B42318}
+
+/* lists */
+.flist{display:grid;gap:8px}
+.frow{display:grid;grid-template-columns:28px 72px 1fr auto;gap:14px;align-items:center;padding:10px 12px}
+.frow .n{font-family:var(--m);color:var(--mute)}
+.acards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.acard{overflow:hidden;display:grid}
+.acard img{width:100%;aspect-ratio:16/9;object-fit:cover;background:#E9ECF2;display:block}
+.acard .c{padding:14px;display:grid;gap:6px}
+.acard .c b{font-size:14px}
+.acard .c .m{color:var(--mute);font-size:12px}
+.acard .c .row{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+
+/* texts */
+.tsec{margin-bottom:26px}
+.tsec h3{font-size:14px;margin:0 0 10px;font-weight:700}
+.titem{padding:14px;display:grid;gap:10px;margin-bottom:10px}
+.titem .k{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--mute)}
+.titem .k code{font-family:var(--m);background:#F2F4F7;border-radius:4px;padding:1px 6px}
+.tlangs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tlangs label{display:grid;gap:4px;font-size:11px;font-weight:600;color:var(--mute);letter-spacing:.06em}
+@media (max-width:900px){.tlangs{grid-template-columns:1fr}}
+.titem.dirty{border-color:#F79009;box-shadow:0 0 0 1px #F79009}
+.savebar{position:sticky;bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--navy);color:#fff;border-radius:12px;padding:12px 14px 12px 18px;box-shadow:0 12px 40px rgba(10,16,32,.3);margin-top:16px}
+
+.note{background:#F8F9FB;border:1px solid var(--line);border-radius:8px;padding:12px 14px;color:#475467;font-size:13px}
+.note code{font-family:var(--m);background:#fff;border:1px solid var(--line);border-radius:4px;padding:0 5px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:13px}
+.kv span{color:var(--mute)}
+
+/* login */
+.login{min-height:100vh;display:grid;place-items:center;background:var(--navy);padding:16px}
+.login .box{width:min(380px,100%);background:#fff;border-radius:14px;padding:28px;display:grid;gap:16px}
+.login .brand{color:var(--ink)}
+.err{color:#B42318;font-size:13px;min-height:1em}
+
+/* toast */
+#toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);opacity:0;background:var(--navy);color:#fff;padding:11px 18px;border-radius:10px;font-weight:500;transition:.25s;z-index:100;pointer-events:none;max-width:calc(100% - 32px)}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+#toast.bad{background:#B42318}
+.spin{width:16px;height:16px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:sp .7s linear infinite;display:inline-block}
+@keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<section class="login" id="login" hidden>
+  <form class="box" id="loginForm">
+    <div class="brand"><img src="../assets/img/logo-w.png" alt="" style="filter:invert(1)"><span><i>LED</i> CITY <small>админка</small></span></div>
+    <label class="f">Пароль
+      <input class="inp" type="password" id="pw" autocomplete="current-password" required autofocus>
+    </label>
+    <div class="err" id="loginErr"></div>
+    <button class="btn pri" type="submit" style="justify-content:center">Войти</button>
+  </form>
+</section>
+
+<!-- APP -->
+<div id="app" hidden>
+  <header class="top">
+    <div class="in">
+      <div class="brand"><img src="../assets/img/logo-w.png" alt=""><span><i>LED</i> CITY</span> <small>админка</small></div>
+      <nav class="tabs" role="tablist">
+        <button role="tab" data-tab="screens" aria-selected="true">Экраны</button>
+        <button role="tab" data-tab="flags">Флагманы</button>
+        <button role="tab" data-tab="airport">Аэропорт</button>
+        <button role="tab" data-tab="settings">Курс и контакты</button>
+        <button role="tab" data-tab="texts">Тексты сайта</button>
+        <button role="tab" data-tab="backups">Резервные копии</button>
+      </nav>
+      <div class="act">
+        <a href="../" target="_blank" rel="noopener">Открыть сайт ↗</a>
+        <button id="logout">Выйти</button>
+      </div>
+    </div>
+  </header>
+  <main id="view"></main>
+</div>
+
+<!-- SCREEN EDITOR -->
+<dialog id="scrDlg">
+  <form id="scrForm" novalidate>
+    <div class="dh"><h2 id="scrTitle">Экран</h2><button type="button" class="icon-btn" data-close aria-label="Закрыть">✕</button></div>
+    <div class="db">
+      <fieldset>
+        <legend>Фото</legend>
+        <div class="photo">
+          <img id="scrImg" alt="Фото экрана">
+          <div style="display:grid;gap:8px">
+            <input type="file" id="scrFile" accept="image/jpeg,image/png,image/webp">
+            <div class="usd">JPG, PNG или WEBP до 12 МБ. Фото сохранится сразу, ширина будет уменьшена до 1600 px. Лучше горизонтальное 16:10.</div>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Название</legend>
+        <div class="grid3">
+          <label class="f">Русский *<input class="inp" name="n" required></label>
+          <label class="f">Oʻzbekcha<input class="inp" name="nu"></label>
+          <label class="f">English<input class="inp" name="ne"></label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Подпись под названием <span style="text-transform:none;letter-spacing:0;font-weight:400">(необязательно, например «перекрёсток»)</span></legend>
+        <div class="grid3">
+          <label class="f">Русский<input class="inp" name="s"></label>
+          <label class="f">Oʻzbekcha<input class="inp" name="su"></label>
+          <label class="f">English<input class="inp" name="se"></label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Параметры</legend>
+        <div class="grid4">
+          <label class="f">Размер<span class="hint">как на сайте, «8 × 4 м»</span><input class="inp" name="size" placeholder="8 × 4 м"></label>
+          <label class="f">Площадь, м²<span class="hint">считается из размера</span><input class="inp mono" name="a" inputmode="decimal"></label>
+          <label class="f">Разрешение<span class="hint">«1920×1080»</span><input class="inp mono" name="res"></label>
+          <label class="f">Время трансляции<span class="hint">«7:00-23:00»</span><input class="inp mono" name="hr"></label>
+          <label class="f">Показов в месяц<input class="inp mono" name="sh" inputmode="numeric"></label>
+          <label class="f">Размер для КП<span class="hint">если отличается</span><input class="inp" name="kpSize"></label>
+          <label class="f">Категория<span class="hint">определяется площадью</span><input class="inp" id="scrCat" disabled></label>
+          <label class="f">ID<span class="hint">номер фото c{ID}.jpg</span><input class="inp mono" name="id" disabled></label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Цены за 1 месяц, сум без НДС <span style="text-transform:none;letter-spacing:0;font-weight:400">— пустое поле: длительности нет</span></legend>
+        <div class="grid4">
+          <label class="f">Ролик 5 сек<input class="inp mono" name="p5" inputmode="numeric"><span class="usd" data-usd="p5"></span></label>
+          <label class="f">Ролик 10 сек<input class="inp mono" name="p10" inputmode="numeric"><span class="usd" data-usd="p10"></span></label>
+          <label class="f">Ролик 15 сек<input class="inp mono" name="p15" inputmode="numeric"><span class="usd" data-usd="p15"></span></label>
+          <label class="f">Ролик 20 сек<input class="inp mono" name="p20" inputmode="numeric"><span class="usd" data-usd="p20"></span></label>
+        </div>
+      </fieldset>
+      <fieldset style="margin:0">
+        <legend>Адрес для коммерческого предложения (Excel)</legend>
+        <textarea class="inp" name="addr" rows="2" placeholder="(НАЗВАНИЕ) Район, пересечение улиц …"></textarea>
+      </fieldset>
+    </div>
+    <div class="df">
+      <div id="scrDelWrap"><button type="button" class="btn danger" id="scrDel">Удалить экран</button></div>
+      <div class="bar"><button type="button" class="btn" data-close>Отмена</button><button type="submit" class="btn pri" id="scrSave">Сохранить</button></div>
+    </div>
+  </form>
+</dialog>
+
+<!-- AIRPORT EDITOR -->
+<dialog id="airDlg">
+  <form id="airForm" novalidate>
+    <div class="dh"><h2 id="airTitle">Формат аэропорта</h2><button type="button" class="icon-btn" data-close aria-label="Закрыть">✕</button></div>
+    <div class="db">
+      <fieldset>
+        <legend>Фото</legend>
+        <div class="photo">
+          <img id="airImg" alt="Фото формата">
+          <div style="display:grid;gap:8px">
+            <input type="file" id="airFile" accept="image/jpeg,image/png,image/webp">
+            <div class="usd">Фото сохранится сразу. Лучше формат 4:3.</div>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset><legend>Зона (заголовок формата)</legend>
+        <div class="grid3">
+          <label class="f">Русский *<input class="inp" name="zn" required></label>
+          <label class="f">Oʻzbekcha<input class="inp" name="znu"></label>
+          <label class="f">English<input class="inp" name="zne"></label>
+        </div></fieldset>
+      <fieldset><legend>Тип носителя</legend>
+        <div class="grid3">
+          <label class="f">Русский<input class="inp" name="t"></label>
+          <label class="f">Oʻzbekcha<input class="inp" name="tu"></label>
+          <label class="f">English<input class="inp" name="te"></label>
+        </div></fieldset>
+      <fieldset><legend>Терминал</legend>
+        <div class="grid3">
+          <label class="f">Русский<input class="inp" name="term"></label>
+          <label class="f">Oʻzbekcha<input class="inp" name="termu"></label>
+          <label class="f">English<input class="inp" name="terme"></label>
+        </div></fieldset>
+      <fieldset><legend>Параметры и цена</legend>
+        <div class="grid4">
+          <label class="f">Размер<input class="inp" name="size" placeholder="10 × 5 м"></label>
+          <label class="f">Кол-во носителей<input class="inp mono" name="q" inputmode="numeric"></label>
+          <label class="f">Разрешение<input class="inp mono" name="res"></label>
+          <label class="f">Показы<span class="hint">«144+ / сутки»</span><input class="inp mono" name="sh"></label>
+          <label class="f">Ролик, сек<input class="inp mono" name="d" inputmode="numeric"></label>
+          <label class="f">Цена за месяц, сум<input class="inp mono" name="p" inputmode="numeric"><span class="usd" data-usd="p"></span></label>
+        </div></fieldset>
+      <fieldset style="margin:0"><legend>Прогноз охвата, человек</legend>
+        <div class="grid3">
+          <label class="f">Неделя<input class="inp mono" name="r0" placeholder="70 000+"></label>
+          <label class="f">Месяц<input class="inp mono" name="r1" placeholder="300 000+"></label>
+          <label class="f">Год<input class="inp mono" name="r2" placeholder="3 600 000+"></label>
+        </div></fieldset>
+    </div>
+    <div class="df">
+      <div id="airDelWrap"><button type="button" class="btn danger" id="airDel">Удалить формат</button></div>
+      <div class="bar"><button type="button" class="btn" data-close>Отмена</button><button type="submit" class="btn pri">Сохранить</button></div>
+    </div>
+  </form>
+</dialog>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+{% verbatim %}
+<script>
+(() => {
+'use strict';
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const esc = t => String(t ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = n => Number(n).toLocaleString('ru-RU').replace(/ | /g,' ');
+let CSRF = '', D = null, TAB = 'screens';
+
+/* ---------- API ---------- */
+async function api(a, {body, file, form} = {}){
+  const opt = { method: (body||form) ? 'POST' : 'GET', headers:{'X-CSRFToken':CSRF}, credentials:'same-origin' };
+  if(body){ opt.headers['Content-Type']='application/json'; opt.body=JSON.stringify(body); }
+  if(form){ opt.body=form; }
+  let r, j;
+  const apiEndpoint = window.location.pathname.replace(/\/+$/, '') + '/api/';
+  try{ r = await fetch(`${apiEndpoint}?a=${a}${file?`&file=${file}`:''}`, opt); j = await r.json(); }
+  catch(e){ throw new Error('Сервер не отвечает'); }
+  if(r.status===401 && a!=='login'){ showLogin(); throw new Error(j.error||'Нужно войти'); }
+  if(!j.ok) throw new Error(j.error||'Ошибка сервера');
+  return j;
+}
+function toast(msg, bad=false){ const t=$('#toast'); t.textContent=msg; t.className=bad?'bad on':'on'; clearTimeout(t._h); t._h=setTimeout(()=>t.className=bad?'bad':'',3200); }
+async function busy(btn, fn){
+  const html=btn.innerHTML; btn.disabled=true; btn.innerHTML='<span class="spin"></span> Сохраняю…';
+  try{ return await fn(); } catch(e){ toast(e.message, true); throw e; } finally{ btn.disabled=false; btn.innerHTML=html; }
+}
+async function save(file, data, btn){
+  const run = async () => { const j = await api('save', {file, body:{data}}); D[file] = j.data; if(file==='screens'){ const j2=await api('load'); D=j2; } return j; };
+  const j = btn ? await busy(btn, run) : await run();
+  toast('Сохранено. На сайте изменения видны сразу');
+  return j;
+}
+
+/* ---------- auth ---------- */
+function showLogin(){ $('#app').hidden=true; $('#login').hidden=false; setTimeout(()=>$('#pw').focus(),50); }
+async function boot(){
+  try{
+    const me = await api('me'); CSRF = me.csrf;
+    if(!me.auth) return showLogin();
+    D = await api('load');
+    $('#login').hidden=true; $('#app').hidden=false; render();
+  }catch(e){ document.body.innerHTML = `<div class="empty">${esc(e.message)}</div>`; }
+}
+$('#loginForm').addEventListener('submit', async e => {
+  e.preventDefault(); $('#loginErr').textContent='';
+  const b=e.submitter||$('#loginForm button');
+  try{ b.disabled=true; const j=await api('login',{body:{password:$('#pw').value}}); CSRF=j.csrf; $('#pw').value=''; D=await api('load'); $('#login').hidden=true; $('#app').hidden=false; render(); }
+  catch(err){ $('#loginErr').textContent=err.message; }
+  finally{ b.disabled=false; }
+});
+$('#logout').addEventListener('click', async () => { try{ await api('logout',{body:{}}); }catch(e){} location.reload(); });
+
+/* ---------- helpers ---------- */
+const catOf = l => (l.id===2 || l.a>=120) ? 'flag' : (l.a>=28 ? 'big' : 'city');
+const CATN = {flag:'Флагман', big:'Крупный', city:'Городской'};
+const usd = n => '$' + Math.round(n / D.settings.usdRate * D.settings.usdMarkup).toLocaleString('en-US');
+const img = l => `../assets/img/c${l.id}.jpg?v=${l.v||1}`;
+const areaFrom = sz => { let a=0; String(sz).replace(/,/g,'.').replace(/([\d.]+)\s*[×xх*]\s*([\d.]+)/gi,(m,w,h)=>{a+=parseFloat(w)*parseFloat(h);}); return Math.round(a*100)/100; };
+const numIn = v => { const t=String(v??'').replace(/[\s ]/g,'').replace(',','.'); return t==='' ? '' : Number(t); };
+let dirtyTexts = {};
+
+/* ---------- tabs ---------- */
+$$('.tabs button').forEach(b => b.addEventListener('click', () => {
+  if(TAB==='texts' && Object.keys(dirtyTexts).length && !window.__leaveOk){ toast('Сначала сохраните или сбросьте изменения в текстах', true); return; }
+  TAB=b.dataset.tab; $$('.tabs button').forEach(x=>x.setAttribute('aria-selected', String(x===b))); render();
+}));
+function render(){ ({screens:vScreens, flags:vFlags, airport:vAir, settings:vSettings, texts:vTexts, backups:vBackups})[TAB](); }
+
+/* ---------- SCREENS ---------- */
+let scrQ = '';
+function vScreens(){
+  const list = D.screens.slice().sort((a,b)=>(b.id===2?999:b.a)-(a.id===2?999:a.a)||a.id-b.id)
+    .filter(l => !scrQ || [l.n,l.nu,l.ne,l.size,l.addr,String(l.id)].join(' ').toLowerCase().includes(scrQ));
+  const fl = new Set(D.settings.flagships);
+  $('#view').innerHTML = `
+  <div class="head">
+    <div><h1>Экраны</h1><p class="sub">${D.screens.length} экранов в городе. Цены в сумах за месяц без НДС.</p></div>
+    <div class="bar"><input class="inp search" id="q" placeholder="Поиск по названию, адресу, ID" value="${esc(scrQ)}"><button class="btn pri" id="addScr">+ Добавить экран</button></div>
+  </div>
+  <div class="card tbl-wrap"><table>
+    <thead><tr><th></th><th>ID</th><th>Название</th><th>Размер</th><th>Категория</th><th class="num">5 сек</th><th class="num">10 сек</th><th class="num">15 сек</th><th class="num">20 сек</th><th></th></tr></thead>
+    <tbody>${list.map(l=>`<tr>
+      <td><img class="thumb" src="${img(l)}" alt="" loading="lazy"></td>
+      <td class="mono">${l.id}</td>
+      <td class="nm"><b>${fl.has(l.id)?'<span class="star" title="Флагман">★</span> ':''}${esc(l.n)}</b><span>${esc(l.s||'')}${l.s&&l.ne?' · ':''}${esc(l.ne||'')}</span></td>
+      <td class="mono">${esc(l.size)}</td>
+      <td><span class="pill ${catOf(l)}">${CATN[catOf(l)]}</span></td>
+      ${['5','10','15','20'].map(d=>`<td class="num">${l.p[d]!=null?fmt(l.p[d]):'<span class="na">—</span>'}</td>`).join('')}
+      <td><button class="btn sm" data-edit="${l.id}">Изменить</button></td>
+    </tr>`).join('') || `<tr><td colspan="10" class="empty">Ничего не найдено</td></tr>`}</tbody>
+  </table></div>`;
+  $('#q').addEventListener('input', e => { scrQ=e.target.value.trim().toLowerCase(); const pos=e.target.selectionStart; vScreens(); const q=$('#q'); q.focus(); q.setSelectionRange(pos,pos); });
+  $('#addScr').addEventListener('click', () => openScr(null));
+  $$('[data-edit]').forEach(b => b.addEventListener('click', () => openScr(+b.dataset.edit)));
+}
+
+let scrCur = null, scrNew = false, areaTouched = false;
+const sf = () => $('#scrForm');
+function openScr(id){
+  scrNew = id==null;
+  const nextId = Math.max(0,...D.screens.map(l=>l.id))+1;
+  scrCur = scrNew ? {id:nextId, n:'', nu:'', ne:'', s:'', su:'', se:'', size:'6 × 3 м', a:18, res:'1920×1080', hr:'7:00-23:00', p:{}, sh:9000, addr:''} : structuredClone(D.screens.find(l=>l.id===id));
+  const f = sf(); f.reset(); areaTouched = !scrNew;
+  for(const k of ['n','nu','ne','s','su','se','size','a','res','hr','sh','kpSize','addr','id']) if(f[k]) f[k].value = scrCur[k] ?? '';
+  for(const d of ['5','10','15','20']) f['p'+d].value = scrCur.p[d]!=null ? fmt(scrCur.p[d]) : '';
+  $('#scrTitle').textContent = scrNew ? 'Новый экран' : `Экран · ${scrCur.n}`;
+  $('#scrImg').src = scrNew ? '' : img(scrCur); $('#scrImg').style.visibility = scrNew ? 'hidden' : 'visible';
+  $('#scrDelWrap').hidden = scrNew; resetDel($('#scrDelWrap'), 'scrDel', 'Удалить экран', delScr);
+  upd(); $('#scrDlg').showModal();
+}
+function upd(){
+  const f=sf();
+  if(!areaTouched) f.a.value = areaFrom(f.size.value) || '';
+  const a = numIn(f.a.value)||0; $('#scrCat').value = CATN[catOf({id:scrCur.id,a})];
+  for(const k of ['p5','p10','p15','p20']){ const v=numIn(f[k].value); $(`[data-usd="${k}"]`, f).textContent = v!=='' && !isNaN(v) ? `≈ ${usd(v)} в англ. версии` : ''; }
+}
+sf().addEventListener('input', e => { if(e.target.name==='a') areaTouched=true; upd(); });
+$$('#scrForm input[name^="p"]').forEach(i => i.addEventListener('blur', () => { const v=numIn(i.value); if(v!=='' && !isNaN(v)) i.value=fmt(v); }));
+sf().addEventListener('submit', async e => {
+  e.preventDefault();
+  const f=sf(), o={...scrCur};
+  for(const k of ['n','nu','ne','s','su','se','size','res','hr','kpSize','addr']) o[k]=f[k].value.trim();
+  if(!o.kpSize) delete o.kpSize;
+  if(!o.n){ toast('Укажите название на русском', true); f.n.focus(); return; }
+  o.a = numIn(f.a.value)||0; o.sh = numIn(f.sh.value)||0;
+  o.p = {}; for(const d of ['5','10','15','20']){ const v=numIn(f['p'+d].value); if(v!=='' ){ if(isNaN(v)){ toast(`Цена ${d} сек: введите число`, true); return; } o.p[d]=v; } }
+  if(!Object.keys(o.p).length){ toast('Укажите хотя бы одну цену', true); return; }
+  if(scrNew && !o.nu) o.nu=o.n; if(scrNew && !o.ne) o.ne=o.n;
+  const list = scrNew ? [...D.screens, o] : D.screens.map(l=>l.id===o.id?o:l);
+  await save('screens', list, $('#scrSave'));
+  scrCur = D.screens.find(l=>l.id===o.id); scrNew=false;
+  $('#scrDlg').close(); render();
+  if(!scrCur.v) toast('Сохранено. Не забудьте загрузить фото экрана');
+});
+$('#scrFile').addEventListener('change', async e => {
+  const file=e.target.files[0]; if(!file) return;
+  if(scrNew){ toast('Сначала сохраните экран, затем загрузите фото', true); e.target.value=''; return; }
+  const fd=new FormData(); fd.append('photo',file); fd.append('kind','screen'); fd.append('id',scrCur.id);
+  try{
+    toast('Загружаю фото…');
+    const j=await api('upload',{form:fd});
+    const list = D.screens.map(l=>l.id===scrCur.id?{...l, v:j.v}:l);
+    await save('screens', list);
+    scrCur = D.screens.find(l=>l.id===scrCur.id);
+    $('#scrImg').src = img(scrCur); $('#scrImg').style.visibility='visible';
+    toast('Фото обновлено'); render();
+  }catch(err){ toast(err.message, true); }
+  e.target.value='';
+});
+async function delScr(){
+  const list = D.screens.filter(l=>l.id!==scrCur.id);
+  await save('screens', list);
+  $('#scrDlg').close(); render(); toast('Экран удалён');
+}
+function resetDel(wrap, id, label, onYes){
+  wrap.innerHTML = `<button type="button" class="btn danger" id="${id}">${label}</button>`;
+  $('#'+id, wrap).addEventListener('click', () => {
+    wrap.innerHTML = `<div class="confirm">Удалить без возможности отмены? <button type="button" class="btn sm danger" data-y>Да, удалить</button><button type="button" class="btn sm" data-n>Нет</button></div>`;
+    $('[data-n]',wrap).addEventListener('click', () => resetDel(wrap,id,label,onYes));
+    $('[data-y]',wrap).addEventListener('click', async () => { try{ await onYes(); }catch(e){ toast(e.message,true); } });
+  });
+}
+$$('dialog [data-close]').forEach(b => b.addEventListener('click', () => b.closest('dialog').close()));
+
+/* ---------- FLAGSHIPS ---------- */
+let flDraft = null;
+function vFlags(){
+  if(!flDraft) flDraft = D.settings.flagships.slice();
+  const by = Object.fromEntries(D.screens.map(l=>[l.id,l]));
+  const rest = D.screens.filter(l=>!flDraft.includes(l.id)).sort((a,b)=>b.a-a.a);
+  const changed = JSON.stringify(flDraft)!==JSON.stringify(D.settings.flagships);
+  $('#view').innerHTML = `
+  <div class="head"><div><h1>Флагманская сеть</h1><p class="sub">Экраны в блоке «Флагманы» на главной, сверху вниз. Рекомендуем 4–8.</p></div></div>
+  <div class="flist">${flDraft.map((id,i)=>{ const l=by[id]; return `<div class="card frow">
+    <span class="n">${String(i+1).padStart(2,'0')}</span><img class="thumb" src="${img(l)}" alt="">
+    <div class="nm"><b>${esc(l.n)}</b><span>${esc(l.size)} · ${esc(l.res)}</span></div>
+    <div class="bar"><button class="icon-btn" data-up="${i}" ${i?'':'disabled'} aria-label="Выше">↑</button><button class="icon-btn" data-down="${i}" ${i<flDraft.length-1?'':'disabled'} aria-label="Ниже">↓</button><button class="icon-btn" data-rm="${i}" aria-label="Убрать">✕</button></div>
+  </div>`; }).join('')}</div>
+  <div class="bar" style="margin-top:14px">
+    <select class="sel" id="flAdd" style="max-width:420px"><option value="">+ Добавить экран во флагманы…</option>${rest.map(l=>`<option value="${l.id}">${esc(l.n)} · ${esc(l.size)}</option>`).join('')}</select>
+  </div>
+  <div class="savebar" ${changed?'':'hidden'}><span>Порядок флагманов изменён</span><div class="bar"><button class="btn" id="flReset">Сбросить</button><button class="btn pri" id="flSave">Сохранить</button></div></div>`;
+  const mv=(i,j)=>{ [flDraft[i],flDraft[j]]=[flDraft[j],flDraft[i]]; vFlags(); };
+  $$('[data-up]').forEach(b=>b.addEventListener('click',()=>mv(+b.dataset.up,+b.dataset.up-1)));
+  $$('[data-down]').forEach(b=>b.addEventListener('click',()=>mv(+b.dataset.down,+b.dataset.down+1)));
+  $$('[data-rm]').forEach(b=>b.addEventListener('click',()=>{ if(flDraft.length<2){ toast('Нужен хотя бы один флагман',true); return; } flDraft.splice(+b.dataset.rm,1); vFlags(); }));
+  $('#flAdd').addEventListener('change',e=>{ if(e.target.value){ flDraft.push(+e.target.value); vFlags(); } });
+  $('#flReset')?.addEventListener('click',()=>{ flDraft=null; vFlags(); });
+  $('#flSave')?.addEventListener('click',async e=>{ await save('settings',{...D.settings, flagships:flDraft}, e.currentTarget); flDraft=null; vFlags(); });
+}
+
+/* ---------- AIRPORT ---------- */
+function vAir(){
+  const total = D.airport.reduce((a,f)=>a+(+f.q||0),0);
+  $('#view').innerHTML = `
+  <div class="head"><div><h1>Аэропорт «Ташкент»</h1><p class="sub">${D.airport.length} форматов, ${total} носителей. Число носителей на сайте считается автоматически.</p></div>
+    <div class="bar"><button class="btn pri" id="addAir">+ Добавить формат</button></div></div>
+  <div class="acards">${D.airport.map((f,i)=>`<div class="card acard">
+    <img src="../assets/img/${f.img}.jpg?v=${f.v||1}" alt="" loading="lazy">
+    <div class="c"><span class="m">Формат ${String(i+1).padStart(2,'0')} · ${esc(f.term)}</span><b>${esc(f.zn)}</b>
+      <span class="m">${esc(f.t)} · ${esc(f.size)} · ${f.q} шт.</span>
+      <div class="row"><span class="mono">${fmt(f.p)} сум</span>
+        <div class="bar"><button class="icon-btn" data-aup="${i}" ${i?'':'disabled'} aria-label="Выше">↑</button><button class="icon-btn" data-adn="${i}" ${i<D.airport.length-1?'':'disabled'} aria-label="Ниже">↓</button><button class="btn sm" data-aed="${i}">Изменить</button></div></div>
+    </div></div>`).join('')}</div>`;
+  $('#addAir').addEventListener('click',()=>openAir(null));
+  $$('[data-aed]').forEach(b=>b.addEventListener('click',()=>openAir(+b.dataset.aed)));
+  const mv=async (i,j)=>{ const l=D.airport.slice(); [l[i],l[j]]=[l[j],l[i]]; try{ await save('airport',l); vAir(); }catch(e){ toast(e.message,true); } };
+  $$('[data-aup]').forEach(b=>b.addEventListener('click',()=>mv(+b.dataset.aup,+b.dataset.aup-1)));
+  $$('[data-adn]').forEach(b=>b.addEventListener('click',()=>mv(+b.dataset.adn,+b.dataset.adn+1)));
+}
+let airIdx = null, airCur = null;
+const af = () => $('#airForm');
+function openAir(i){
+  airIdx=i;
+  const nextImg = 'a' + (Math.max(0,...D.airport.map(f=>+f.img.slice(1)))+1);
+  airCur = i==null ? {zn:'',znu:'',zne:'',t:'LED-экран',tu:'LED-ekran',te:'LED screen',term:'Терминал 2',termu:'2-terminal',terme:'Terminal 2',z:'',size:'',q:1,res:'',sh:'144+ / сутки',d:15,p:0,r:['','',''],img:nextImg} : structuredClone(D.airport[i]);
+  const f=af(); f.reset();
+  for(const k of ['zn','znu','zne','t','tu','te','term','termu','terme','size','q','res','sh','d']) f[k].value=airCur[k]??'';
+  f.p.value = airCur.p ? fmt(airCur.p) : ''; ['r0','r1','r2'].forEach((k,j)=>f[k].value=airCur.r[j]||'');
+  $('#airTitle').textContent = i==null ? 'Новый формат' : `Формат ${String(i+1).padStart(2,'0')}`;
+  $('#airImg').src = i==null ? '' : `../assets/img/${airCur.img}.jpg?v=${airCur.v||1}`; $('#airImg').style.visibility = i==null?'hidden':'visible';
+  $('#airDelWrap').hidden = i==null; resetDel($('#airDelWrap'),'airDel','Удалить формат',delAir);
+  updAir(); $('#airDlg').showModal();
+}
+function updAir(){ const v=numIn(af().p.value); $('[data-usd="p"]',af()).textContent = v!=='' && !isNaN(v) ? `≈ ${usd(v)} в англ. версии` : ''; }
+af().addEventListener('input', updAir);
+af().p.addEventListener('blur', e=>{ const v=numIn(e.target.value); if(v!=='' && !isNaN(v)) e.target.value=fmt(v); });
+af().addEventListener('submit', async e=>{
+  e.preventDefault(); const f=af(), o={...airCur};
+  for(const k of ['zn','znu','zne','t','tu','te','term','termu','terme','size','res','sh']) o[k]=f[k].value.trim();
+  if(!o.zn){ toast('Укажите название зоны на русском', true); return; }
+  o.q=numIn(f.q.value)||0; o.d=numIn(f.d.value)||15; o.p=numIn(f.p.value)||0; o.r=[f.r0.value.trim(),f.r1.value.trim(),f.r2.value.trim()];
+  const list = airIdx==null ? [...D.airport,o] : D.airport.map((x,j)=>j===airIdx?o:x);
+  await save('airport', list, e.submitter);
+  if(airIdx==null){ airIdx=D.airport.length-1; toast('Формат добавлен. Загрузите фото'); $('#airDelWrap').hidden=false; $('#airTitle').textContent=`Формат ${String(airIdx+1).padStart(2,'0')}`; airCur=D.airport[airIdx]; vAir(); return; }
+  $('#airDlg').close(); vAir();
+});
+$('#airFile').addEventListener('change', async e=>{
+  const file=e.target.files[0]; if(!file) return;
+  if(airIdx==null){ toast('Сначала сохраните формат, затем загрузите фото', true); e.target.value=''; return; }
+  const fd=new FormData(); fd.append('photo',file); fd.append('kind','airport'); fd.append('id',airCur.img);
+  try{ toast('Загружаю фото…'); const j=await api('upload',{form:fd});
+    await save('airport', D.airport.map((x,k)=>k===airIdx?{...x,v:j.v}:x)); airCur=D.airport[airIdx];
+    $('#airImg').src=`../assets/img/${airCur.img}.jpg?v=${airCur.v}`; $('#airImg').style.visibility='visible'; toast('Фото обновлено'); vAir();
+  }catch(err){ toast(err.message,true); }
+  e.target.value='';
+});
+async function delAir(){ await save('airport', D.airport.filter((_,j)=>j!==airIdx)); $('#airDlg').close(); vAir(); toast('Формат удалён'); }
+
+/* ---------- SETTINGS ---------- */
+function vSettings(){
+  const s=D.settings;
+  $('#view').innerHTML = `
+  <div class="head"><div><h1>Курс и контакты</h1><p class="sub">Курс влияет на цены английской версии и Excel-КП на английском.</p></div></div>
+  <form class="card" id="setForm" style="padding:22px;display:grid;gap:22px;max-width:900px" novalidate>
+    <fieldset style="margin:0"><legend>Цены в долларах (английская версия)</legend>
+      <div class="grid3">
+        <label class="f">Курс, сум за $1<input class="inp mono" name="usdRate" value="${fmt(s.usdRate)}"></label>
+        <label class="f">Множитель «с налогами»<span class="hint">1.12 = +12%</span><input class="inp mono" name="usdMarkup" value="${s.usdMarkup}"></label>
+        <label class="f">НДС для Excel-КП, %<input class="inp mono" name="vat" value="${Math.round(s.vatRate*100)}" disabled><span class="hint">сейчас зафиксирован в шаблоне КП (12%)</span></label>
+      </div>
+      <p class="note" id="usdEx" style="margin:12px 0 0"></p>
+    </fieldset>
+    <fieldset style="margin:0"><legend>Контакты на сайте</legend>
+      <div class="grid2">
+        <label class="f">Телефон<input class="inp" name="phone" value="${esc(s.phone)}"></label>
+        <label class="f">E-mail<input class="inp" name="email" value="${esc(s.email)}"></label>
+        <label class="f">Instagram (как показывать)<input class="inp" name="instagram" value="${esc(s.instagram||'')}"></label>
+        <label class="f">Ссылка для всех контактов<span class="hint">куда ведут клики по телефону, почте, Instagram и адресу</span><input class="inp" name="linktree" value="${esc(s.linktree)}"></label>
+      </div>
+      <p class="note" style="margin:12px 0 0">Адрес меняется во вкладке «Тексты сайта»: ключи <code>ct_addr</code> и <code>ft2</code>.</p>
+    </fieldset>
+    <div><button class="btn pri" type="submit">Сохранить</button></div>
+  </form>`;
+  const f=$('#setForm');
+  const ex=()=>{ const r=numIn(f.usdRate.value), m=numIn(f.usdMarkup.value); $('#usdEx').innerHTML = (r>0&&m>0) ? `Пример: экран 6 × 3 м, 10 сек — 5 700 000 сум → <b class="mono">$${Math.round(5700000/r*m).toLocaleString('en-US')}</b> на английском сайте.` : 'Введите курс и множитель'; };
+  f.addEventListener('input',ex); ex();
+  f.addEventListener('submit', async e=>{
+    e.preventDefault();
+    const o={...s, usdRate:numIn(f.usdRate.value), usdMarkup:numIn(f.usdMarkup.value), phone:f.phone.value.trim(), email:f.email.value.trim(), instagram:f.instagram.value.trim(), linktree:f.linktree.value.trim()};
+    if(!(o.usdRate>0) || !(o.usdMarkup>0)){ toast('Проверьте курс и множитель', true); return; }
+    await save('settings', o, e.submitter); vSettings();
+  });
+}
+
+/* ---------- TEXTS ---------- */
+const TSECT = [
+  ['nav','Верхнее меню'], ['h_','Первый экран'], ['st','Цифры под табло'], ['f_','Флагманы'], ['c_','Каталог'],
+  ['a_','Аэропорт'], ['m_','Мобильный LED'], ['d','Презентации PDF'], ['ct_','Контакты'], ['t','Условия оплаты'], ['ft','Подвал'], ['p_','Панель медиаплана']
+];
+let txQ='';
+function vTexts(){
+  const T=D.texts, keys=Object.keys(T);
+  const secOf = k => (TSECT.find(([p])=>k.startsWith(p))||['','Прочее'])[1];
+  const groups={}; keys.forEach(k=>{ const t=T[k], v=dirtyTexts[k]||t; if(txQ && ![k,v.ru,v.uz,v.en].join(' ').toLowerCase().includes(txQ)) return; (groups[secOf(k)] ||= []).push(k); });
+  const n=Object.keys(dirtyTexts).length;
+  $('#view').innerHTML = `
+  <div class="head"><div><h1>Тексты сайта</h1><p class="sub">Все надписи страницы на трёх языках. Цены, названия экранов и форматы меняются в своих вкладках.</p></div>
+    <input class="inp search" id="tq" placeholder="Поиск по тексту" value="${esc(txQ)}"></div>
+  <p class="note">Можно использовать теги <code>&lt;br&gt;</code> (перенос строки), <code>&lt;strong&gt;</code>, <code>&lt;b&gt;</code>, <code>&lt;em&gt;</code>, <code>&lt;span class="r"&gt;</code> (красный цвет).
+  Подстановки: <code>{screens}</code> — число экранов, <code>{airport}</code> — число носителей в аэропорту, <code>{usdRate}</code> — курс доллара.</p>
+  ${Object.entries(groups).map(([g,ks])=>`<div class="tsec"><h3>${g}</h3>${ks.map(k=>{ const v=dirtyTexts[k]||T[k]; return `<div class="card titem ${dirtyTexts[k]?'dirty':''}" data-k="${k}">
+    <div class="k"><span>${esc(T[k].ru.replace(/<[^>]+>/g,'').slice(0,70))}</span><code>${k}</code></div>
+    <div class="tlangs">${['ru','uz','en'].map(lg=>`<label>${{ru:'РУС',uz:'UZB',en:'ENG'}[lg]}<textarea class="inp" data-lg="${lg}" rows="${Math.min(6,Math.max(1,Math.ceil(v[lg].length/60)))}">${esc(v[lg])}</textarea></label>`).join('')}</div>
+  </div>`; }).join('')}</div>`).join('') || '<div class="empty">Ничего не найдено</div>'}
+  <div class="savebar" ${n?'':'hidden'} id="txBar"><span id="txN">Изменено текстов: ${n}</span><div class="bar"><button class="btn" id="txReset">Отменить изменения</button><button class="btn pri" id="txSave">Сохранить тексты</button></div></div>`;
+  $('#tq').addEventListener('input',e=>{ txQ=e.target.value.trim().toLowerCase(); const p=e.target.selectionStart; vTexts(); $('#tq').focus(); $('#tq').setSelectionRange(p,p); });
+  $$('.titem textarea').forEach(ta=>ta.addEventListener('input',()=>{
+    const it=ta.closest('.titem'), k=it.dataset.k, cur={...(dirtyTexts[k]||T[k])}; cur[ta.dataset.lg]=ta.value;
+    if(cur.ru===T[k].ru && cur.uz===T[k].uz && cur.en===T[k].en) delete dirtyTexts[k]; else dirtyTexts[k]=cur;
+    it.classList.toggle('dirty', !!dirtyTexts[k]);
+    const c=Object.keys(dirtyTexts).length; $('#txBar').hidden=!c; $('#txN').textContent=`Изменено текстов: ${c}`;
+  }));
+  $('#txReset').addEventListener('click',()=>{ dirtyTexts={}; vTexts(); });
+  $('#txSave').addEventListener('click', async e=>{ await save('texts', dirtyTexts, e.currentTarget); dirtyTexts={}; vTexts(); });
+}
+addEventListener('beforeunload', e=>{ if(Object.keys(dirtyTexts).length){ e.preventDefault(); e.returnValue=''; } });
+
+/* ---------- BACKUPS ---------- */
+async function vBackups(){
+  $('#view').innerHTML = `<div class="head"><div><h1>Резервные копии</h1><p class="sub">Перед каждым сохранением прошлая версия файла сохраняется. Хранятся последние 40 копий каждого файла.</p></div></div><div class="card"><div class="empty"><span class="spin"></span></div></div>`;
+  let list=[];
+  try{ list=(await api('backups')).backups; }catch(e){ toast(e.message,true); }
+  const FN={screens:'Экраны',airport:'Аэропорт',settings:'Курс, контакты, флагманы',texts:'Тексты сайта'};
+  const dt=a=>`${a.slice(6,8)}.${a.slice(4,6)}.${a.slice(0,4)} ${a.slice(9,11)}:${a.slice(11,13)}`;
+  $('#view .card').innerHTML = list.length ? `<div class="tbl-wrap"><table><thead><tr><th>Дата</th><th>Что</th><th class="num">Размер</th><th></th></tr></thead><tbody>
+    ${list.map(b=>`<tr><td class="mono">${dt(b.at)}</td><td>${FN[b.file]}</td><td class="num">${(b.size/1024).toFixed(1)} КБ</td><td style="text-align:right" data-wrap="${esc(b.name)}"><button class="btn sm" data-restore="${esc(b.name)}">Восстановить</button></td></tr>`).join('')}
+  </tbody></table></div>` : '<div class="empty">Копий пока нет. Они появятся после первого сохранения.</div>';
+  $$('[data-restore]').forEach(btn=>btn.addEventListener('click',()=>{
+    const td=btn.parentElement, name=btn.dataset.restore;
+    td.innerHTML=`<span class="confirm" style="display:inline-flex">Вернуть эту версию? <button class="btn sm danger" data-y>Да</button><button class="btn sm" data-n>Нет</button></span>`;
+    $('[data-n]',td).addEventListener('click',()=>vBackups());
+    $('[data-y]',td).addEventListener('click',async()=>{ try{ await api('restore',{body:{name}}); D=await api('load'); toast('Версия восстановлена'); vBackups(); }catch(e){ toast(e.message,true); } });
+  }));
+}
+
+boot();
+})();
+</script>
+{% endverbatim %}
+</body>
+</html>

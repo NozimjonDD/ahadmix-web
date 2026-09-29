@@ -66,6 +66,7 @@ Fill in every `change-me` value:
 |-----|-------------|
 | `SECRET_KEY` | Generate with: `python -c "import secrets; print(secrets.token_urlsafe(50))"` |
 | `DB_PASSWORD` | The password set for the `ahadmix` PostgreSQL role |
+| `ADMIN_PASSWORD` | Set a unique password for the LED CITY editor at `/site-admin/`. The editor login is disabled while this is blank. |
 | Others | Review and confirm default values |
 
 ### 2c. Obtain an SSL certificate
