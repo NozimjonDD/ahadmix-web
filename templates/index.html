@@ -1,0 +1,939 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AHADMIX LED City</title>
+<meta name="description" content="AHADMIX LED CITY — наружная LED-реклама в Ташкенте: 75 LED-экранов в городе, 54 носителя в аэропорту, мобильный LED. Онлайн-медиаплан и коммерческое предложение в Excel.">
+<meta property="og:title" content="AHADMIX LED CITY — наружная LED-реклама в Ташкенте">
+<meta property="og:description" content="75 LED-экранов в городе, 54 носителя в аэропорту «Ташкент», мобильный LED.">
+<meta property="og:image" content="assets/img/c5.jpg">
+<meta name="theme-color" content="#0A1020">
+<link rel="icon" type="image/png" href="assets/img/logo-w.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;700&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --night:#0A1020; --night2:#111A2F; --night3:#18233D;
+  --paper:#F2F3F5; --paper2:#E8EAEE; --white:#FFFFFF;
+  --ink:#0E1424; --mute-l:#5B6377; --mute-d:#8D96AC; --txt-d:#E9ECF3;
+  --line-d:rgba(233,236,243,.10); --line-l:rgba(14,20,36,.11);
+  --red:#E3262D; --red-soft:rgba(227,38,45,.14);
+  --f-disp:"Unbounded","Arial Black",system-ui,sans-serif;
+  --f-body:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --gut:clamp(16px,3vw,56px);
+  --max:1840px;
+  --ease:cubic-bezier(.2,.7,.1,1);
+}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
+.lenis.lenis-stopped{overflow:hidden}
+*,*::before,*::after{box-sizing:border-box}
+body{background:var(--night);color:var(--txt-d);font:400 16px/1.6 var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:4px}
+h1,h2,h3{font-family:var(--f-disp);font-weight:400;margin:0;text-wrap:balance;letter-spacing:-.02em}
+p{margin:0}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gut)}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mute-d);display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--red);box-shadow:0 0 10px var(--red)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.num{font-variant-numeric:tabular-nums}
+
+/* NAV */
+.nav{position:fixed;inset:0 0 auto 0;z-index:40;padding-top:env(safe-area-inset-top,0px);transition:background .4s var(--ease),border-color .4s}
+.nav.solid{background:rgba(10,16,32,.96);border-bottom:1px solid var(--line-d)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:104px;gap:32px}
+.brand{display:flex;align-items:center;gap:16px}
+.brand img{width:61px;height:61px}
+.brand b{font:500 13px/1.1 var(--f-disp);letter-spacing:.18em}
+.brand small{display:block;font:400 10px/1.2 var(--f-mono);letter-spacing:.2em;color:var(--mute-d)}
+.brand .bt{font:500 22px/1 var(--f-disp);letter-spacing:.16em}.brand .bt i{font-style:normal;color:var(--red)}
+.nav ul{display:flex;gap:clamp(18px,2vw,44px);list-style:none;margin:0;padding:0;font:500 clamp(13px,1.32vw,19px)/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--mute-d)}
+.nav ul a{transition:color .2s;white-space:nowrap}.brand .bt{white-space:nowrap}
+.nav ul a:hover{color:var(--white)}
+.nav .call{font:500 clamp(16px,1.4vw,21px)/1 var(--f-mono);padding:16px 26px;border:1px solid var(--line-d);border-radius:999px;transition:border-color .2s,background .2s;white-space:nowrap}
+.nav .call:hover{border-color:var(--red);background:var(--red-soft)}
+.navr{display:flex;align-items:center;gap:14px}
+.lang{display:flex;border:1px solid var(--line-d);border-radius:999px;padding:4px}
+.lang button{font:600 13px/1 var(--f-mono);letter-spacing:.08em;color:var(--mute-d);padding:10px 12px;border-radius:999px;transition:background .2s,color .2s}
+.lang button:hover{color:#fff}
+.lang button[aria-pressed="true"]{background:var(--red);color:#fff}
+@media (max-width:1560px){.nav .call{display:none}}
+@media (max-width:1200px){.nav ul{display:none}}
+@media (max-width:1400px){.nav ul{font-size:clamp(13px,1.2vw,17px)}}
+@media (max-width:600px){.nav .wrap{height:84px}.brand img{width:48px;height:48px}.brand .bt{font-size:18px}.nav .call{font-size:14px;padding:12px 16px}}
+
+
+/* HERO */
+.hero{padding-top:calc(168px + env(safe-area-inset-top,0px));padding-bottom:56px;position:relative}
+.hero .top{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:end}
+.hero h1{font-size:clamp(40px,7.2vw,112px);line-height:.98;font-weight:300;margin-top:28px}
+.hero h1 em{font-style:normal;font-weight:500}
+.hero h1 .r{color:var(--red)}
+.hero .lede{color:var(--mute-d);max-width:40ch;font-size:17px}
+.hero .lede strong{color:var(--txt-d);font-weight:500}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 22px;border-radius:999px;font-weight:500;font-size:15px;transition:transform .3s var(--ease),background .2s,border-color .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.red{background:var(--red);color:#fff}
+.btn.ghost{border:1px solid var(--line-d)}
+.btn.ghost:hover{border-color:var(--txt-d)}
+.btn .ar{transition:transform .3s var(--ease)}
+.btn:hover .ar{transform:translateX(4px)}
+
+.board{margin-top:56px;position:relative}
+.board-frame{position:relative;border-radius:6px;background:#04070F;padding:clamp(8px,1.2vw,16px);box-shadow:0 0 0 1px #1E2942,0 30px 70px -40px rgba(227,38,45,.35),0 30px 80px -30px rgba(0,0,0,.8)}
+.board canvas{display:block;width:100%;aspect-ratio:8/1;border-radius:2px}
+.board .legs{display:flex;justify-content:space-between;padding-inline:14%}
+.board .legs span{width:clamp(10px,1.4vw,18px);height:clamp(28px,5vw,64px);background:linear-gradient(#1a2338,#0b111f)}
+.board .cap{display:flex;justify-content:space-between;gap:16px;margin-top:18px;font:400 12px/1.4 var(--f-mono);color:var(--mute-d);letter-spacing:.06em;flex-wrap:wrap}
+.board .cap b{color:var(--txt-d);font-weight:500}
+@media (max-width:700px){.board canvas{aspect-ratio:3.2/1}.hero .top{grid-template-columns:1fr}}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line-d);margin-top:64px}
+.stat{padding:28px 24px 0 0;display:grid;gap:8px}
+.stat + .stat{padding-left:24px;border-left:1px solid var(--line-d)}
+.stat b{font:300 clamp(34px,4.4vw,60px)/1 var(--f-disp);letter-spacing:-.03em}
+.stat b sup{font-size:.4em;color:var(--red);vertical-align:top;margin-left:4px}
+.stat span{font-size:13px;color:var(--mute-d);max-width:22ch}
+@media (max-width:760px){.stats{grid-template-columns:1fr 1fr}.stat:nth-child(3){padding-left:0;border-left:0}.stat{padding-bottom:20px}}
+
+/* MARQUEE */
+.marquee{contain:paint;border-block:1px solid var(--line-d);overflow:hidden;padding-block:22px;white-space:nowrap;margin-top:72px}
+.marquee .track{display:inline-flex;gap:40px;animation:mq 90s linear infinite;font:300 clamp(20px,2.4vw,30px)/1 var(--f-disp);color:var(--mute-d)}
+.marquee .track span{display:inline-flex;align-items:center;gap:40px}
+.marquee .track span::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 12px var(--red)}
+.marquee:hover .track{animation-play-state:paused}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* SECTIONS */
+section{position:relative}
+.sec{padding-block:clamp(88px,12vw,160px)}
+.sec-head{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:clamp(40px,6vw,80px)}
+.sec-head h2{font-size:clamp(32px,4.8vw,68px);line-height:1.02;font-weight:300;margin-top:22px}
+.sec-head p{color:var(--mute-d);max-width:46ch;justify-self:end}
+@media (max-width:820px){.sec-head{grid-template-columns:1fr}.sec-head p{justify-self:start}}
+
+/* FLAGSHIPS */
+.flag{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(32px,5vw,80px)}
+.flag-stage{position:sticky;top:calc(128px + env(safe-area-inset-top,0px));height:clamp(440px,40vw,720px);border-radius:4px;overflow:hidden;background:var(--night2)}
+.flag-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.06);transition:opacity .9s var(--ease),transform 1.6s var(--ease)}
+.flag-stage img.on{opacity:1;transform:scale(1)}
+.flag-stage .shade{position:absolute;inset:auto 0 0 0;height:45%;background:linear-gradient(transparent,rgba(4,7,15,.85))}
+.flag-stage .idx{position:absolute;left:24px;bottom:22px;font:500 12px/1 var(--f-mono);letter-spacing:.16em;color:#fff;display:flex;gap:14px;align-items:center}
+.flag-stage .bar{width:120px;height:2px;background:rgba(255,255,255,.22);position:relative;overflow:hidden}
+.flag-stage .bar i{position:absolute;inset:0;background:var(--red);transform-origin:left;transform:scaleX(.16);transition:transform .6s var(--ease)}
+.flag-list{display:grid}
+.fl{min-height:clamp(440px,40vw,720px);display:flex;flex-direction:column;justify-content:center;gap:22px;border-top:1px solid var(--line-d);padding-block:40px;opacity:.28;transition:opacity .6s var(--ease)}
+.fl.on{opacity:1}
+.fl:first-child{border-top:0}
+.fl .k{font:500 12px/1 var(--f-mono);letter-spacing:.16em;color:var(--red)}
+.fl h3{font-size:clamp(26px,3vw,46px);line-height:1.06;font-weight:400;text-transform:uppercase;letter-spacing:0}
+.fl .s{color:var(--mute-d);font-size:14px;margin-top:-10px}
+.spec{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:12px 36px}
+.spec dt{font:400 11px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mute-d);margin-bottom:8px}
+.spec dd{margin:0;font:500 15px/1.2 var(--f-mono)}
+.fl .price{font:300 clamp(24px,2.4vw,32px)/1 var(--f-disp)}
+.fl .price small{font:400 12px/1 var(--f-mono);color:var(--mute-d);margin-left:8px;letter-spacing:.06em}
+.fl .mob{display:none}
+@media (max-width:900px){
+  .flag{grid-template-columns:1fr}.flag-stage{display:none}
+  .fl{min-height:0;opacity:1;padding-block:32px}
+  .fl .mob{display:block;border-radius:4px;aspect-ratio:16/10;object-fit:cover;width:100%}
+  .spec{grid-template-columns:repeat(2,auto)}
+}
+
+/* CATALOG (paper) */
+.paper{background:var(--paper);color:var(--ink)}
+.paper .eyebrow,.paper .sec-head p{color:var(--mute-l)}
+.tools{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;justify-content:space-between;padding-block:18px;border-block:1px solid var(--line-l);position:sticky;top:calc(104px + env(safe-area-inset-top,0px));z-index:5;background:#F2F3F5}
+.seg{display:flex;gap:4px;flex-wrap:wrap}
+.seg button{padding:9px 14px;border-radius:999px;font-size:14px;color:var(--mute-l);transition:background .2s,color .2s}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.seg button sup{font:500 10px var(--f-mono);margin-left:4px;opacity:.6}
+.tool-lbl{font:400 11px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mute-l);margin-right:6px}
+.tgroup{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.dur button{font-family:var(--f-mono);font-size:13px}
+select.sort{font:500 13px var(--f-mono);letter-spacing:.04em;cursor:pointer;color:var(--ink);background:transparent;border:1px solid var(--line-l);border-radius:999px;padding:9px 14px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,2.4vw,36px) clamp(16px,2vw,28px);padding-top:40px}
+@media (max-width:1500px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:1040px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:620px){.grid{grid-template-columns:1fr}}
+.card{display:grid;gap:14px;cursor:pointer}
+.card .ph{position:relative;border-radius:4px;overflow:hidden;aspect-ratio:16/10;background:var(--paper2)}
+.card .ph img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.card:hover .ph img{transform:scale(1.045)}
+.card .tag{position:absolute;left:12px;top:12px;font:500 11px/1 var(--f-mono);letter-spacing:.08em;background:rgba(10,16,32,.78);color:#fff;padding:7px 9px;border-radius:3px;}
+.card .tag.soon{background:var(--red)}
+.card .add{position:absolute;right:12px;top:12px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.92);color:var(--ink);display:grid;place-items:center;font-size:20px;line-height:1;transition:background .2s,color .2s,transform .3s var(--ease)}
+.card .add:hover{transform:scale(1.08)}
+.card .add[aria-pressed="true"]{background:var(--red);color:#fff}
+.card .row{display:flex;justify-content:space-between;gap:16px;align-items:baseline}
+.card h3{font:500 17px/1.2 var(--f-disp);letter-spacing:.02em;text-transform:uppercase}
+.card .sub{font-size:13px;color:var(--mute-l);margin-top:4px}
+.card .meta{font:400 12px/1.5 var(--f-mono);color:var(--mute-l);text-align:right;white-space:nowrap}
+.card .pr{display:flex;justify-content:space-between;border-top:1px solid var(--line-l);padding-top:12px;font:500 14px/1 var(--f-mono)}
+.card .pr span{color:var(--mute-l);font-weight:400}
+.card .pr .na{color:var(--mute-l);font-weight:400}
+.empty{padding:60px 0;color:var(--mute-l)}
+.note{margin-top:48px;font-size:13px;color:var(--mute-l);max-width:80ch}
+
+/* PLAN BAR */
+.plan{position:fixed;left:50%;bottom:0;transform:translate(-50%,120%);z-index:30;width:min(760px,calc(100% - 24px));margin-bottom:calc(12px + env(safe-area-inset-bottom,0px));background:var(--night);color:var(--txt-d);border-radius:14px;box-shadow:0 20px 60px -10px rgba(0,0,0,.5),0 0 0 1px #1E2942;padding:14px 14px 14px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transition:transform .5s var(--ease)}
+.plan{visibility:hidden}.plan.show{transform:translate(-50%,0);visibility:visible}
+.plan .inf{flex:1;min-width:180px}
+.plan .inf b{font:500 16px/1.2 var(--f-mono)}
+.plan .inf small{display:block;font-size:12px;color:var(--mute-d)}
+.plan .btn{padding:11px 16px;font-size:14px}
+.plan .x{color:var(--mute-d);font-size:13px;padding:8px}
+.plan .x:hover{color:#fff}
+.plan .mon{display:flex;align-items:center;gap:8px;font:400 11px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute-d)}
+.plan .mon select{font:500 13px var(--f-mono);color:var(--txt-d);background:var(--night2);border:1px solid var(--line-d);border-radius:999px;padding:9px 12px;cursor:pointer}
+.plan .btn[disabled]{opacity:.6;cursor:progress}
+
+/* AIRPORT */
+.air-intro{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,80px);align-items:center}
+.air-intro .im{border-radius:4px;overflow:hidden;background:#fff}
+.air-intro .im img{width:100%;aspect-ratio:3/2;object-fit:cover}
+.aud{display:grid;gap:22px;margin-top:36px}
+.aud .l{display:flex;justify-content:space-between;font:400 12px/1 var(--f-mono);letter-spacing:.08em;color:var(--mute-d);margin-bottom:10px}
+.aud .l b{color:var(--txt-d);font-weight:500}
+.aud .b{height:6px;border-radius:3px;background:var(--night3);overflow:hidden;display:flex}
+.aud .b i{background:var(--txt-d)}
+.aud .b i + i{background:var(--red)}
+@media (max-width:820px){.air-intro{grid-template-columns:1fr}}
+.fmts{margin-top:clamp(64px,8vw,112px);border-top:1px solid var(--line-d)}
+.fmt{border-bottom:1px solid var(--line-d)}
+.fmt summary{list-style:none;display:grid;grid-template-columns:112px 1fr auto auto;gap:24px;align-items:center;padding:26px 0;cursor:pointer}
+.fmt summary::-webkit-details-marker{display:none}
+.fmt .n{font:500 13px/1.3 var(--f-mono);color:var(--red);letter-spacing:.1em;white-space:nowrap}
+.fmt .t{font:400 clamp(18px,2vw,26px)/1.2 var(--f-disp)}
+.fmt .t small{display:block;font:400 13px/1.4 var(--f-body);color:var(--mute-d);margin-top:6px;letter-spacing:0}
+.fmt .q{font:400 13px/1 var(--f-mono);color:var(--mute-d);white-space:nowrap}
+.fmt .pl{width:36px;height:36px;border-radius:50%;border:1px solid var(--line-d);display:grid;place-items:center;transition:transform .4s var(--ease),background .2s}
+.fmt[open] .pl{transform:rotate(45deg);background:var(--red);border-color:var(--red)}
+.fmt summary:hover .t{color:#fff}
+.fmt .body{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(24px,4vw,56px);padding:4px 0 40px 136px}
+.fmt .body img{border-radius:4px;width:100%;aspect-ratio:4/3;object-fit:cover}
+.fmt .reach{display:grid;grid-template-columns:repeat(3,1fr);border-block:1px solid var(--line-d);margin-block:20px}
+.fmt .reach div{padding:16px 0}
+.fmt .reach div + div{padding-left:16px;border-left:1px solid var(--line-d)}
+.fmt .reach dt{font:400 11px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mute-d)}
+.fmt .reach dd{margin:8px 0 0;font:400 20px/1 var(--f-disp)}
+.fmt .price{font:300 clamp(26px,2.6vw,36px)/1 var(--f-disp);margin-top:24px}
+.fmt .price small{display:block;font:400 12px/1.4 var(--f-mono);color:var(--mute-d);margin-top:10px}
+@media (max-width:820px){
+  .fmt summary{grid-template-columns:1fr auto;gap:8px 14px}.fmt .n{grid-column:1/-1}.fmt .q{display:none}
+  .fmt .body{grid-template-columns:1fr;padding-left:0}
+}
+
+/* MOBILE LED */
+.truck{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,80px);align-items:start}
+.truck .ph{border-radius:6px;overflow:hidden;aspect-ratio:1586/992;position:sticky;top:140px;background:#FAF8F4}
+.truck .ph img{width:100%;height:100%;object-fit:cover}
+.feats{list-style:none;margin:36px 0 0;padding:0;display:grid;border-top:1px solid var(--line-l)}
+.feats li{display:flex;justify-content:space-between;gap:20px;padding:18px 0;border-bottom:1px solid var(--line-l)}
+.feats li span{color:var(--mute-l);font:400 13px/1.6 var(--f-mono);white-space:nowrap}
+.excl{margin-top:48px;background:var(--night);color:var(--txt-d);border-radius:6px;overflow:hidden;display:grid;grid-template-columns:1fr}
+.excl img{width:100%;height:auto;aspect-ratio:800/420;object-fit:cover;background:#F2F3F5}
+.excl .c{padding:28px;display:grid;gap:14px;align-content:center}
+.excl h3{font:400 24px/1.1 var(--f-disp)}
+.excl p{color:var(--mute-d);font-size:14px}
+.excl .mono{font-size:13px;color:var(--txt-d)}
+@media (max-width:860px){.truck{grid-template-columns:1fr}.truck .ph{position:static}.excl{grid-template-columns:1fr}}
+
+/* DOCS */
+.docs{border-top:1px solid var(--line-d)}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,2.4vw,36px)}
+.doc{display:grid;gap:18px;padding:16px;border:1px solid var(--line-d);border-radius:8px;background:var(--night2);transition:border-color .25s,transform .4s var(--ease)}
+.doc:hover{border-color:rgba(227,38,45,.6);transform:translateY(-3px)}
+.dph{border-radius:4px;overflow:hidden;aspect-ratio:16/10;background:#fff}
+.dph img{width:100%;height:100%;object-fit:cover}
+.dmeta{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.dmeta h3{font:400 clamp(18px,1.6vw,24px)/1.15 var(--f-disp)}
+.dmeta p{color:var(--mute-d);font-size:14px;margin-top:6px}
+.dsz{font:400 12px/1.4 var(--f-mono);color:var(--mute-d);white-space:nowrap}
+.dbtn{justify-self:start;display:inline-flex;gap:10px;align-items:center;background:var(--red);color:#fff;border-radius:999px;padding:12px 20px;font-weight:500;font-size:15px}
+.doc[aria-busy="true"] .dbtn{opacity:.6}
+@media (max-width:760px){.dgrid{grid-template-columns:1fr}.dmeta{flex-direction:column}}
+
+/* CONTACT */
+.contact h2{font-size:clamp(44px,9vw,148px);line-height:.95;font-weight:300;margin-top:24px}
+.contact h2 .r{color:var(--red)}
+.cgrid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line-d);margin-top:clamp(48px,6vw,88px)}
+.cgrid .ci{padding:28px 20px 0 0;display:grid;gap:10px;align-content:start}
+.cgrid .ci + .ci{padding-left:20px;border-left:1px solid var(--line-d)}
+.cgrid .dt{font:400 11px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mute-d)}
+.cgrid .dd{font:400 clamp(16px,1.5vw,20px)/1.3 var(--f-disp);overflow-wrap:anywhere}
+.cgrid .ci .dd{transition:color .2s}.cgrid .ci:hover .dd{color:var(--red)}.cgrid .ci .dd::after{content:" ↗";font-size:.7em;color:var(--mute-d);transition:color .2s}.cgrid .ci:hover .dd::after{color:var(--red)}
+.copy{justify-self:start;font:400 12px/1 var(--f-mono);color:var(--mute-d);border-bottom:1px solid var(--line-d);padding-bottom:3px}
+.copy:hover{color:#fff}
+@media (max-width:860px){.cgrid{grid-template-columns:1fr 1fr}.cgrid .ci:nth-child(3){padding-left:0;border-left:0}.cgrid .ci{padding-bottom:24px}}
+@media (max-width:480px){.cgrid{grid-template-columns:1fr}.cgrid .ci + .ci{padding-left:0;border-left:0;border-top:1px solid var(--line-d)}}
+.terms{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line-d);margin-top:clamp(32px,4vw,56px)}
+.terms .ti{padding:28px 20px 0 0;display:grid;gap:10px;align-content:start}
+.terms .ti + .ti{padding-left:20px;border-left:1px solid var(--line-d)}
+.terms .dt{font:400 11px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mute-d)}
+.terms .dd{font:400 clamp(16px,1.5vw,20px)/1.3 var(--f-disp);color:var(--txt-d)}
+@media (max-width:860px){.terms{grid-template-columns:1fr 1fr}.terms .ti:nth-child(3){padding-left:0;border-left:0}.terms .ti{padding-bottom:24px}}
+@media (max-width:480px){.terms{grid-template-columns:1fr}.terms .ti + .ti{padding-left:0;border-left:0;border-top:1px solid var(--line-d)}}
+footer{border-top:1px solid var(--line-d);background:#070B17;padding-block:40px calc(40px + env(safe-area-inset-bottom,0px))}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:24px 40px;flex-wrap:wrap}
+.fbrand{display:flex;align-items:center;gap:16px}
+.fbrand img{width:52px;height:52px}
+.fbrand b{display:block;font:700 20px/1.1 var(--f-disp);letter-spacing:.14em;color:var(--txt-d)}
+.fbrand b i{font-style:normal;color:var(--red)}
+.fbrand small{display:block;margin-top:6px;font:500 13px/1.3 var(--f-body);color:var(--mute-d)}
+.fline{display:flex;gap:12px 28px;flex-wrap:wrap;font:600 15px/1.4 var(--f-body);color:var(--txt-d)}
+.fline span{display:inline-flex;align-items:center;gap:10px}
+.fline span + span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--red)}
+.fcopy{width:100%;padding-top:24px;border-top:1px solid var(--line-d);font:500 13px/1.4 var(--f-body);color:var(--mute-d)}
+
+/* DIALOG */
+dialog.dd{width:min(1080px,calc(100% - 24px));max-height:calc(100% - 24px);padding:0;border:0;border-radius:8px;background:var(--paper);color:var(--ink);overflow:auto}
+dialog.dd::backdrop{background:rgba(4,7,15,.82)}
+dialog.dd[open]{animation:pop .45s var(--ease)}
+@keyframes pop{from{opacity:0;transform:translateY(16px) scale(.985)}}
+.dd .in{display:grid;grid-template-columns:1.2fr 1fr}
+.dd .in > img{width:100%;height:100%;object-fit:cover;min-height:320px}
+.dd .c{padding:clamp(24px,3vw,40px);display:grid;gap:20px;align-content:start}
+.dd h3{font:400 clamp(24px,2.8vw,34px)/1.08 var(--f-disp);text-transform:uppercase}
+.dd .sub{color:var(--mute-l);font-size:14px;margin-top:-10px}
+.dd .spec dt{color:var(--mute-l)}
+.dd table{width:100%;border-collapse:collapse;font:400 14px/1 var(--f-mono);font-variant-numeric:tabular-nums}
+.dd th{font:400 11px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute-l);text-align:left;padding:0 0 12px}
+.dd td{padding:13px 0;border-top:1px solid var(--line-l)}
+.dd td:last-child,.dd th:last-child{text-align:right}
+.dd tr.cur td{color:var(--red);font-weight:500}
+.dd .small{font-size:12px;color:var(--mute-l)}
+.dd .close{position:absolute;right:14px;top:14px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);color:var(--ink);font-size:20px;display:grid;place-items:center;z-index:2}
+@media (max-width:760px){.dd .in{grid-template-columns:1fr}.dd .in > img{min-height:0;aspect-ratio:16/10}}
+
+.toast{position:fixed;left:50%;top:calc(120px + env(safe-area-inset-top,0px));transform:translate(-50%,-20px);opacity:0;background:var(--white);color:var(--ink);padding:10px 16px;border-radius:999px;font-size:14px;z-index:60;transition:all .35s var(--ease);pointer-events:none;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* scroll-linked reveal (visible at rest where unsupported) */
+@supports (animation-timeline: view()){
+  .rv{animation:rv linear both;animation-timeline:view();animation-range:entry 0% entry 35%}
+  @keyframes rv{from{opacity:.1;transform:translateY(36px)}}
+}
+@media (prefers-reduced-motion:reduce){
+  *:not(.marquee .track){animation:none!important;transition:none!important}
+}
+</style>
+
+</head>
+<body>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="#top" class="brand" data-go>
+      <img src="assets/img/logo-w.png" alt="AHADMIX GROUP">
+      <span class="bt"><i>LED</i> CITY</span>
+    </a>
+    <ul>
+      <li><a href="#flagships" data-go data-i18n="nav1">Флагманы</a></li>
+      <li><a href="#catalog" data-go data-i18n="nav2">Все экраны</a></li>
+      <li><a href="#airport" data-go data-i18n="nav3">Аэропорт</a></li>
+      <li><a href="#mobile" data-go data-i18n="nav4">Мобильный LED</a></li>
+      <li><a href="#contact" data-go data-i18n="nav5">Контакты</a></li>
+    </ul>
+    <div class="navr">
+      <a class="call" href="#contact" data-go>+998 94 657-33-33</a>
+      <div class="lang" role="group" aria-label="Язык / Til"><button data-lang="ru" aria-pressed="true">РУС</button><button data-lang="uz" aria-pressed="false">UZB</button><button data-lang="en" aria-pressed="false">ENG</button></div>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="top">
+        <div>
+          <div class="eyebrow" data-i18n="h_eb">Наружная реклама · Ташкент · с 2010</div>
+          <h1 data-i18n="h_h1"><em><span class="r">LED</span> City.</em><br>Ваш бренд на улицах всего города.</h1>
+        </div>
+        <div>
+          <p class="lede" data-i18n="h_lede"><strong>75 LED-экранов</strong> на главных перекрёстках Ташкента и <strong>54 носителя</strong> в международном аэропорту. От медиафасада 48 метров до городских экранов 6 × 3 м.</p>
+          <div class="cta-row">
+            <a class="btn red" href="#catalog" data-go data-i18n="h_c1">Подобрать экраны <span class="ar">→</span></a>
+            <a class="btn ghost" href="#docs" data-go data-i18n="h_c2">Презентации PDF <span class="ar">↓</span></a>
+            <a class="btn ghost" href="#contact" data-go data-i18n="h_c3">Связаться</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="board" aria-hidden="true">
+        <div class="board-frame"><canvas id="led"></canvas></div>
+        <div class="legs"><span></span><span></span></div>
+      </div>
+      <div class="wrap" style="padding:0">
+        <div class="board-cap cap" style="display:flex;justify-content:space-between;gap:16px;margin-top:18px;font:400 12px/1.4 var(--f-mono);color:var(--mute-d);letter-spacing:.06em;flex-wrap:wrap">
+          <span data-i18n="h_cap1">Пропорции табло 8 : 1, как у экрана <b style="color:var(--txt-d);font-weight:500">PIRAMIT · 48 × 6 м · 9408 × 1152 px</b></span>
+          <span data-i18n="h_cap2">Трансляция 7:00 – 23:00</span>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><b class="num">75</b><span data-i18n="st1">LED-экранов в городе</span></div>
+        <div class="stat"><b class="num">54</b><span data-i18n="st2">носителя в аэропорту «Ташкент»</span></div>
+        <div class="stat"><b class="num">4<sup>M+</sup></b><span data-i18n="st3">пассажиров аэропорта в год</span></div>
+        <div class="stat"><b class="num">9 000</b><span data-i18n="st4">показов в месяц на ряде экранов</span></div>
+      </div>
+    </div>
+    <div class="marquee" aria-hidden="true"><div class="track" id="mq"></div></div>
+  </section>
+
+  <section class="sec" id="flagships">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow" data-i18n="f_eb">Флагманская сеть</div>
+          <h2 data-i18n="f_h2">Экраны, которые становятся ориентирами.</h2>
+        </div>
+        <p data-i18n="f_p">Крупнейшие медиафасады города. Их видно за несколько кварталов, и о них договариваются встретиться: «у Пирамиды», «у ГУМа».</p>
+      </div>
+      <div class="flag">
+        <div class="flag-stage" id="stage">
+          <div class="shade"></div>
+          <div class="idx"><span id="stageN">01 / 06</span><span class="bar"><i id="stageBar"></i></span></div>
+        </div>
+        <div class="flag-list" id="flagList"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec paper" id="catalog">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow" data-i18n="c_eb">Каталог · прайс-лист на 1 месяц</div>
+          <h2 data-i18n="c_h2">Соберите медиаплан по городу.</h2>
+        </div>
+        <p data-i18n="c_p">Выберите длительность ролика: цены пересчитаются. Отмечайте экраны знаком +, внизу появится итог и кнопка, которая соберёт коммерческое предложение в Excel.</p>
+      </div>
+      <div class="tools">
+        <div class="seg" id="cat" role="group" aria-label="Категория"></div>
+        <div class="tgroup">
+          <span class="tool-lbl" data-i18n="c_dur">Ролик</span>
+          <div class="seg dur" id="dur" role="group" aria-label="Длительность ролика"></div>
+        </div>
+        <label class="tgroup" for="sort"><span class="tool-lbl" data-i18n="c_size">Размер</span>
+          <select class="sort" id="sort"></select>
+        </label>
+      </div>
+      <div class="grid" id="grid"></div>
+      <p class="note" data-i18n="c_note">Цены указаны в сумах за 1 месяц размещения, без НДС. Оплата по безналичному расчёту, 100% предоплата. Если вещание остановится по техническим или иным причинам, размещение компенсируется отдельно.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="airport">
+    <div class="wrap">
+      <div class="air-intro">
+        <div>
+          <div class="eyebrow" data-i18n="a_eb">Международный аэропорт «Ташкент» · Терминалы 2 и 3</div>
+          <h2 style="font-size:clamp(32px,4.8vw,68px);line-height:1.02;font-weight:300;margin-top:22px" data-i18n="a_h2">Первое, что видит гость страны.</h2>
+          <p style="color:var(--mute-d);max-width:46ch;margin-top:24px" data-i18n="a_p">6 форматов на 54 LED-носителях: от парковки до паспортного контроля и залов ожидания. Пассажиры смотрят на экраны в спокойном ожидании, без визуального шума улицы.</p>
+          <div class="aud">
+            <div><div class="l"><span data-i18n="a_a1">Граждане РУз <b>65%</b></span><span data-i18n="a_a2">Иностранцы <b>35%</b></span></div><div class="b"><i style="width:65%"></i><i style="width:35%"></i></div></div>
+            <div><div class="l"><span data-i18n="a_a3">Мужчины <b>68%</b></span><span data-i18n="a_a4">Женщины <b>32%</b></span></div><div class="b"><i style="width:68%"></i><i style="width:32%"></i></div></div>
+          </div>
+        </div>
+        <div class="im rv"><img src="assets/img/a0.jpg" alt="Визуализация LED-пилонов у терминала аэропорта Ташкента" loading="lazy" decoding="async"></div>
+      </div>
+      <div class="fmts" id="fmts"></div>
+    </div>
+  </section>
+
+  <section class="sec paper" id="mobile">
+    <div class="wrap truck">
+      <div class="ph rv"><img src="assets/img/truck.jpg" alt="Мобильный LED-экран LED CITY на грузовике AHADMIX с номером 01 717 LED" loading="lazy" decoding="async"></div>
+      <div>
+        <div class="eyebrow" data-i18n="m_eb">Мобильный LED</div>
+        <h2 style="font-size:clamp(32px,4.6vw,64px);line-height:1.02;font-weight:300;margin-top:22px" data-i18n="m_h2">Экран, который сам едет к вашей аудитории.</h2>
+        <p style="color:var(--mute-l);max-width:48ch;margin-top:22px" data-i18n="m_p">Автомобиль с двусторонним LED-экраном в городском потоке. Мы продумали каждую деталь внешнего вида, потому что машина работает лицом вашей рекламы.</p>
+        <ul class="feats">
+          <li data-i18n="m_f1">Широкий экран с двух сторон<span>4 × 2,5 м</span></li>
+          <li data-i18n="m_f2">Чёткость изображения<span>Full HD 1080</span></li>
+          <li data-i18n="m_f3">3D-звуковое сопровождение<span>аудио</span></li>
+          <li data-i18n="m_f4">Светодиодные фонари<span>свет</span></li>
+          <li data-i18n="m_f5">Матовое покрытие, заниженный кузов, чёрные диски<span>стиль</span></li>
+          <li data-i18n="m_f6">Тематический фирменный номер<span>01 717 LED</span></li>
+        </ul>
+        <div class="excl">
+          <img src="assets/img/truck-rear.jpg" alt="Грузовик AHADMIX с двусторонним LED-экраном LED CITY, вид сзади" loading="lazy" decoding="async">
+          <div class="c">
+            <div class="eyebrow" data-i18n="m_x_eb">Эксклюзив</div>
+            <h3 data-i18n="m_x_h3">«Твоя Реклама»</h3>
+            <p data-i18n="m_x_p">На экране только ваш ролик, 5 часов в день.</p>
+            <div class="mono" data-i18n="m_x_m">5 часов · 1 день · цена договорная</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec docs" id="docs">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow" data-i18n="d_eb">Коммерческие предложения</div>
+          <h2 data-i18n="d_h2">Презентации для скачивания.</h2>
+        </div>
+        <p data-i18n="d_p">Полные предложения в PDF: фото каждого экрана, карта расположения, технические параметры и прайс-лист.</p>
+      </div>
+      <div class="dgrid">
+        <a class="doc" href="../docs/ahadmix-led-city.pdf" target="_blank" rel="noopener" download data-dl="docs/ahadmix-led-city.pdf" data-name="AHADMIX LED CITY — экраны Ташкента.pdf">
+          <div class="dph"><img src="assets/img/c1.jpg" alt="Обложка презентации LED CITY" loading="lazy" decoding="async"></div>
+          <div class="dmeta"><div><h3 data-i18n="d1_h">LED CITY · экраны Ташкента</h3><p data-i18n="d1_p">75 LED-экранов: фото, карта, размеры и цены</p></div><span class="dsz" data-i18n="d1_s">PDF · 78 стр. · 13 МБ</span></div>
+          <span class="dbtn" data-i18n="d_btn">Скачать PDF <span class="ar">↓</span></span>
+        </a>
+        <a class="doc" href="../docs/ahadmix-airport.pdf" target="_blank" rel="noopener" download data-dl="docs/ahadmix-airport.pdf" data-name="AHADMIX — реклама в аэропорту Ташкента.pdf">
+          <div class="dph"><img src="assets/img/a0.jpg" alt="Обложка презентации рекламы в аэропорту" loading="lazy" decoding="async"></div>
+          <div class="dmeta"><div><h3 data-i18n="d2_h">Аэропорт «Ташкент»</h3><p data-i18n="d2_p">6 форматов, 54 носителя, охват и цены</p></div><span class="dsz" data-i18n="d2_s">PDF · 9 стр. · 2,4 МБ</span></div>
+          <span class="dbtn" data-i18n="d_btn">Скачать PDF <span class="ar">↓</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec contact" id="contact">
+    <div class="wrap">
+      <div class="eyebrow" data-i18n="ct_eb">Готовы начать?</div>
+      <h2 data-i18n="ct_h2">Обсудим<br>ваш <span class="r">проект.</span></h2>
+      <p style="color:var(--mute-d);max-width:44ch;margin-top:28px;font-size:17px" data-i18n="ct_p">Напишите или позвоните менеджеру. Индивидуальное предложение под ваш бренд подготовим в течение 24 часов.</p>
+      <div class="cgrid">
+        <a class="ci" href="https://linktr.ee/ahadmix_group" target="_blank" rel="noopener"><span class="dt" data-i18n="ct_l1">Телефон</span><span class="dd num">+998 94 657-33-33</span></a>
+        <a class="ci" href="https://linktr.ee/ahadmix_group" target="_blank" rel="noopener"><span class="dt">E-mail</span><span class="dd">info@ahadmix.uz</span></a>
+        <a class="ci" href="https://linktr.ee/ahadmix_group" target="_blank" rel="noopener"><span class="dt">Instagram</span><span class="dd">@ahadmix_group</span></a>
+        <a class="ci" href="https://linktr.ee/ahadmix_group" target="_blank" rel="noopener"><span class="dt" data-i18n="ct_l4">Адрес</span><span class="dd" data-i18n="ct_addr">г. Ташкент,<br>Бунёдкор, 8А</span></a>
+      </div>
+      <div class="terms">
+        <div class="ti"><span class="dt" data-i18n="t1l">Цены</span><span class="dd" data-i18n="t1">Без НДС</span></div>
+        <div class="ti"><span class="dt" data-i18n="t2l">Оплата</span><span class="dd" data-i18n="t2">100% предоплата</span></div>
+        <div class="ti"><span class="dt" data-i18n="t3l">Расчёт</span><span class="dd" data-i18n="t3">Безналичный</span></div>
+        <div class="ti"><span class="dt" data-i18n="t4l">Гарантия</span><span class="dd" data-i18n="t4">Компенсация при остановке вещания</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fbrand"><img src="assets/img/logo-w.png" alt="AHADMIX GROUP"><div><b><i>LED</i> CITY</b><small data-i18n="ft1">AHADMIX GROUP · наружная реклама с 2010 года</small></div></div>
+    <div class="fline"><span data-i18n="ft2">Ташкент, Бунёдкор, 8А</span><span>+998 94 657-33-33</span><span>info@ahadmix.uz</span></div>
+    <div class="fcopy" data-i18n="ft3">© AHADMIX GROUP. Все права защищены.</div>
+  </div>
+</footer>
+
+<div class="plan" id="plan" role="region" aria-label="Медиаплан">
+  <div class="inf"><b id="planSum">0 сум</b><small id="planInfo">0 экранов</small></div>
+  <label class="mon" for="planMonths"><span data-i18n="p_per">Период</span>
+    <select id="planMonths"><option value="1" data-i18n="p_m1">1 мес.</option><option value="2" data-i18n="p_m2">2 мес.</option><option value="3" data-i18n="p_m3">3 мес.</option><option value="4" data-i18n="p_m4">4 мес.</option><option value="5" data-i18n="p_m5">5 мес.</option><option value="6" data-i18n="p_m6">6 мес.</option><option value="7" data-i18n="p_m7">7 мес.</option><option value="8" data-i18n="p_m8">8 мес.</option><option value="9" data-i18n="p_m9">9 мес.</option><option value="10" data-i18n="p_m10">10 мес.</option><option value="11" data-i18n="p_m11">11 мес.</option><option value="12" data-i18n="p_m12">12 мес.</option></select>
+  </label>
+  <button class="x" id="planClear" data-i18n="p_clr">Очистить</button>
+  <button class="btn red" id="planKP" data-i18n="p_kp">Скачать КП · Excel <span class="ar">↓</span></button>
+</div>
+
+<dialog class="dd" id="dd" data-lenis-prevent>
+  <button class="close" id="ddClose" aria-label="Закрыть">×</button>
+  <div class="in" id="ddIn"></div>
+</dialog>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="assets/js/lenis.min.js"></script>
+<script src="assets/js/jszip.min.js"></script>
+<script>
+(async () => {
+const getJSON = u => fetch(u, {cache:'no-cache'}).then(r => { if(!r.ok) throw new Error(u); return r.json(); });
+const [LOC, AIR, CFG] = await Promise.all([getJSON('data/screens.json'), getJSON('data/airport.json'), getJSON('data/settings.json')]);
+const FLAG = CFG.flagships;
+const EN = {"nav1": "Flagships", "nav2": "All screens", "nav3": "Airport", "nav4": "Mobile LED", "nav5": "Contacts", "h_eb": "Outdoor advertising · Tashkent · since 2010", "h_h1": "<em><span class=\"r\">LED</span> City.</em><br>Your brand across the whole city.", "h_lede": "<strong>75 LED screens</strong> at the main intersections of Tashkent and <strong>54 displays</strong> at the international airport. From a 48-metre media façade to 6 × 3 m city screens.", "h_c1": "Choose screens <span class=\"ar\">→</span>", "h_c2": "PDF presentations <span class=\"ar\">↓</span>", "h_c3": "Get in touch", "h_cap1": "Board ratio 8 : 1, same as the <b style=\"color:var(--txt-d);font-weight:500\">PIRAMIT · 48 × 6 m · 9408 × 1152 px</b> screen", "h_cap2": "On air 7:00 – 23:00", "st1": "LED screens across the city", "st2": "displays at Tashkent Airport", "st3": "airport passengers a year", "st4": "plays a month on selected screens", "f_eb": "Flagship network", "f_h2": "Screens that become landmarks.", "f_p": "The largest media façades in the city. They are visible blocks away, and people arrange to meet by them: “at the Pyramid”, “by GUM”.", "c_eb": "Catalogue · monthly price list", "c_h2": "Build your city media plan.", "c_p": "Choose the spot length and prices update. Mark screens with +: the total appears below, with a button that builds a commercial offer in Excel.", "c_dur": "Spot", "c_size": "Size", "c_note": "Prices are in US dollars per 1 month of placement, including tax and all fees. Converted from UZS at 11,000 UZS per USD and rounded. 100% prepayment by bank transfer. If broadcasting stops for technical or other reasons, the placement is compensated separately.", "a_eb": "Tashkent International Airport · Terminals 2 and 3", "a_h2": "The first thing a visitor to the country sees.", "a_p": "6 formats on 54 LED displays, from the car park to passport control and the waiting halls. Passengers watch the screens while waiting calmly, away from street clutter.", "a_a1": "Citizens of Uzbekistan <b>65%</b>", "a_a2": "Foreign visitors <b>35%</b>", "a_a3": "Men <b>68%</b>", "a_a4": "Women <b>32%</b>", "m_eb": "Mobile LED", "m_h2": "A screen that drives to your audience.", "m_p": "A vehicle with a double-sided LED screen moving through city traffic. We designed every detail of its look, because the vehicle is the face of your advertising.", "m_f1": "Wide screen on both sides<span>4 × 2.5 m</span>", "m_f2": "Image quality<span>Full HD 1080</span>", "m_f3": "3D sound<span>audio</span>", "m_f4": "LED lights<span>light</span>", "m_f5": "Matte finish, lowered body, black wheels<span>style</span>", "m_f6": "Custom themed licence plate<span>01 717 LED</span>", "m_x_eb": "Exclusive", "m_x_h3": "“Your Ad”", "m_x_p": "Only your spot on the screen, 5 hours a day.", "m_x_m": "5 hours · 1 day · price on request", "d_eb": "Commercial offers", "d_h2": "Presentations to download.", "d_p": "Full offers in PDF: a photo of every screen, location map, specifications and price list (in Russian, prices in UZS).", "d1_h": "LED CITY · Tashkent screens", "d1_p": "75 LED screens: photos, map, sizes and prices", "d1_s": "PDF · 78 pages · 13 MB", "d2_h": "Tashkent Airport", "d2_p": "6 formats, 54 displays, reach and prices", "d2_s": "PDF · 9 pages · 2.4 MB", "d_btn": "Download PDF <span class=\"ar\">↓</span>", "ct_eb": "Ready to start?", "ct_h2": "Let’s talk about<br>your <span class=\"r\">project.</span>", "ct_p": "Write or call our manager. We will prepare a tailored offer for your brand within 24 hours.", "ct_l1": "Phone", "ct_l4": "Address", "ct_addr": "8A Bunyodkor Ave,<br>Tashkent", "t1l": "Prices", "t1": "Including tax and all fees", "t2l": "Payment", "t2": "100% prepayment", "t3l": "Settlement", "t3": "Bank transfer", "t4l": "Guarantee", "t4": "Compensation if broadcasting stops", "ft1": "AHADMIX GROUP · outdoor advertising since 2010", "ft2": "8A Bunyodkor Ave, Tashkent", "ft3": "© AHADMIX GROUP. All rights reserved.", "p_per": "Period", "p_clr": "Clear", "p_kp": "Offer · Excel <span class=\"ar\">↓</span>", "p_m1": "1 mo.", "p_m2": "2 mo.", "p_m3": "3 mo.", "p_m4": "4 mo.", "p_m5": "5 mo.", "p_m6": "6 mo.", "p_m7": "7 mo.", "p_m8": "8 mo.", "p_m9": "9 mo.", "p_m10": "10 mo.", "p_m11": "11 mo.", "p_m12": "12 mo."};
+const UZ = {"nav1": "Flagmanlar", "nav2": "Barcha ekranlar", "nav3": "Aeroport", "nav4": "Mobil LED", "nav5": "Kontaktlar", "h_eb": "Tashqi reklama · Toshkent · 2010-yildan", "h_h1": "<em><span class=\"r\">LED</span> City.</em><br>Brendingiz butun shahar koʻchalarida.", "h_lede": "Toshkentning asosiy chorrahalarida <strong>75 ta LED-ekran</strong> va xalqaro aeroportda <strong>54 ta reklama tashuvchisi</strong>. 48 metrlik media-fasaddan 6 × 3 m shahar ekranlarigacha.", "h_c1": "Ekran tanlash <span class=\"ar\">→</span>", "h_c2": "PDF taqdimotlar <span class=\"ar\">↓</span>", "h_c3": "Bogʻlanish", "h_cap1": "Tablo nisbati 8 : 1, xuddi <b style=\"color:var(--txt-d);font-weight:500\">PIRAMIT · 48 × 6 m · 9408 × 1152 px</b> ekranidagidek", "h_cap2": "Efir 7:00 – 23:00", "st1": "ta LED-ekran shaharda", "st2": "ta tashuvchi «Toshkent» aeroportida", "st3": "yoʻlovchi yiliga aeroportdan oʻtadi", "st4": "ayrim ekranlarda oyiga koʻrsatuv", "f_eb": "Flagman tarmoq", "f_h2": "Moʻljalga aylangan ekranlar.", "f_p": "Shahardagi eng yirik media-fasadlar. Ular bir necha mavze narisidan koʻrinadi, odamlar esa uchrashuvni aynan shu yerda belgilaydi: «Piramida oldida», «GUM yonida».", "c_eb": "Katalog · 1 oylik narxlar", "c_h2": "Shahar boʻylab media-rejangizni tuzing.", "c_p": "Rolik davomiyligini tanlang, narxlar qayta hisoblanadi. Ekranlarni + belgisi bilan belgilang: pastda jami summa va tijorat taklifini Excel faylida tayyorlaydigan tugma paydo boʻladi.", "c_dur": "Rolik", "c_size": "Oʻlcham", "c_note": "Narxlar soʻmda, 1 oylik joylashtirish uchun, QQSsiz koʻrsatilgan. Toʻlov naqd pulsiz, 100% oldindan. Agar efir texnik yoki boshqa sabablarga koʻra toʻxtasa, joylashtirish alohida qoplanadi.", "a_eb": "«Toshkent» xalqaro aeroporti · 2- va 3-terminallar", "a_h2": "Mamlakat mehmoni koʻradigan birinchi manzara.", "a_p": "54 ta LED-tashuvchida 6 ta format: avtoturargohdan pasport nazorati va kutish zallarigacha. Yoʻlovchilar ekranlarni koʻcha shovqinisiz, xotirjam kutish paytida tomosha qiladi.", "a_a1": "Oʻzbekiston fuqarolari <b>65%</b>", "a_a2": "Xorijliklar <b>35%</b>", "a_a3": "Erkaklar <b>68%</b>", "a_a4": "Ayollar <b>32%</b>", "m_eb": "Mobil LED", "m_h2": "Auditoriyangiz sari oʻzi yetib boradigan ekran.", "m_p": "Shahar oqimida harakatlanuvchi ikki tomonlama LED-ekranli avtomobil. Tashqi koʻrinishning har bir detalini oʻylab chiqdik, chunki mashina reklamangizning yuzi hisoblanadi.", "m_f1": "Ikki tomonlama keng ekran<span>4 × 2,5 m</span>", "m_f2": "Tasvir aniqligi<span>Full HD 1080</span>", "m_f3": "3D ovozli hamrohlik<span>audio</span>", "m_f4": "Svetodiodli chiroqlar<span>yorugʻlik</span>", "m_f5": "Mat qoplama, pasaytirilgan kuzov, qora disklar<span>uslub</span>", "m_f6": "Tematik firma davlat raqami<span>01 717 LED</span>", "m_x_eb": "Eksklyuziv", "m_x_h3": "«Sizning reklamangiz»", "m_x_p": "Ekranda faqat sizning rolikingiz, kuniga 5 soat.", "m_x_m": "5 soat · 1 kun · narxi kelishiladi", "d_eb": "Tijorat takliflari", "d_h2": "Yuklab olish uchun taqdimotlar.", "d_p": "PDF formatidagi toʻliq takliflar: har bir ekran surati, joylashuv xaritasi, texnik koʻrsatkichlar va narxlar.", "d1_h": "LED CITY · Toshkent ekranlari", "d1_p": "75 ta LED-ekran: suratlar, xarita, oʻlchamlar va narxlar", "d1_s": "PDF · 78 bet · 13 MB", "d2_h": "«Toshkent» aeroporti", "d2_p": "6 ta format, 54 ta tashuvchi, qamrov va narxlar", "d2_s": "PDF · 9 bet · 2,4 MB", "d_btn": "PDF yuklab olish <span class=\"ar\">↓</span>", "ct_eb": "Boshlashga tayyormisiz?", "ct_h2": "Loyihangizni<br><span class=\"r\">muhokama qilamiz.</span>", "ct_p": "Menejerga yozing yoki qoʻngʻiroq qiling. Brendingiz uchun individual taklifni 24 soat ichida tayyorlaymiz.", "ct_l1": "Telefon", "ct_l4": "Manzil", "ct_addr": "Toshkent sh.,<br>Bunyodkor, 8A", "t1l": "Narxlar", "t1": "QQSsiz", "t2l": "Toʻlov", "t2": "100% oldindan toʻlov", "t3l": "Hisob-kitob", "t3": "Naqd pulsiz", "t4l": "Kafolat", "t4": "Efir toʻxtasa, kompensatsiya", "ft1": "AHADMIX GROUP · 2010-yildan beri tashqi reklama", "ft2": "Toshkent, Bunyodkor, 8A", "ft3": "© AHADMIX GROUP. Barcha huquqlar himoyalangan.", "p_per": "Davr", "p_clr": "Tozalash", "p_kp": "Tijorat taklifi · Excel <span class=\"ar\">↓</span>", "p_m1": "1 oy", "p_m2": "2 oy", "p_m3": "3 oy", "p_m4": "4 oy", "p_m5": "5 oy", "p_m6": "6 oy", "p_m7": "7 oy", "p_m8": "8 oy", "p_m9": "9 oy", "p_m10": "10 oy", "p_m11": "11 oy", "p_m12": "12 oy"};
+let LANG='ru';
+try{ const sv=localStorage.getItem('ahx_lang'); if(sv==='uz'||sv==='ru'||sv==='en') LANG=sv; }catch(e){}
+const HS=(location.hash||'').slice(1); if(HS==='uz'||HS==='en'||HS==='ru') LANG=HS;
+const L=(ru,uz,en)=> LANG==='uz' ? uz : LANG==='en' ? (en ?? ru) : ru;
+const USD=n=>'$'+Math.round(n/CFG.usdRate*CFG.usdMarkup).toLocaleString('en-US');
+const PR=n=> LANG==='en' ? USD(n) : fmt(n);
+const CUR=n=> LANG==='en' ? USD(n) : fmt(n)+' '+L('сум','soʻm');
+const NM=l=>L(l.n,l.nu,l.ne);
+const SB=l=>l.s ? L(l.s,l.su,l.se) : '';
+const SZ=x=>LANG!=='ru' ? String(x).replace(/(\d)\s*м(?![а-яё])/g,'$1 m').replace('Медиафасад',LANG==='en'?'Media façade':'Media-fasad').replace(/сутки/g,LANG==='en'?'day':'sutka').replace('диагональ','diagonal').replace(/(\d),(\d)/g, LANG==='en'?'$1.$2':'$1,$2') : x;
+const I18N_EL=[...document.querySelectorAll('[data-i18n]')];
+I18N_EL.forEach(el=>{ el.dataset.ru=el.innerHTML; });
+function applyStatic(){
+  document.documentElement.lang = LANG==='uz' ? 'uz-Latn' : LANG==='en' ? 'en' : 'ru';
+  I18N_EL.forEach(el=>{ const v = LANG==='uz' ? UZ[el.dataset.i18n] : LANG==='en' ? EN[el.dataset.i18n] : el.dataset.ru; if(v!=null) el.innerHTML=v; });
+  document.querySelectorAll('[data-lang]').forEach(b=>b.setAttribute('aria-pressed', String(b.dataset.lang===LANG)));
+}
+applyStatic();
+const fmt = n => n.toLocaleString('ru-RU').replace(/ |,/g,' ');
+const $ = s => document.querySelector(s);
+const byId = Object.fromEntries(LOC.map(l=>[l.id,l]));
+const catOf = l => (l.id===2 || l.a>=120) ? 'flag' : (l.a>=28 ? 'big' : 'city');
+const shortN = l => l.n + (l.s ? ' · ' + l.s : '');  // КП всегда на русском
+
+/* ---------- smooth scroll ---------- */
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let lenis = null;
+if (!reduce && window.Lenis) {
+  lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.95, smoothWheel: true });
+  const raf = t => { lenis.raf(t); requestAnimationFrame(raf); };
+  requestAnimationFrame(raf);
+}
+document.querySelectorAll('[data-go]').forEach(a => a.addEventListener('click', e => {
+  const id = a.getAttribute('href'); const el = document.querySelector(id); if (!el) return;
+  e.preventDefault();
+  if (lenis) lenis.scrollTo(id === '#top' ? 0 : el, { offset: -104, duration: 1.4 });
+  else el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+}));
+const nav = $('#nav');
+const onScroll = () => nav.classList.toggle('solid', scrollY > 40);
+addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+/* ---------- toast / copy ---------- */
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('on'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('on'),2200); }
+async function copyText(txt, okMsg){
+  try { await navigator.clipboard.writeText(txt); toast(okMsg); }
+  catch(e){
+    const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); toast(okMsg);}catch(_){ toast('Выделите текст и скопируйте вручную'); }
+    ta.remove();
+  }
+}
+document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',()=>copyText(b.dataset.copy,'Скопировано')));
+
+/* ---------- marquee ---------- */
+function renderMarquee(){
+  const names = [...new Set(LOC.map(NM))];
+  const html = names.map(n=>`<span>${n}</span>`).join('');
+  $('#mq').innerHTML = html + html;
+}
+renderMarquee();
+
+/* ---------- LED board ---------- */
+(() => {
+  const cv = $('#led'), ctx = cv.getContext('2d', {alpha:false});
+  const MSGT = () => [['LED',1],[' CITY',0],['   ●   ',1],[L('ВАШ БРЕНД НА 75 ЭКРАНАХ ТАШКЕНТА','BRENDINGIZ TOSHKENTNING 75 EKRANIDA','YOUR BRAND ON 75 SCREENS IN TASHKENT'),0],['   ●   ',1],['AHADMIX',0],[' GROUP',1],['   ●   ',1]];
+  let W=0,H=0,rows,pitch,stripW=0,bg=null,lit=null,off=0,last=0,visible=true,raf=0,dpr=1;
+  function build(){
+    dpr = Math.min(devicePixelRatio||1, 1.5);
+    const r = cv.getBoundingClientRect(); if(!r.width) return;
+    W=r.width; H=r.height;
+    cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr);
+    rows = W<700 ? 22 : 30; pitch = H/rows; const cols = Math.ceil(W/pitch)+1;
+    // 1) sample text into a low-res bitmap (one pixel per LED)
+    const o=document.createElement('canvas'); const oc=o.getContext('2d');
+    const fs = Math.round(rows*0.62), font=`500 ${fs}px Unbounded, "Arial Black", sans-serif`;
+    const MSG=MSGT(); oc.font=font; const widths=MSG.map(([t])=>oc.measureText(t).width); stripW=Math.ceil(widths.reduce((a,b)=>a+b,0));
+    o.width=stripW; o.height=rows; oc.font=font; oc.textBaseline='middle';
+    let x=0; MSG.forEach(([t,red],i)=>{ oc.fillStyle=red?'#ff0000':'#ffffff'; oc.fillText(t,x,rows/2+1); x+=widths[i]; });
+    const d=oc.getImageData(0,0,stripW,rows).data;
+    // 2) pre-render the lit strip once (glowing dots), wide enough to wrap
+    const pw=Math.round(pitch*dpr*1000)/1000;
+    lit=document.createElement('canvas'); lit.width=Math.ceil((stripW+cols)*pitch*dpr); lit.height=cv.height;
+    const lc=lit.getContext('2d');
+    const spr=c=>{ const s=document.createElement('canvas'); const rr=Math.ceil(pitch*dpr*1.1); s.width=s.height=rr*2; const g=s.getContext('2d'); const gr=g.createRadialGradient(rr,rr,0,rr,rr,rr); gr.addColorStop(0,c); gr.addColorStop(.32,c); gr.addColorStop(.45,c.replace('1)','.35)')); gr.addColorStop(1,c.replace('1)','0)')); g.fillStyle=gr; g.fillRect(0,0,rr*2,rr*2); return s; };
+    const sw=spr('rgba(246,248,255,1)'), sr=spr('rgba(236,40,48,1)'), sz=pitch*dpr*2.2;
+    for(let c=0;c<stripW+cols;c++){ const sc=c%stripW;
+      for(let y=0;y<rows;y++){ const i=(y*stripW+sc)*4; if(d[i+3]<=90) continue;
+        lc.drawImage(d[i+1]<120?sr:sw, (c+.5)*pw-sz/2, (y+.5)*pitch*dpr-sz/2, sz, sz); } }
+    // 3) dim background grid once
+    bg=document.createElement('canvas'); bg.width=cv.width; bg.height=cv.height; const b=bg.getContext('2d');
+    b.fillStyle='#04070F'; b.fillRect(0,0,bg.width,bg.height); b.fillStyle='#121a2c';
+    for(let c=0;c<cols;c++) for(let y=0;y<rows;y++){ b.beginPath(); b.arc((c+.5)*pw,(y+.5)*pitch*dpr,pitch*dpr*.3,0,6.283); b.fill(); }
+    draw();
+  }
+  function draw(){
+    if(!bg) return;
+    ctx.drawImage(bg,0,0);
+    const col=Math.floor(off)%stripW;
+    ctx.drawImage(lit, -col*pitch*dpr, 0);
+  }
+  function tick(t){
+    raf=0;
+    const dt = last ? Math.min(100, t-last) : 16; last=t;
+    off += dt*0.018; draw();
+    if(visible && !document.hidden) raf=requestAnimationFrame(tick);
+  }
+  const play=()=>{ if(!raf && visible && !document.hidden){ last=0; raf=requestAnimationFrame(tick); } };
+  try{ new IntersectionObserver(([e])=>{ visible=e.isIntersecting; play(); }).observe(cv); }catch(e){}
+  document.addEventListener('visibilitychange', play);
+  const rebuild=()=>{ try{ build(); }catch(e){} };
+  window.__ledRebuild = rebuild;
+  rebuild(); play();
+  if(document.fonts && document.fonts.load){ document.fonts.load('500 20px Unbounded').then(rebuild,()=>{}); }
+  let lastW=innerWidth, rt; addEventListener('resize',()=>{ if(Math.abs(innerWidth-lastW)<2) return; lastW=innerWidth; clearTimeout(rt); rt=setTimeout(rebuild,200); });
+})();
+
+/* ---------- flagships ---------- */
+function flagHTML(l,i){
+  const id=l.id, p5 = l.p['5'] ?? l.p['10'], d5 = l.p['5'] ? 5 : 10;
+  return `<img class="mob" src="assets/img/c${id}.jpg" alt="${NM(l)}" loading="lazy" decoding="async">
+      <div class="k">${String(i+1).padStart(2,'0')} · ${l.id===2?L('медиафасад','media-fasad','media façade'):L('LED-экран','LED-ekran','LED screen')}</div>
+      <h3>${NM(l)}</h3>${l.s?`<div class="s">${SB(l)}</div>`:''}
+      <dl class="spec">
+        <div><dt>${L('Размер','Oʻlcham','Size')}</dt><dd>${SZ(l.size)}</dd></div>
+        <div><dt>${L('Разрешение','Ruxsat','Resolution')}</dt><dd>${l.res} px</dd></div>
+        <div><dt>${L('Эфир','Efir','On air')}</dt><dd>${l.hr.replace('-',' – ')}</dd></div>
+        <div><dt>${L('Показы / мес','Koʻrsatuv / oy','Plays / month')}</dt><dd>${fmt(l.sh)}</dd></div>
+      </dl>
+      <div class="price num">${PR(p5)} <small>${L(`сум · ${d5} сек · месяц`,`soʻm · ${d5} soniya · oy`,`${d5} sec · per month · incl. tax & all fees`)}</small></div>
+      <div><button class="btn ghost" data-open="${id}" style="padding:11px 18px;font-size:14px">${L('Весь прайс','Barcha narxlar','Full price list')} <span class="ar">→</span></button></div>`;
+}
+function renderFlags(){ document.querySelectorAll('#flagList .fl').forEach(el=>{ el.innerHTML=flagHTML(byId[+el.dataset.id], +el.dataset.i); }); document.querySelectorAll('#stage img').forEach(im=>{ im.alt=NM(byId[FLAG[+im.dataset.i]]); }); }
+(() => {
+  const stage=$('#stage'), list=$('#flagList');
+  FLAG.forEach((id,i)=>{
+    const l=byId[id];
+    const img=document.createElement('img'); img.src=`assets/img/c${id}.jpg`; img.alt=NM(l); if(i===0) img.className='on'; 
+    stage.insertBefore(img, stage.firstChild);
+    img.dataset.i=i;
+    const el=document.createElement('article'); el.className='fl'+(i===0?' on':''); el.dataset.i=i; el.dataset.id=id;
+    el.innerHTML=flagHTML(l,i);
+    list.appendChild(el);
+  });
+
+  const imgs=[...stage.querySelectorAll('img')], items=[...list.children];
+  const set=i=>{ imgs.forEach(im=>im.classList.toggle('on',+im.dataset.i===i)); items.forEach(it=>it.classList.toggle('on',+it.dataset.i===i));
+    $('#stageN').textContent=`${String(i+1).padStart(2,'0')} / ${String(FLAG.length).padStart(2,'0')}`; $('#stageBar').style.transform=`scaleX(${(i+1)/FLAG.length})`; };
+  let cur=0;
+  let pend=false;
+  const sync=()=>{ if(pend) return; pend=true; requestAnimationFrame(()=>{ pend=false; doSync(); }); };
+  const doSync=()=>{
+    if(stage.offsetParent===null) return;
+    const sr=stage.getBoundingClientRect(), mid=sr.top+sr.height/2;
+    let best=0,bd=Infinity;
+    items.forEach((it,i)=>{ const h=it.querySelector('h3').getBoundingClientRect(); const d=Math.abs((h.top+h.height/2)-mid); if(d<bd){bd=d;best=i;} });
+    if(best!==cur){cur=best;set(best);}
+  };
+  addEventListener('scroll',sync,{passive:true}); addEventListener('resize',sync); sync();
+})();
+
+/* ---------- catalog ---------- */
+const state = { cat:'all', dur:'10', size:'all', plan:new Set() };
+const CATS=()=>[['all',L('Все','Barchasi','All')],['flag',L('Флагманы','Flagmanlar','Flagships')],['big',L('Крупные','Yirik','Large')],['city',L('Городские','Shahar','City')]];
+const DURS=['5','10','15','20'];
+const priceFor = l => l.p[state.dur] ?? null;
+const sizeKey = l => l.size.replace(/\s+/g,' ').trim();
+const avail = () => LOC.filter(l => l.p[state.dur] != null);
+function renderSizes(){
+  const list=avail(); const m=new Map();
+  list.forEach(l=>{ const k=sizeKey(l); const e=m.get(k)||{k,a:(l.id===2?999:l.a),n:0}; e.n++; m.set(k,e); });
+  if(state.size!=='all' && !m.has(state.size)) state.size='all';
+  const opts=[...m.values()].sort((a,b)=>b.a-a.a);
+  $('#sort').innerHTML = `<option value="all">${L('ВСЕ','BARCHASI','ALL')} · ${list.length}</option>` + opts.map(o=>`<option value="${o.k}">${SZ(o.k).toUpperCase()} · ${o.n}</option>`).join('');
+  $('#sort').value = state.size;
+}
+function renderTools(){
+  renderSizes();
+  $('#cat').innerHTML = CATS().map(([k,n])=>`<button aria-pressed="${state.cat===k}" data-cat="${k}">${n}<sup>${k==='all'?avail().length:avail().filter(l=>catOf(l)===k).length}</sup></button>`).join('');
+  $('#dur').innerHTML = DURS.map(d=>`<button aria-pressed="${state.dur===d}" data-dur="${d}">${d} ${L('с','s','s')}</button>`).join('');
+}
+function renderGrid(){
+  let arr = avail().filter(l=>(state.cat==='all'||catOf(l)===state.cat) && (state.size==='all'||sizeKey(l)===state.size));
+  arr.sort((a,b)=>(b.id===2?999:b.a)-(a.id===2?999:a.a)||a.id-b.id);
+  $('#grid').innerHTML = arr.map(l=>{
+    const p=priceFor(l), inPlan=state.plan.has(l.id);
+    return `<article class="card rv" data-open="${l.id}" tabindex="0" aria-label="${l.n}, ${l.size}">
+      <div class="ph"><img src="assets/img/c${l.id}.jpg" alt="${L('Экран','Ekran','Screen')} ${NM(l)}" loading="lazy" decoding="async">
+        <span class="tag">${SZ(l.size)}</span>
+        <button class="add" data-add="${l.id}" aria-pressed="${inPlan}" aria-label="${inPlan?L('Убрать из плана','Rejadan olib tashlash','Remove from plan'):L('Добавить в план','Rejaga qoʻshish','Add to plan')}: ${NM(l)}">${inPlan?'✓':'+'}</button>
+      </div>
+      <div class="row"><div><h3>${NM(l)}</h3>${l.s?`<div class="sub">${SB(l)}</div>`:''}</div>
+        <div class="meta">${l.res} px<br>${l.hr.replace('-','–')}</div></div>
+      <div class="pr"><span>${L(`${state.dur} сек · ${fmt(l.sh)} показов`,`${state.dur} soniya · ${fmt(l.sh)} koʻrsatuv`,`${state.dur} sec · ${fmt(l.sh)} plays`)}</span>${p?`<b class="num">${CUR(p)}</b>`:`<span class="na">${L('нет формата','format yoʻq','not available')}</span>`}</div>
+    </article>`;}).join('') || `<p class="empty">${L('Нет экранов в этой категории.','Bu toifada ekranlar yoʻq.','No screens in this category.')}</p>`;
+}
+function renderPlan(){
+  const ids=[...state.plan]; const bar=$('#plan');
+  bar.classList.toggle('show', ids.length>0);
+  let sum=0, miss=0; ids.forEach(id=>{ const p=priceFor(byId[id]); if(p) sum+=p; else miss++; });
+  const mo=+($('#planMonths').value||1);
+  $('#planSum').textContent = CUR(sum*mo) + (mo>1?L(` за ${mo} мес.`,` · ${mo} oy uchun`,` for ${mo} months`):L(' / мес',' / oy',' / month'));
+  const w = n => n%10===1&&n%100!==11?'экран':(n%10>=2&&n%10<=4&&(n%100<10||n%100>=20)?'экрана':'экранов');
+  $('#planInfo').textContent = L(`${ids.length} ${w(ids.length)} · ролик ${state.dur} сек · без НДС${miss?` · ${miss} без формата ${state.dur} сек`:''}`,
+    `${ids.length} ta ekran · rolik ${state.dur} soniya · QQSsiz${miss?` · ${miss} tasida ${state.dur} soniyalik format yoʻq`:''}`,
+    `${ids.length} ${ids.length===1?'screen':'screens'} · ${state.dur}-sec spot · incl. tax & all fees${miss?` · ${miss} without a ${state.dur}-sec format`:''}`);
+}
+document.addEventListener('click', e=>{
+  const c=e.target.closest('[data-cat]'); if(c){ state.cat=c.dataset.cat; state.size='all'; $('#sort').value='all'; renderTools(); renderGrid(); return; }
+  const d=e.target.closest('[data-dur]'); if(d){ state.dur=d.dataset.dur; renderTools(); renderGrid(); renderPlan(); return; }
+  const a=e.target.closest('[data-add]'); if(a){ e.stopPropagation(); const id=+a.dataset.add; state.plan.has(id)?state.plan.delete(id):state.plan.add(id);
+    a.setAttribute('aria-pressed', state.plan.has(id)); a.textContent = state.plan.has(id)?'✓':'+'; renderPlan(); if(dlg.open) openDlg(id); return; }
+  const o=e.target.closest('[data-open]'); if(o){ openDlg(+o.dataset.open); }
+});
+document.addEventListener('keydown', e=>{ if(e.key==='Enter' && e.target.matches('.card')) openDlg(+e.target.dataset.open); });
+$('#sort').addEventListener('change', e=>{ state.size=e.target.value; if(state.size!=='all'){ state.cat='all'; renderTools(); } renderGrid(); });
+$('#planClear').addEventListener('click', ()=>{ state.plan.clear(); renderGrid(); renderPlan(); });
+$('#planMonths').addEventListener('change', renderPlan);
+
+/* ---------- PDF downloads ---------- */
+document.querySelectorAll('[data-dl]').forEach(a=>a.addEventListener('click', async e=>{
+  const dl = window.claude?.use ? await Promise.race([window.claude.use('downloads'), new Promise(r=>setTimeout(()=>r(null),1500))]) : null;
+  if(!dl) return;               // no capability: let the link open the PDF
+  e.preventDefault();
+  if(a.getAttribute('aria-busy')==='true') return;
+  a.setAttribute('aria-busy','true');
+  try{
+    const blob = await fetch(a.dataset.dl).then(r=>{ if(!r.ok) throw 0; return r.blob(); });
+    await dl.save({filename:a.dataset.name, data:blob});
+    toast(L('Файл сохранён','Fayl saqlandi','File saved'));
+  }catch(err){
+    if(err?.code==='declined') toast(L('Скачивание отменено','Yuklab olish bekor qilindi','Download cancelled'));
+    else toast(L('Не удалось скачать. Позвоните: +998 94 657-33-33','Yuklab boʻlmadi. Qoʻngʻiroq qiling: +998 94 657-33-33','Download failed. Call us: +998 94 657-33-33'));
+  }finally{ a.removeAttribute('aria-busy'); }
+}));
+
+/* ---------- commercial offer (xlsx) ---------- */
+const xesc = t => String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const kpSize = l => (l.kpSize || l.size).replace(/\s*×\s*/g,' X ');
+async function buildKP(){
+  if(!window.JSZip) throw new Error('nozip');
+  const b64 = await fetch('assets/kp-template.txt').then(r=>{ if(!r.ok) throw new Error('tpl'); return r.text(); });
+  const zip = await JSZip.loadAsync(b64.trim(), {base64:true});
+  const path='xl/worksheets/sheet1.xml';
+  let xml = await zip.file(path).async('string');
+  const EN_KP = LANG==='en';                       // foreign client: USD incl. tax, no VAT column
+  const usd = n => Math.round(n/CFG.usdRate*CFG.usdMarkup);
+  const dur=+state.dur, mo=+($('#planMonths').value||1);
+  const items=[...state.plan].map(id=>byId[id]).filter(l=>priceFor(l)!=null);
+  const S=(ref,s,t)=>`<c r="${ref}" s="${s}" t="inlineStr"><is><t xml:space="preserve">${xesc(t)}</t></is></c>`;
+  const N=(ref,s,v)=>`<c r="${ref}" s="${s}"><v>${v}</v></c>`;
+  const F=(ref,s,f,v)=>`<c r="${ref}" s="${s}"><f>${f}</f><v>${v}</v></c>`;
+  const lastCol = EN_KP ? 'I' : 'K';
+  let rows='', r=16, tI=0,tJ=0,tK=0;
+  items.forEach((l,i)=>{
+    const p = EN_KP ? usd(priceFor(l)) : priceFor(l), h=p, iv=h*mo;
+    const loc = EN_KP ? `${l.ne}${l.se?' ('+l.se+')':''}, Tashkent — ${l.addr}` : l.addr;
+    const sizeTxt = EN_KP ? kpSize(l).replace(/\s*м$/,' m').replace('Медиафасад','Media façade') : kpSize(l);
+    rows+=`<row r="${r}" spans="1:11" s="2" customFormat="1" ht="${EN_KP?64:48}" customHeight="1">`
+      +N('A'+r,5,i+1)+S('B'+r,6,sizeTxt)+S('C'+r,7,loc)+N('D'+r,6,dur)+N('E'+r,8,mo)
+      +N('F'+r,13,p)+N('G'+r,14,0)+F('H'+r,13,`F${r}*(1-G${r})`,h)+F('I'+r,13,`H${r}*E${r}`,iv);
+    tI+=iv;
+    if(!EN_KP){ const jv=Math.round(iv*12)/100, kv=iv+jv; tJ+=jv; tK+=kv;
+      rows+=F('J'+r,13,`ROUND(I${r}*12%,2)`,jv)+F('K'+r,13,`I${r}+J${r}`,kv); }
+    rows+=`</row>`;
+    r++;
+  });
+  const last=r-1, T=r;
+  rows+=`<row r="${T}" spans="1:11" s="9" customFormat="1" ht="23.1" customHeight="1">`+S('A'+T,11, EN_KP?'TOTAL:':'ИТОГО:')
+    +['B','C','D','E','F','G','H'].map(c=>`<c r="${c}${T}" s="11"/>`).join('')
+    +F('I'+T,15,`SUM(I16:I${last})`,tI)
+    +(EN_KP ? '' : F('J'+T,15,`SUM(J16:J${last})`,tJ)+F('K'+T,15,`SUM(K16:K${last})`,tK))+`</row>`;
+  const n=T+2;
+  const note = EN_KP
+    ? 'All prices are in US dollars and include tax and all fees (converted at 11,000 UZS per USD). Payment: 100% prepayment by bank transfer. '
+      +'If broadcasting stops for technical or other reasons, the placement is compensated separately. Broadcast hours: 7:00–23:00 (Humo Arena: 18:00–24:00). '
+      +'Contacts: +998 94 657-33-33 · info@ahadmix.uz · linktr.ee/ahadmix_group'
+    : 'Цены в сумах. Стоимость по прайсу указана без НДС, НДС 12% начислен отдельно. Условия оплаты: безналичный расчёт, 100% предоплата. '
+      +'Если вещание остановится по техническим или иным причинам, размещение компенсируется отдельно. Время трансляции: 7:00–23:00 (Хумо Арена: 18:00–24:00). '
+      +'Контакты: +998 94 657-33-33 · info@ahadmix.uz · linktr.ee/ahadmix_group';
+  rows+=`<row r="${n}" spans="1:11" ht="46" customHeight="1">`+S('A'+n,16,note)+`</row>`;
+  const d=new Date(), dd=`${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()}`;
+  const hdr=S('A14',17, EN_KP
+    ? `Commercial offer, ${dd} · ${dur}-sec spot · ${mo} ${mo===1?'month':'months'} · screens: ${items.length} · prices in USD, including tax and all fees`
+    : `Коммерческое предложение от ${dd} · ролик ${dur} сек · период ${mo} мес. · экранов: ${items.length}`);
+  if(EN_KP){
+    const H=['No.','Screen size','Location','Spot, sec','Period, months','Monthly price, USD','Discount','Price after discount, USD','Total for period, USD (incl. tax & all fees)'];
+    const cols='ABCDEFGHI';
+    const cells=H.map((t,i)=>S(cols[i]+'15',4,t)).join('');
+    xml = xml.replace(/(<row r="15"[^>]*>)[\s\S]*?(<\/row>)/, `$1${cells}$2`)
+             .replace(/(<row r="15"[^>]*?)ht="[^"]*"/, '$1ht="46"');
+  }
+  xml = xml.replace('<!--ROWS-->', rows)
+           .replace('<!--HDR-->', hdr)
+           .replace(/<row r="14"([^>]*?)ht="[^"]*"/, '<row r="14"$1ht="24"')
+           .replace('<mergeCells count="1"><mergeCell ref="E6:H6"/><!--MERGE-->', `<mergeCells count="3"><mergeCell ref="E6:H6"/><mergeCell ref="A${T}:H${T}"/><mergeCell ref="A${n}:${lastCol}${n}"/>`)
+           .replace(/<dimension ref="[^"]*"\/>/, `<dimension ref="A1:${lastCol}${n}"/>`);
+  zip.file(path, xml);
+  const blob = await zip.generateAsync({type:'blob', mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', compression:'DEFLATE'});
+  return {blob, name: EN_KP ? `Offer AHADMIX LED CITY ${dd}.xlsx` : `КП AHADMIX LED CITY ${dd}.xlsx`, count:items.length};
+}
+window.__buildKP = buildKP;
+$('#planKP').addEventListener('click', async e=>{
+  const btn=e.currentTarget; if(btn.disabled) return;
+  if(![...state.plan].some(id=>priceFor(byId[id])!=null)){ toast(L(`Нет экранов с роликом ${state.dur} сек`,`${state.dur} soniyalik rolik uchun ekran tanlanmagan`,`No screens selected for a ${state.dur}-sec spot`)); return; }
+  btn.disabled=true;
+  try{
+    const kp=await buildKP();
+    const dl = window.claude?.use ? await window.claude.use('downloads') : null;
+    if(dl){
+      try{ await dl.save({filename:kp.name, data:kp.blob}); toast(L('Коммерческое предложение сохранено','Tijorat taklifi saqlandi','Commercial offer saved')); }
+      catch(err){
+        if(err?.code==='declined') toast(L('Скачивание отменено','Yuklab olish bekor qilindi','Download cancelled'));
+        else if(err?.code==='rate_limited') toast(L('Подождите секунду и попробуйте снова','Bir soniya kuting va qayta urinib koʻring','Wait a second and try again'));
+        else toast(L('Скачивание недоступно. Позвоните: +998 94 657-33-33','Yuklab olish imkoni yoʻq. Qoʻngʻiroq qiling: +998 94 657-33-33','Download is not available here. Call us: +998 94 657-33-33'));
+      }
+    } else {
+      const a=document.createElement('a'); a.href=URL.createObjectURL(kp.blob); a.download=kp.name; document.body.appendChild(a); a.click();
+      setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},4000);
+    }
+  }catch(err){ toast(L('Не удалось собрать файл. Попробуйте ещё раз','Faylni tayyorlab boʻlmadi. Qayta urinib koʻring','Could not build the file. Please try again')); }
+  finally{ btn.disabled=false; }
+});
+
+/* ---------- dialog ---------- */
+const dlg=$('#dd');
+function openDlg(id){
+  dlg.dataset.id=id;
+  const l=byId[id]; const inPlan=state.plan.has(id);
+  $('#ddIn').innerHTML = `<img src="assets/img/c${id}.jpg" alt="${L('Экран','Ekran','Screen')} ${NM(l)}">
+    <div class="c">
+      <div class="eyebrow" style="color:var(--mute-l)">${catOf(l)==='flag'?L('Флагман','Flagman','Flagship'):catOf(l)==='big'?L('Крупный формат','Yirik format','Large format'):L('Городской экран','Shahar ekrani','City screen')}</div>
+      <h3>${NM(l)}</h3>${l.s?`<div class="sub">${SB(l)}</div>`:''}
+      <dl class="spec"><div><dt>${L('Размер','Oʻlcham','Size')}</dt><dd>${SZ(l.size)}</dd></div><div><dt>${L('Разрешение','Ruxsat','Resolution')}</dt><dd>${l.res} px</dd></div><div><dt>${L('Эфир','Efir','On air')}</dt><dd>${l.hr.replace('-',' – ')}</dd></div></dl>
+      <table><thead><tr><th>${L('Ролик','Rolik','Spot')}</th><th>${L('Показы / мес','Koʻrsatuv / oy','Plays / month')}</th><th>${L('Стоимость, сум','Narxi, soʻm','Price, USD')}</th></tr></thead><tbody>
+      ${Object.entries(l.p).map(([d,p])=>`<tr class="${d===state.dur?'cur':''}"><td>${d} ${L('сек','soniya','sec')}</td><td>${fmt(l.sh)}</td><td>${PR(p)}</td></tr>`).join('')}
+      </tbody></table>
+      <p class="small">${L('Прайс на 1 месяц, без НДС · 100% предоплата · Ташкент, Узбекистан','1 oylik narx, QQSsiz · 100% oldindan toʻlov · Toshkent, Oʻzbekiston','Price per 1 month, including tax and all fees · 100% prepayment · Tashkent, Uzbekistan')}</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn red" data-add="${id}" aria-pressed="${inPlan}">${inPlan?L('✓ В медиаплане','✓ Media-rejada','✓ In media plan'):L('+ Добавить в медиаплан','+ Media-rejaga qoʻshish','+ Add to media plan')}</button></div>
+    </div>`;
+  if(!dlg.open){ dlg.showModal(); lenis && lenis.stop(); }
+}
+function closeDlg(){ dlg.close(); }
+$('#ddClose').addEventListener('click', closeDlg);
+dlg.addEventListener('click', e=>{ if(e.target===dlg) closeDlg(); });
+dlg.addEventListener('close', ()=>{ lenis && lenis.start(); renderGrid(); });
+
+/* ---------- airport ---------- */
+function renderAir(){
+const op=[...document.querySelectorAll('#fmts details')].findIndex(d=>d.open);
+$('#fmts').innerHTML = AIR.map((f,i)=>`<details class="fmt" name="fmt" ${i===(op<0&&!document.querySelector('#fmts details')?0:op)?'open':''}>
+  <summary><span class="n">${L('Формат','Format','Format')} ${String(i+1).padStart(2,'0')}</span><span class="t">${L(f.zn,f.znu,f.zne)}<small>${L(f.t,f.tu,f.te)} · ${L(f.term,f.termu,f.terme)}</small></span><span class="q">${SZ(f.size)} · ${f.q} ${L('шт.','dona','pcs')}</span><span class="pl" aria-hidden="true">+</span></summary>
+  <div class="body">
+    <img src="assets/img/${f.img}.jpg" alt="${L(f.t,f.tu,f.te)}: ${L(f.zn,f.znu,f.zne)}" loading="lazy" decoding="async">
+    <div>
+      <dl class="spec"><div><dt>${L('Размер','Oʻlcham','Size')}</dt><dd>${SZ(f.size)}</dd></div><div><dt>${L('Носителей','Tashuvchilar','Displays')}</dt><dd>${f.q} ${L('шт.','dona','pcs')}</dd></div><div><dt>${L('Разрешение','Ruxsat','Resolution')}</dt><dd>${f.res} px</dd></div><div><dt>${L('Показы','Koʻrsatuvlar','Plays')}</dt><dd>${SZ(f.sh)}</dd></div><div><dt>${L('Ролик','Rolik','Spot')}</dt><dd>${f.d} ${L('сек','soniya','sec')}</dd></div></dl>
+      <dl class="reach"><div><dt>${L('Неделя','Hafta','Week')}</dt><dd class="num">${f.r[0]}</dd></div><div><dt>${L('Месяц','Oy','Month')}</dt><dd class="num">${f.r[1]}</dd></div><div><dt>${L('Год','Yil','Year')}</dt><dd class="num">${f.r[2]}</dd></div></dl>
+      <div class="price num">${CUR(f.p)}<small>${L(`за ${f.d} сек размещения · 1 месяц · без НДС · прогноз охвата, человек`,`${f.d} soniyalik joylashtirish · 1 oy · QQSsiz · qamrov prognozi, kishi`,`per ${f.d}-sec spot · 1 month · including tax and all fees · reach forecast, people`)}</small></div>
+    </div>
+  </div></details>`).join('');
+}
+renderAir();
+
+renderTools(); renderGrid(); renderPlan();
+
+/* ---------- language ---------- */
+function setLang(lg){
+  if(lg===LANG) return; LANG=lg;
+  try{ localStorage.setItem('ahx_lang',lg); }catch(e){}
+  applyStatic(); renderMarquee(); renderFlags(); renderTools(); renderGrid(); renderPlan(); renderAir();
+  if(dlg.open && dlg.dataset.id) openDlg(+dlg.dataset.id);
+  window.__ledRebuild && window.__ledRebuild();
+}
+document.querySelectorAll('[data-lang]').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
+})().catch(err => { console.error(err); document.body.insertAdjacentHTML('afterbegin','<p style="padding:16px;background:#E3262D;color:#fff;font:14px sans-serif">Не удалось загрузить данные сайта (data/*.json). Откройте сайт через веб-сервер, а не как файл.</p>'); });
+</script>
+
+</body>
+</html>
