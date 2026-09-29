@@ -1,29 +1,5 @@
 [
   {
-    "zn": "ЗОНА ВЫЛЕТА: ЗАЛ ОЖИДАНИЯ (2 ЭТАЖ)",
-    "znu": "UCHISH ZONASI: KUTISH ZALI (2-QAVAT)",
-    "zne": "DEPARTURES: WAITING HALL (2ND FLOOR)",
-    "t": "LED-экраны",
-    "tu": "LED-ekranlar",
-    "te": "LED screens",
-    "term": "Терминал 2",
-    "termu": "2-terminal",
-    "terme": "Terminal 2",
-    "z": "Зона вылета · зал ожидания, 2 этаж",
-    "size": "15 × 1,5 м",
-    "res": "4480 × 576",
-    "sh": "144+ / сутки",
-    "q": 7,
-    "d": 15,
-    "p": 50000000,
-    "r": [
-      "70 000+",
-      "300 000+",
-      "3 600 000+"
-    ],
-    "img": "a2"
-  },
-  {
     "zn": "ЗОНА ВЫЛЕТА: ПАРКОВКА",
     "znu": "UCHISH ZONASI: AVTOTURARGOH",
     "zne": "DEPARTURES: CAR PARK",
@@ -46,6 +22,30 @@
       "4 114 000+"
     ],
     "img": "a1"
+  },
+  {
+    "zn": "ЗОНА ВЫЛЕТА: ЗАЛ ОЖИДАНИЯ (2 ЭТАЖ)",
+    "znu": "UCHISH ZONASI: KUTISH ZALI (2-QAVAT)",
+    "zne": "DEPARTURES: WAITING HALL (2ND FLOOR)",
+    "t": "LED-экраны",
+    "tu": "LED-ekranlar",
+    "te": "LED screens",
+    "term": "Терминал 2",
+    "termu": "2-terminal",
+    "terme": "Terminal 2",
+    "z": "Зона вылета · зал ожидания, 2 этаж",
+    "size": "15 × 1,5 м",
+    "res": "4480 × 576",
+    "sh": "144+ / сутки",
+    "q": 7,
+    "d": 15,
+    "p": 50000000,
+    "r": [
+      "70 000+",
+      "300 000+",
+      "3 600 000+"
+    ],
+    "img": "a2"
   },
   {
     "zn": "ЗОНА ВЫЛЕТА: ПАСПОРТНЫЙ КОНТРОЛЬ (2 ЭТАЖ)",
