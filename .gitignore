@@ -3,6 +3,7 @@
 
 delete_ignore
 restart.sh
+/templates/data/*
 ### Django ###
 *.log
 *.pot

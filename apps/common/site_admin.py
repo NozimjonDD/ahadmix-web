@@ -10,7 +10,6 @@ import logging
 import math
 import os
 import re
-import shutil
 import time
 from pathlib import Path
 
@@ -26,13 +25,29 @@ logger = logging.getLogger(__name__)
 
 # Data directories
 DATA_DIR = Path(settings.BASE_DIR).parent / "templates" / "data"
-BACKUPS_DIR = DATA_DIR / "backups"
+DATA_SEED_DIR = Path(settings.BASE_DIR).parent / "templates" / "data_seed"
 IMG_DIR = Path(settings.BASE_DIR).parent / "templates" / "assets" / "img"
 
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "")
 
 
+def ensure_site_data():
+    """Populate a fresh checkout without replacing any admin-edited data."""
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    for name in ("screens", "airport", "settings", "texts"):
+        target = DATA_DIR / f"{name}.json"
+        if not target.exists():
+            seed = DATA_SEED_DIR / target.name
+            initial_data = seed.read_bytes()
+            try:
+                with target.open("xb") as out:
+                    out.write(initial_data)
+            except FileExistsError:
+                pass
+
+
 def read_json_file(filename: str):
+    ensure_site_data()
     path = DATA_DIR / f"{filename}.json"
     if not path.is_file():
         raise FileNotFoundError(f"Data file not found: {filename}.json")
@@ -40,26 +55,9 @@ def read_json_file(filename: str):
         return json.load(f)
 
 
-def write_json_file(filename: str, data, keep_backups: int = 40):
+def write_json_file(filename: str, data):
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    BACKUPS_DIR.mkdir(parents=True, exist_ok=True)
     target = DATA_DIR / f"{filename}.json"
-
-    # Backup previous version
-    if target.is_file():
-        timestamp = time.strftime("%Y%m%d-%H%M%S")
-        backup_path = BACKUPS_DIR / f"{filename}-{timestamp}.json"
-        try:
-            shutil.copy2(target, backup_path)
-            # Prune old backups
-            old_backups = sorted(BACKUPS_DIR.glob(f"{filename}-*.json"), reverse=True)
-            for old in old_backups[keep_backups:]:
-                try:
-                    old.unlink()
-                except OSError:
-                    pass
-        except Exception as e:
-            logger.warning("Could not create backup for %s: %s", filename, e)
 
     # Atomic write via temp file
     tmp_path = DATA_DIR / f"{filename}.tmp.{int(time.time() * 1000)}"
@@ -241,10 +239,22 @@ class SiteAdminTemplateView(TemplateView):
     """Renders the HTML administrative dashboard."""
     template_name = "site_admin/index.html"
 
+    def get(self, request, *args, **kwargs):
+        ensure_site_data()
+        return super().get(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx["csrf_token"] = get_token(self.request)
         return ctx
+
+
+class SiteHomeTemplateView(TemplateView):
+    template_name = "index.html"
+
+    def get(self, request, *args, **kwargs):
+        ensure_site_data()
+        return super().get(request, *args, **kwargs)
 
 
 class SiteAdminAPIView(View):
@@ -256,8 +266,6 @@ class SiteAdminAPIView(View):
     - ?a=load
     - ?a=save&file=...
     - ?a=upload
-    - ?a=backups
-    - ?a=restore
     """
 
     def get(self, request):
@@ -288,25 +296,6 @@ class SiteAdminAPIView(View):
                 })
             except Exception as e:
                 logger.exception("Error loading site data")
-                return JsonResponse({"ok": False, "error": str(e)}, status=500)
-
-        if action == "backups":
-            try:
-                BACKUPS_DIR.mkdir(parents=True, exist_ok=True)
-                items = []
-                for p in sorted(BACKUPS_DIR.glob("*.json"), key=os.path.getmtime, reverse=True):
-                    name = p.name
-                    # parse name e.g. screens-20260929-123456.json
-                    base = name.split("-")[0] if "-" in name else name
-                    stat = p.stat()
-                    items.append({
-                        "name": name,
-                        "file": base,
-                        "size": stat.st_size,
-                        "at": name[len(base) + 1:-5],
-                    })
-                return JsonResponse({"ok": True, "backups": items})
-            except Exception as e:
                 return JsonResponse({"ok": False, "error": str(e)}, status=500)
 
         return JsonResponse({"ok": False, "error": f"Unknown GET action: {action}"}, status=400)
@@ -452,26 +441,5 @@ class SiteAdminAPIView(View):
             except Exception as e:
                 logger.exception("Image processing failed")
                 return JsonResponse({"ok": False, "error": f"Ошибка обработки фото: {e}"}, status=400)
-
-        if action == "restore":
-            try:
-                body = json.loads(request.body.decode("utf-8")) if request.body else {}
-                name = str(body.get("name") or "")
-                if not name or ".." in name or "/" in name or "\\" in name:
-                    return JsonResponse({"ok": False, "error": "Некорректное имя резервной копии"}, status=400)
-
-                backup_file = BACKUPS_DIR / name
-                if not backup_file.is_file():
-                    return JsonResponse({"ok": False, "error": "Резервная копия не найдена"}, status=404)
-
-                base_name = name.split("-")[0]
-                if base_name not in ("screens", "airport", "settings", "texts"):
-                    return JsonResponse({"ok": False, "error": "Неизвестный тип файла данных"}, status=400)
-
-                target = DATA_DIR / f"{base_name}.json"
-                shutil.copy2(backup_file, target)
-                return JsonResponse({"ok": True, "file": base_name})
-            except Exception as e:
-                return JsonResponse({"ok": False, "error": str(e)}, status=500)
 
         return JsonResponse({"ok": False, "error": f"Unknown POST action: {action}"}, status=400)

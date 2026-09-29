@@ -5,10 +5,9 @@ from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include, re_path
-from django.views.generic import TemplateView
 from django.views.i18n import set_language
 from django.views.static import serve
-from apps.common.site_admin import SiteAdminAPIView, SiteAdminTemplateView
+from apps.common.site_admin import SiteAdminAPIView, SiteAdminTemplateView, SiteHomeTemplateView
 
 # from .swagger_conf import swagger_urlpatterns
 
@@ -18,7 +17,7 @@ _DOCS_DIR = Path(__file__).resolve().parent.parent / "docs"
 
 # Non-i18n URL patterns
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='index.html'), name='home'),
+    path('', SiteHomeTemplateView.as_view(), name='home'),
     path('site-admin/', SiteAdminTemplateView.as_view(), name='site_admin'),
     path('site-admin/api/', SiteAdminAPIView.as_view(), name='site_admin_api'),
     path('set-language/', set_language, name='set_language'),

@@ -1,29 +1,5 @@
 [
   {
-    "zn": "ЗОНА ВЫЛЕТА: ПАРКОВКА",
-    "znu": "UCHISH ZONASI: AVTOTURARGOH",
-    "zne": "DEPARTURES: CAR PARK",
-    "t": "Большие LED-экраны",
-    "tu": "Katta LED-ekranlar",
-    "te": "Large LED screens",
-    "term": "Терминал 2",
-    "termu": "2-terminal",
-    "terme": "Terminal 2",
-    "z": "Зона вылета · парковка",
-    "size": "9,6 × 9,7 м",
-    "res": "1408 × 1920",
-    "sh": "480+ / сутки",
-    "q": 3,
-    "d": 15,
-    "p": 50000000,
-    "r": [
-      "80 000+",
-      "342 000+",
-      "4 114 000+"
-    ],
-    "img": "a1"
-  },
-  {
     "zn": "ЗОНА ВЫЛЕТА: ЗАЛ ОЖИДАНИЯ (2 ЭТАЖ)",
     "znu": "UCHISH ZONASI: KUTISH ZALI (2-QAVAT)",
     "zne": "DEPARTURES: WAITING HALL (2ND FLOOR)",
@@ -46,6 +22,30 @@
       "3 600 000+"
     ],
     "img": "a2"
+  },
+  {
+    "zn": "ЗОНА ВЫЛЕТА: ПАРКОВКА",
+    "znu": "UCHISH ZONASI: AVTOTURARGOH",
+    "zne": "DEPARTURES: CAR PARK",
+    "t": "Большие LED-экраны",
+    "tu": "Katta LED-ekranlar",
+    "te": "Large LED screens",
+    "term": "Терминал 2",
+    "termu": "2-terminal",
+    "terme": "Terminal 2",
+    "z": "Зона вылета · парковка",
+    "size": "9,6 × 9,7 м",
+    "res": "1408 × 1920",
+    "sh": "480+ / сутки",
+    "q": 3,
+    "d": 15,
+    "p": 50000000,
+    "r": [
+      "80 000+",
+      "342 000+",
+      "4 114 000+"
+    ],
+    "img": "a1"
   },
   {
     "zn": "ЗОНА ВЫЛЕТА: ПАСПОРТНЫЙ КОНТРОЛЬ (2 ЭТАЖ)",

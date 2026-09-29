@@ -69,6 +69,8 @@ Fill in every `change-me` value:
 | `ADMIN_PASSWORD` | Set a unique password for the LED CITY editor at `/site-admin/`. The editor login is disabled while this is blank. |
 | Others | Review and confirm default values |
 
+LED CITY JSON files under `templates/data/` are local runtime data and are not tracked by Git. On a fresh checkout, Django copies the initial files from `templates/data_seed/` when the home page or site editor is first opened. Keep `templates/data/` when updating an existing server; those files contain edits made in the panel.
+
 ### 2c. Obtain an SSL certificate
 
 ```bash

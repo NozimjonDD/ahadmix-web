@@ -145,6 +145,8 @@ dialog::backdrop{background:rgba(10,16,32,.55)}
 #toast.bad{background:#B42318}
 .spin{width:16px;height:16px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:sp .7s linear infinite;display:inline-block}
 @keyframes sp{to{transform:rotate(360deg)}}
+.admin-language{position:fixed;right:14px;bottom:14px;z-index:999;display:flex;align-items:center;gap:8px;padding:7px 9px;background:#fff;color:#17213a;border:1px solid #dce1e9;border-radius:8px;box-shadow:0 4px 18px #0002;font-size:12px}
+.admin-language select{padding:4px;border:1px solid #cbd2df;border-radius:5px;background:#fff;color:#17213a}
 </style>
 </head>
 <body>
@@ -172,7 +174,6 @@ dialog::backdrop{background:rgba(10,16,32,.55)}
         <button role="tab" data-tab="airport">Аэропорт</button>
         <button role="tab" data-tab="settings">Курс и контакты</button>
         <button role="tab" data-tab="texts">Тексты сайта</button>
-        <button role="tab" data-tab="backups">Резервные копии</button>
       </nav>
       <div class="act">
         <a href="../" target="_blank" rel="noopener">Открыть сайт ↗</a>
@@ -305,6 +306,8 @@ dialog::backdrop{background:rgba(10,16,32,.55)}
 </dialog>
 
 <div id="toast" role="status" aria-live="polite"></div>
+<div class="admin-language"><label for="adminLanguage">Til / Language</label><select id="adminLanguage" aria-label="Admin language"><option value="uz">UZ</option><option value="en">EN</option><option value="ru">RU</option></select></div>
+<script src="/assets/js/admin-i18n.js"></script>
 
 {% verbatim %}
 <script>
@@ -315,6 +318,13 @@ const $$ = (s, r=document) => [...r.querySelectorAll(s)];
 const esc = t => String(t ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt = n => Number(n).toLocaleString('ru-RU').replace(/ | /g,' ');
 let CSRF = '', D = null, TAB = 'screens';
+$('#adminLanguage').value = window.adminI18n.language;
+$('#adminLanguage').addEventListener('change', e => {
+  window.adminI18n.setLanguage(e.target.value);
+  if(D) render();
+  if($('#scrDlg').open) upd();
+  if($('#airDlg').open) updAir();
+});
 
 /* ---------- API ---------- */
 async function api(a, {body, file, form} = {}){
@@ -365,6 +375,10 @@ const catOf = l => (l.id===2 || l.a>=120) ? 'flag' : (l.a>=28 ? 'big' : 'city');
 const CATN = {flag:'Флагман', big:'Крупный', city:'Городской'};
 const usd = n => '$' + Math.round(n / D.settings.usdRate * D.settings.usdMarkup).toLocaleString('en-US');
 const img = l => `../assets/img/c${l.id}.jpg?v=${l.v||1}`;
+const screenName = l => l[window.adminI18n.language === 'uz' ? 'nu' : window.adminI18n.language === 'en' ? 'ne' : 'n'] || l.n;
+const airportName = f => f[window.adminI18n.language === 'uz' ? 'znu' : window.adminI18n.language === 'en' ? 'zne' : 'zn'] || f.zn;
+const airportTerm = f => f[window.adminI18n.language === 'uz' ? 'termu' : window.adminI18n.language === 'en' ? 'terme' : 'term'] || f.term;
+const airportType = f => f[window.adminI18n.language === 'uz' ? 'tu' : window.adminI18n.language === 'en' ? 'te' : 't'] || f.t;
 const areaFrom = sz => { let a=0; String(sz).replace(/,/g,'.').replace(/([\d.]+)\s*[×xх*]\s*([\d.]+)/gi,(m,w,h)=>{a+=parseFloat(w)*parseFloat(h);}); return Math.round(a*100)/100; };
 const numIn = v => { const t=String(v??'').replace(/[\s ]/g,'').replace(',','.'); return t==='' ? '' : Number(t); };
 let dirtyTexts = {};
@@ -374,7 +388,7 @@ $$('.tabs button').forEach(b => b.addEventListener('click', () => {
   if(TAB==='texts' && Object.keys(dirtyTexts).length && !window.__leaveOk){ toast('Сначала сохраните или сбросьте изменения в текстах', true); return; }
   TAB=b.dataset.tab; $$('.tabs button').forEach(x=>x.setAttribute('aria-selected', String(x===b))); render();
 }));
-function render(){ ({screens:vScreens, flags:vFlags, airport:vAir, settings:vSettings, texts:vTexts, backups:vBackups})[TAB](); }
+function render(){ ({screens:vScreens, flags:vFlags, airport:vAir, settings:vSettings, texts:vTexts})[TAB](); }
 
 /* ---------- SCREENS ---------- */
 let scrQ = '';
@@ -392,7 +406,7 @@ function vScreens(){
     <tbody>${list.map(l=>`<tr>
       <td><img class="thumb" src="${img(l)}" alt="" loading="lazy"></td>
       <td class="mono">${l.id}</td>
-      <td class="nm"><b>${fl.has(l.id)?'<span class="star" title="Флагман">★</span> ':''}${esc(l.n)}</b><span>${esc(l.s||'')}${l.s&&l.ne?' · ':''}${esc(l.ne||'')}</span></td>
+      <td class="nm"><b>${fl.has(l.id)?'<span class="star" title="Флагман">★</span> ':''}${esc(screenName(l))}</b><span>${esc(l.s||'')}${l.s&&l.ne?' · ':''}${esc(l.ne||'')}</span></td>
       <td class="mono">${esc(l.size)}</td>
       <td><span class="pill ${catOf(l)}">${CATN[catOf(l)]}</span></td>
       ${['5','10','15','20'].map(d=>`<td class="num">${l.p[d]!=null?fmt(l.p[d]):'<span class="na">—</span>'}</td>`).join('')}
@@ -421,7 +435,7 @@ function openScr(id){
 function upd(){
   const f=sf();
   if(!areaTouched) f.a.value = areaFrom(f.size.value) || '';
-  const a = numIn(f.a.value)||0; $('#scrCat').value = CATN[catOf({id:scrCur.id,a})];
+  const a = numIn(f.a.value)||0; $('#scrCat').value = window.adminI18n.translate(CATN[catOf({id:scrCur.id,a})]);
   for(const k of ['p5','p10','p15','p20']){ const v=numIn(f[k].value); $(`[data-usd="${k}"]`, f).textContent = v!=='' && !isNaN(v) ? `≈ ${usd(v)} в англ. версии` : ''; }
 }
 sf().addEventListener('input', e => { if(e.target.name==='a') areaTouched=true; upd(); });
@@ -483,11 +497,11 @@ function vFlags(){
   <div class="head"><div><h1>Флагманская сеть</h1><p class="sub">Экраны в блоке «Флагманы» на главной, сверху вниз. Рекомендуем 4–8.</p></div></div>
   <div class="flist">${flDraft.map((id,i)=>{ const l=by[id]; return `<div class="card frow">
     <span class="n">${String(i+1).padStart(2,'0')}</span><img class="thumb" src="${img(l)}" alt="">
-    <div class="nm"><b>${esc(l.n)}</b><span>${esc(l.size)} · ${esc(l.res)}</span></div>
+    <div class="nm"><b>${esc(screenName(l))}</b><span>${esc(l.size)} · ${esc(l.res)}</span></div>
     <div class="bar"><button class="icon-btn" data-up="${i}" ${i?'':'disabled'} aria-label="Выше">↑</button><button class="icon-btn" data-down="${i}" ${i<flDraft.length-1?'':'disabled'} aria-label="Ниже">↓</button><button class="icon-btn" data-rm="${i}" aria-label="Убрать">✕</button></div>
   </div>`; }).join('')}</div>
   <div class="bar" style="margin-top:14px">
-    <select class="sel" id="flAdd" style="max-width:420px"><option value="">+ Добавить экран во флагманы…</option>${rest.map(l=>`<option value="${l.id}">${esc(l.n)} · ${esc(l.size)}</option>`).join('')}</select>
+    <select class="sel" id="flAdd" style="max-width:420px"><option value="">+ Добавить экран во флагманы…</option>${rest.map(l=>`<option value="${l.id}">${esc(screenName(l))} · ${esc(l.size)}</option>`).join('')}</select>
   </div>
   <div class="savebar" ${changed?'':'hidden'}><span>Порядок флагманов изменён</span><div class="bar"><button class="btn" id="flReset">Сбросить</button><button class="btn pri" id="flSave">Сохранить</button></div></div>`;
   const mv=(i,j)=>{ [flDraft[i],flDraft[j]]=[flDraft[j],flDraft[i]]; vFlags(); };
@@ -507,8 +521,8 @@ function vAir(){
     <div class="bar"><button class="btn pri" id="addAir">+ Добавить формат</button></div></div>
   <div class="acards">${D.airport.map((f,i)=>`<div class="card acard">
     <img src="../assets/img/${f.img}.jpg?v=${f.v||1}" alt="" loading="lazy">
-    <div class="c"><span class="m">Формат ${String(i+1).padStart(2,'0')} · ${esc(f.term)}</span><b>${esc(f.zn)}</b>
-      <span class="m">${esc(f.t)} · ${esc(f.size)} · ${f.q} шт.</span>
+    <div class="c"><span class="m">Формат ${String(i+1).padStart(2,'0')} · ${esc(airportTerm(f))}</span><b>${esc(airportName(f))}</b>
+      <span class="m">${esc(airportType(f))} · ${esc(f.size)} · ${f.q} шт.</span>
       <div class="row"><span class="mono">${fmt(f.p)} сум</span>
         <div class="bar"><button class="icon-btn" data-aup="${i}" ${i?'':'disabled'} aria-label="Выше">↑</button><button class="icon-btn" data-adn="${i}" ${i<D.airport.length-1?'':'disabled'} aria-label="Ниже">↓</button><button class="btn sm" data-aed="${i}">Изменить</button></div></div>
     </div></div>`).join('')}</div>`;
@@ -625,24 +639,6 @@ function vTexts(){
   $('#txSave').addEventListener('click', async e=>{ await save('texts', dirtyTexts, e.currentTarget); dirtyTexts={}; vTexts(); });
 }
 addEventListener('beforeunload', e=>{ if(Object.keys(dirtyTexts).length){ e.preventDefault(); e.returnValue=''; } });
-
-/* ---------- BACKUPS ---------- */
-async function vBackups(){
-  $('#view').innerHTML = `<div class="head"><div><h1>Резервные копии</h1><p class="sub">Перед каждым сохранением прошлая версия файла сохраняется. Хранятся последние 40 копий каждого файла.</p></div></div><div class="card"><div class="empty"><span class="spin"></span></div></div>`;
-  let list=[];
-  try{ list=(await api('backups')).backups; }catch(e){ toast(e.message,true); }
-  const FN={screens:'Экраны',airport:'Аэропорт',settings:'Курс, контакты, флагманы',texts:'Тексты сайта'};
-  const dt=a=>`${a.slice(6,8)}.${a.slice(4,6)}.${a.slice(0,4)} ${a.slice(9,11)}:${a.slice(11,13)}`;
-  $('#view .card').innerHTML = list.length ? `<div class="tbl-wrap"><table><thead><tr><th>Дата</th><th>Что</th><th class="num">Размер</th><th></th></tr></thead><tbody>
-    ${list.map(b=>`<tr><td class="mono">${dt(b.at)}</td><td>${FN[b.file]}</td><td class="num">${(b.size/1024).toFixed(1)} КБ</td><td style="text-align:right" data-wrap="${esc(b.name)}"><button class="btn sm" data-restore="${esc(b.name)}">Восстановить</button></td></tr>`).join('')}
-  </tbody></table></div>` : '<div class="empty">Копий пока нет. Они появятся после первого сохранения.</div>';
-  $$('[data-restore]').forEach(btn=>btn.addEventListener('click',()=>{
-    const td=btn.parentElement, name=btn.dataset.restore;
-    td.innerHTML=`<span class="confirm" style="display:inline-flex">Вернуть эту версию? <button class="btn sm danger" data-y>Да</button><button class="btn sm" data-n>Нет</button></span>`;
-    $('[data-n]',td).addEventListener('click',()=>vBackups());
-    $('[data-y]',td).addEventListener('click',async()=>{ try{ await api('restore',{body:{name}}); D=await api('load'); toast('Версия восстановлена'); vBackups(); }catch(e){ toast(e.message,true); } });
-  }));
-}
 
 boot();
 })();
