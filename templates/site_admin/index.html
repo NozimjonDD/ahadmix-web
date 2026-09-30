@@ -295,13 +295,15 @@ dialog::backdrop{background:#0b1426ad;backdrop-filter:blur(5px)}
   .admin-language{top:12px;right:18px}
 }
 @media(max-width:640px){
-  .top .in{min-height:0;grid-template-columns:1fr;grid-template-areas:"brand" "actions" "tabs";padding:12px 170px 0 14px;row-gap:7px}
-  .top .brand{font-size:13px}
-  .top .brand small{font-size:9px}
+  .top .in{min-height:0;grid-template-columns:1fr;grid-template-areas:"brand" "actions" "tabs";padding:12px 14px 0;row-gap:7px}
+  .top .brand{font-size:13px;max-width:calc(100% - 155px)}
+  .top .brand small{display:none}
   .top .act{justify-self:start}
-  .tabs{margin:0 -170px 0 -14px;padding:0 10px;min-height:43px}
+  .tabs{margin:0 -14px;padding:0 10px;min-height:43px}
   .tabs button{padding:0 10px;font-size:11px}
   .admin-language{top:11px;right:12px}
+  .acards{grid-template-columns:minmax(0,1fr)}
+  main{padding-bottom:160px}
 }
 .rich-field{min-width:0;display:grid;grid-template-rows:auto auto 1fr;border:1px solid var(--line2);border-radius:12px;background:#fff;overflow:hidden}
 .rich-label{padding:10px 12px;font-size:11px;font-weight:700;letter-spacing:.08em;color:#526580;background:#f8fafd;border-bottom:1px solid var(--line)}

@@ -66,10 +66,18 @@ p{margin:0}
 .lang button{font:600 13px/1 var(--f-mono);letter-spacing:.08em;color:var(--mute-d);padding:10px 12px;border-radius:999px;transition:background .2s,color .2s}
 .lang button:hover{color:#fff}
 .lang button[aria-pressed="true"]{background:var(--red);color:#fff}
+.nav .menu-toggle{display:none;width:42px;height:42px;flex:none;place-items:center;border:1px solid var(--line-d);border-radius:50%;font-size:24px;line-height:1;color:var(--txt-d)}
 @media (max-width:1560px){.nav .call{display:none}}
-@media (max-width:1200px){.nav ul{display:none}}
+@media (max-width:1200px){
+  .nav .menu-toggle{display:grid}
+  .nav ul{display:none;position:absolute;top:100%;left:var(--gut);right:var(--gut);padding:18px;background:var(--night2);border:1px solid var(--line-d);border-radius:12px;box-shadow:0 20px 50px rgba(0,0,0,.35);flex-direction:column;gap:0;font-size:15px}
+  .nav.menu-open{background:rgba(10,16,32,.98)}
+  .nav.menu-open ul{display:flex}
+  .nav ul a{display:block;padding:12px 8px}
+}
 @media (max-width:1400px){.nav ul{font-size:clamp(13px,1.2vw,17px)}}
-@media (max-width:600px){.nav .wrap{height:84px}.brand img{width:48px;height:48px}.brand .bt{font-size:18px}.nav .call{font-size:14px;padding:12px 16px}}
+@media (max-width:600px){.nav .wrap{height:84px;gap:10px}.nav ul{font-size:15px}.brand{gap:9px}.brand img{width:40px;height:40px}.brand .bt{font-size:16px}.navr{gap:8px}.lang button{font-size:11px;padding:9px 8px}.nav .call{font-size:14px;padding:12px 16px}}
+@media (max-width:380px){.nav .brand .bt{display:none}}
 
 
 /* HERO */
@@ -181,6 +189,7 @@ select.sort{font:500 13px var(--f-mono);letter-spacing:.04em;cursor:pointer;colo
 .card h3{font:500 17px/1.2 var(--f-disp);letter-spacing:.02em;text-transform:uppercase}
 .card .sub{font-size:13px;color:var(--mute-l);margin-top:4px}
 .card .meta{font:400 12px/1.5 var(--f-mono);color:var(--mute-l);text-align:right;white-space:nowrap}
+@media (max-width:480px){.card .row{flex-direction:column;align-items:flex-start;gap:6px}.card .meta{text-align:left;white-space:normal}}
 .card .pr{display:flex;justify-content:space-between;border-top:1px solid var(--line-l);padding-top:12px;font:500 14px/1 var(--f-mono)}
 .card .pr span{color:var(--mute-l);font-weight:400}
 .card .pr .na{color:var(--mute-l);font-weight:400}
@@ -235,6 +244,7 @@ select.sort{font:500 13px var(--f-mono);letter-spacing:.04em;cursor:pointer;colo
   .fmt summary{grid-template-columns:1fr auto;gap:8px 14px}.fmt .n{grid-column:1/-1}.fmt .q{display:none}
   .fmt .body{grid-template-columns:1fr;padding-left:0}
 }
+.fmt summary .t{min-width:0;overflow-wrap:anywhere}
 
 /* MOBILE LED */
 .truck{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,80px);align-items:start}
@@ -339,7 +349,7 @@ dialog.dd[open]{animation:pop .45s var(--ease)}
       <img src="assets/img/logo-w.png" alt="AHADMIX GROUP">
       <span class="bt"><i>LED</i> CITY</span>
     </a>
-    <ul>
+    <ul id="siteMenu">
       <li><a href="#flagships" data-go data-i18n="nav1">Флагманы</a></li>
       <li><a href="#catalog" data-go data-i18n="nav2">Все экраны</a></li>
       <li><a href="#airport" data-go data-i18n="nav3">Аэропорт</a></li>
@@ -349,6 +359,7 @@ dialog.dd[open]{animation:pop .45s var(--ease)}
     <div class="navr">
       <a class="call" href="#contact" data-go data-cfg="phone">+998 94 657-33-33</a>
       <div class="lang" role="group" aria-label="Язык / Til"><button data-lang="ru" aria-pressed="true">РУС</button><button data-lang="uz" aria-pressed="false">UZB</button><button data-lang="en" aria-pressed="false">ENG</button></div>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Menyu / Menu" aria-controls="siteMenu" aria-expanded="false"><span aria-hidden="true">☰</span></button>
     </div>
   </div>
 </header>
@@ -595,13 +606,25 @@ if (!reduce && window.Lenis) {
   const raf = t => { lenis.raf(t); requestAnimationFrame(raf); };
   requestAnimationFrame(raf);
 }
+const nav = $('#nav');
 document.querySelectorAll('[data-go]').forEach(a => a.addEventListener('click', e => {
   const id = a.getAttribute('href'); const el = document.querySelector(id); if (!el) return;
   e.preventDefault();
-  if (lenis) lenis.scrollTo(id === '#top' ? 0 : el, { offset: -104, duration: 1.4 });
-  else el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+  const top = id === '#top' ? 0 : el.getBoundingClientRect().top + scrollY - nav.getBoundingClientRect().height;
+  if (lenis) lenis.scrollTo(top, { duration: 1.4 });
+  else scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' });
 }));
-const nav = $('#nav');
+const menuToggle = $('#menuToggle');
+const closeMenu = () => { nav.classList.remove('menu-open'); menuToggle.setAttribute('aria-expanded','false'); menuToggle.querySelector('span').textContent='☰'; };
+menuToggle.addEventListener('click', () => {
+  const open = nav.classList.toggle('menu-open');
+  menuToggle.setAttribute('aria-expanded', String(open));
+  menuToggle.querySelector('span').textContent = open ? '×' : '☰';
+});
+nav.querySelectorAll('#siteMenu a').forEach(link => link.addEventListener('click', closeMenu));
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeMenu(); });
+document.addEventListener('click', e => { if(!nav.contains(e.target)) closeMenu(); });
+addEventListener('resize', () => { if(innerWidth > 1200) closeMenu(); });
 const onScroll = () => nav.classList.toggle('solid', scrollY > 40);
 addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
