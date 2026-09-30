@@ -39,6 +39,8 @@
     'JPG, PNG или WEBP до 12 МБ. Фото сохранится сразу, ширина будет уменьшена до 1600 px. Лучше горизонтальное 16:10.':['12 MB gacha JPG, PNG yoki WEBP. Surat darhol saqlanadi va eni 1600 px gacha kichraytiriladi. Gorizontal 16:10 tavsiya etiladi.','JPG, PNG or WEBP up to 12 MB. The photo saves immediately and is resized to 1600 px wide. Landscape 16:10 is recommended.'],
     'Фото сохранится сразу. Лучше формат 4:3.':['Surat darhol saqlanadi. 4:3 format tavsiya etiladi.','The photo saves immediately. A 4:3 ratio is recommended.'],
     'Поиск по названию, адресу, ID':['Nom, manzil yoki ID bo‘yicha qidirish','Search by name, address or ID'],
+    'Вид списка':['Ro‘yxat ko‘rinishi','List view'], '▤ Таблица':['▤ Jadval','▤ Table'], '▦ Карточки':['▦ Kartochkalar','▦ Cards'],
+    'Формат':['Format','Format'],
     'Поиск по тексту':['Matn bo‘yicha qidirish','Search text'], 'Ничего не найдено':['Hech narsa topilmadi','No results'],
     'Название':['Nomi','Name'], 'Изменить':['Tahrirlash','Edit'], '5 сек':['5 soniya','5 sec'],
     '10 сек':['10 soniya','10 sec'], '15 сек':['15 soniya','15 sec'], '20 сек':['20 soniya','20 sec'],

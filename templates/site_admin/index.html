@@ -323,8 +323,32 @@ dialog .db .usd{font-size:11px;line-height:1.5;color:#73839a}
 .screen-head .sub{margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .screen-head .search{max-width:none;min-width:0}
 .screen-head .btn{white-space:nowrap}
-@media(max-width:1000px){.screen-head{grid-template-columns:max-content 1fr}.screen-head .search{grid-column:1}.screen-head .btn{grid-column:2;justify-self:start}}
-@media(max-width:640px){.screen-head{grid-template-columns:1fr}.screen-head .sub{white-space:normal;overflow:visible}.screen-head .search,.screen-head .btn{grid-column:1}}
+.view-switch{display:inline-flex;gap:3px;padding:3px;border:1px solid var(--line2);border-radius:11px;background:#eaf0f7}
+.view-switch button{border:0;border-radius:8px;background:transparent;color:#526580;padding:7px 11px;font-weight:600;white-space:nowrap}
+.view-switch button[aria-pressed="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 5px #1d314925}
+.catalog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,270px),1fr));gap:16px}
+.catalog-card{min-width:0;overflow:hidden;display:flex;flex-direction:column}
+.catalog-card>img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;background:#e9ecf2}
+.catalog-card .c{display:grid;gap:9px;padding:16px;flex:1}
+.catalog-card .c>b{font-size:16px;line-height:1.3}
+.catalog-card .meta{color:var(--mute);font-size:12px;line-height:1.5}
+.catalog-card .details{display:flex;flex-wrap:wrap;gap:6px 12px}
+.catalog-card .prices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;border-top:1px solid var(--line);padding-top:10px}
+.catalog-card .prices span{display:grid;gap:2px;font-size:11px;color:var(--mute)}
+.catalog-card .prices b{font:600 12px var(--m);color:var(--ink)}
+.catalog-card .actions{display:flex;justify-content:flex-end;align-items:center;gap:6px;margin-top:auto;padding-top:10px}
+.catalog-card .actions .btn{margin-left:auto}
+.view-toolbar{display:flex;justify-content:flex-end}
+.head .view-toolbar{flex:none}
+.screen-head{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.screen-head .screen-title{min-width:0;flex:1}
+.screen-head .screen-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+.screen-head .search{width:300px;flex:1 1 220px}
+.screen-head .screen-controls{display:flex;align-items:center;gap:10px;flex:none;white-space:nowrap}
+.catalog-table .thumb{width:64px;height:44px}
+.catalog-empty{padding:28px;text-align:center;color:var(--mute)}
+@media(max-width:1100px){.screen-head{align-items:flex-start;flex-direction:column}.screen-head .screen-actions{width:100%;justify-content:flex-start}}
+@media(max-width:640px){.screen-head .sub{white-space:normal;overflow:visible}.screen-head .search{width:100%;flex-basis:100%}.screen-head .screen-actions{justify-content:flex-start;min-width:0}.screen-head .screen-controls{max-width:100%;overflow-x:auto}}
 </style>
 </head>
 <body>
@@ -571,6 +595,13 @@ $$('.tabs button').forEach(b => b.addEventListener('click', () => {
   TAB=b.dataset.tab; $$('.tabs button').forEach(x=>x.setAttribute('aria-selected', String(x===b))); render();
 }));
 function render(){ ({screens:vScreens, flags:vFlags, airport:vAir, settings:vSettings, texts:vTexts})[TAB](); }
+const viewModes = {screens:'table',flags:'table',airport:'grid'};
+function viewSwitch(section){
+  return `<div class="view-toolbar"><div class="view-switch" role="group" aria-label="Вид списка"><button type="button" data-view="table" aria-pressed="${viewModes[section]==='table'}">▤ Таблица</button><button type="button" data-view="grid" aria-pressed="${viewModes[section]==='grid'}">▦ Карточки</button></div></div>`;
+}
+function bindViewSwitch(section, draw){
+  $$('[data-view]').forEach(b=>b.addEventListener('click',()=>{ viewModes[section]=b.dataset.view; draw(); }));
+}
 
 /* ---------- SCREENS ---------- */
 let scrQ = '';
@@ -580,10 +611,10 @@ function vScreens(){
   const fl = new Set(D.settings.flagships);
   $('#view').innerHTML = `
   <div class="head screen-head">
-    <h1>Экраны</h1><p class="sub">${D.screens.length} экранов в городе. Цены в сумах за месяц без НДС.</p>
-    <input class="inp search" id="q" placeholder="Поиск по названию, адресу, ID" value="${esc(scrQ)}"><button class="btn pri" id="addScr">+ Добавить экран</button>
+    <div class="screen-title"><h1>Экраны</h1><p class="sub">${D.screens.length} экранов в городе. Цены в сумах за месяц без НДС.</p></div>
+    <div class="screen-actions"><input class="inp search" id="q" placeholder="Поиск по названию, адресу, ID" value="${esc(scrQ)}"><div class="screen-controls">${viewSwitch('screens')}<button class="btn pri" id="addScr">+ Добавить экран</button></div></div>
   </div>
-  <div class="card tbl-wrap"><table>
+  ${viewModes.screens==='table' ? `<div class="card tbl-wrap"><table class="catalog-table">
     <thead><tr><th></th><th>ID</th><th>Название</th><th>Размер</th><th>Категория</th><th class="num">5 сек</th><th class="num">10 сек</th><th class="num">15 сек</th><th class="num">20 сек</th><th></th></tr></thead>
     <tbody>${list.map(l=>`<tr>
       <td><img class="thumb" src="${img(l)}" alt="" loading="lazy"></td>
@@ -594,7 +625,13 @@ function vScreens(){
       ${['5','10','15','20'].map(d=>`<td class="num">${l.p[d]!=null?fmt(l.p[d]):'<span class="na">—</span>'}</td>`).join('')}
       <td><button class="btn sm" data-edit="${l.id}">Изменить</button></td>
     </tr>`).join('') || `<tr><td colspan="10" class="empty">Ничего не найдено</td></tr>`}</tbody>
-  </table></div>`;
+  </table></div>` : `<div class="catalog-grid">${list.map(l=>`<article class="card catalog-card">
+    <img src="${img(l)}" alt="" loading="lazy">
+    <div class="c"><div class="details"><span class="mono meta">ID ${l.id}</span><span class="pill ${catOf(l)}">${CATN[catOf(l)]}</span>${fl.has(l.id)?'<span class="pill flag">★ Флагман</span>':''}</div>
+    <b>${esc(screenName(l))}</b><div class="meta">${esc(l.s||l.addr||'')}</div><div class="mono">${esc(l.size)}</div>
+    <div class="prices">${['5','10','15','20'].map(d=>`<span>${d} сек<b>${l.p[d]!=null?fmt(l.p[d]):'—'}</b></span>`).join('')}</div>
+    <div class="actions"><button class="btn sm" data-edit="${l.id}">Изменить</button></div></div></article>`).join('') || '<div class="card catalog-empty">Ничего не найдено</div>'}</div>`}`;
+  bindViewSwitch('screens', vScreens);
   $('#q').addEventListener('input', e => { scrQ=e.target.value.trim().toLowerCase(); const pos=e.target.selectionStart; vScreens(); const q=$('#q'); q.focus(); q.setSelectionRange(pos,pos); });
   $('#addScr').addEventListener('click', () => openScr(null));
   $$('[data-edit]').forEach(b => b.addEventListener('click', () => openScr(+b.dataset.edit)));
@@ -676,8 +713,11 @@ function vFlags(){
   const rest = D.screens.filter(l=>!flDraft.includes(l.id)).sort((a,b)=>b.a-a.a);
   const changed = JSON.stringify(flDraft)!==JSON.stringify(D.settings.flagships);
   $('#view').innerHTML = `
-  <div class="head"><div><h1>Флагманская сеть</h1><p class="sub">Экраны в блоке «Флагманы» на главной, сверху вниз. Рекомендуем 4–8.</p></div></div>
-  <div class="flist">${flDraft.map((id,i)=>{ const l=by[id]; return `<div class="card frow">
+  <div class="head"><div><h1>Флагманская сеть</h1><p class="sub">Экраны в блоке «Флагманы» на главной, сверху вниз. Рекомендуем 4–8.</p></div>${viewSwitch('flags')}</div>
+  <div class="${viewModes.flags==='grid'?'catalog-grid':'flist'}">${flDraft.map((id,i)=>{ const l=by[id]; return viewModes.flags==='grid' ? `<article class="card catalog-card">
+    <img src="${img(l)}" alt="" loading="lazy"><div class="c"><span class="mono meta">${String(i+1).padStart(2,'0')}</span><b>${esc(screenName(l))}</b>
+    <div class="meta">${esc(l.size)} · ${esc(l.res)}</div><div class="actions"><button class="icon-btn" data-up="${i}" ${i?'':'disabled'} aria-label="Выше">↑</button><button class="icon-btn" data-down="${i}" ${i<flDraft.length-1?'':'disabled'} aria-label="Ниже">↓</button><button class="icon-btn" data-rm="${i}" aria-label="Убрать">✕</button></div></div>
+  </article>` : `<div class="card frow">
     <span class="n">${String(i+1).padStart(2,'0')}</span><img class="thumb" src="${img(l)}" alt="">
     <div class="nm"><b>${esc(screenName(l))}</b><span>${esc(l.size)} · ${esc(l.res)}</span></div>
     <div class="bar"><button class="icon-btn" data-up="${i}" ${i?'':'disabled'} aria-label="Выше">↑</button><button class="icon-btn" data-down="${i}" ${i<flDraft.length-1?'':'disabled'} aria-label="Ниже">↓</button><button class="icon-btn" data-rm="${i}" aria-label="Убрать">✕</button></div>
@@ -686,6 +726,7 @@ function vFlags(){
     <select class="sel" id="flAdd" style="max-width:420px"><option value="">+ Добавить экран во флагманы…</option>${rest.map(l=>`<option value="${l.id}">${esc(screenName(l))} · ${esc(l.size)}</option>`).join('')}</select>
   </div>
   <div class="savebar" ${changed?'':'hidden'}><span>Порядок флагманов изменён</span><div class="bar"><button class="btn" id="flReset">Сбросить</button><button class="btn pri" id="flSave">Сохранить</button></div></div>`;
+  bindViewSwitch('flags', vFlags);
   const mv=(i,j)=>{ [flDraft[i],flDraft[j]]=[flDraft[j],flDraft[i]]; vFlags(); };
   $$('[data-up]').forEach(b=>b.addEventListener('click',()=>mv(+b.dataset.up,+b.dataset.up-1)));
   $$('[data-down]').forEach(b=>b.addEventListener('click',()=>mv(+b.dataset.down,+b.dataset.down+1)));
@@ -700,14 +741,20 @@ function vAir(){
   const total = D.airport.reduce((a,f)=>a+(+f.q||0),0);
   $('#view').innerHTML = `
   <div class="head"><div><h1>Аэропорт «Ташкент»</h1><p class="sub">${D.airport.length} форматов, ${total} носителей. Число носителей на сайте считается автоматически.</p></div>
-    <div class="bar"><button class="btn pri" id="addAir">+ Добавить формат</button></div></div>
-  <div class="acards">${D.airport.map((f,i)=>`<div class="card acard">
+    <div class="bar">${viewSwitch('airport')}<button class="btn pri" id="addAir">+ Добавить формат</button></div></div>
+  ${viewModes.airport==='table' ? `<div class="card tbl-wrap"><table class="catalog-table"><thead><tr><th></th><th>Формат</th><th>Зона (заголовок формата)</th><th>Тип носителя</th><th>Размер</th><th>Кол-во носителей</th><th class="num">Цена за месяц, сум</th><th></th></tr></thead><tbody>${D.airport.map((f,i)=>`<tr>
+    <td><img class="thumb" src="../assets/img/${esc(f.img)}.jpg?v=${f.v||1}" alt="" loading="lazy"></td>
+    <td class="mono">${String(i+1).padStart(2,'0')}</td><td class="nm"><b>${esc(airportName(f))}</b><span>${esc(airportTerm(f))}</span></td>
+    <td>${esc(airportType(f))}</td><td class="mono">${esc(f.size)}</td><td class="mono">${esc(f.q)}</td><td class="num">${fmt(f.p)}</td>
+    <td><div class="bar"><button class="icon-btn" data-aup="${i}" ${i?'':'disabled'} aria-label="Выше">↑</button><button class="icon-btn" data-adn="${i}" ${i<D.airport.length-1?'':'disabled'} aria-label="Ниже">↓</button><button class="btn sm" data-aed="${i}">Изменить</button></div></td>
+  </tr>`).join('') || '<tr><td colspan="8" class="empty">Ничего не найдено</td></tr>'}</tbody></table></div>` : `<div class="acards">${D.airport.map((f,i)=>`<div class="card acard">
     <img src="../assets/img/${f.img}.jpg?v=${f.v||1}" alt="" loading="lazy">
     <div class="c"><span class="m">Формат ${String(i+1).padStart(2,'0')} · ${esc(airportTerm(f))}</span><b>${esc(airportName(f))}</b>
       <span class="m">${esc(airportType(f))} · ${esc(f.size)} · ${f.q} шт.</span>
       <div class="row"><span class="mono">${fmt(f.p)} сум</span>
         <div class="bar"><button class="icon-btn" data-aup="${i}" ${i?'':'disabled'} aria-label="Выше">↑</button><button class="icon-btn" data-adn="${i}" ${i<D.airport.length-1?'':'disabled'} aria-label="Ниже">↓</button><button class="btn sm" data-aed="${i}">Изменить</button></div></div>
-    </div></div>`).join('')}</div>`;
+    </div></div>`).join('')}</div>`}`;
+  bindViewSwitch('airport', vAir);
   $('#addAir').addEventListener('click',()=>openAir(null));
   $$('[data-aed]').forEach(b=>b.addEventListener('click',()=>openAir(+b.dataset.aed)));
   const mv=async (i,j)=>{ const l=D.airport.slice(); [l[i],l[j]]=[l[j],l[i]]; try{ await save('airport',l); vAir(); }catch(e){ toast(e.message,true); } };
