@@ -315,6 +315,7 @@ dialog::backdrop{background:#0b1426ad;backdrop-filter:blur(5px)}
 .rich-editor{min-height:112px;max-height:320px;overflow:auto;padding:12px 13px;outline:none;line-height:1.55;white-space:normal;overflow-wrap:anywhere}
 .rich-editor:focus{box-shadow:inset 0 0 0 2px #526985}
 .rich-editor:empty:before{content:attr(data-placeholder);color:#98a5b7}
+.rich-editor .live-token{display:inline-block;padding:1px 7px;border-radius:6px;background:#eaf0ff;color:#284a9a;font-weight:700;white-space:nowrap;cursor:default}
 dialog .db legend{font-size:13px;font-weight:700;letter-spacing:.05em;color:#263651;border-left:3px solid var(--red);padding-left:10px;margin-bottom:16px}
 dialog .db label.f{font-size:12.5px;font-weight:600;color:#30415d}
 dialog .db label.f .hint{font-size:11px;font-weight:400;color:#7c8ca3}
@@ -347,6 +348,15 @@ dialog .db .usd{font-size:11px;line-height:1.5;color:#73839a}
 .screen-head .screen-controls{display:flex;align-items:center;gap:10px;flex:none;white-space:nowrap}
 .catalog-table .thumb{width:64px;height:44px}
 .catalog-empty{padding:28px;text-align:center;color:var(--mute)}
+.presentation-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.presentation-card{padding:20px;min-width:0;display:grid;gap:18px}
+.presentation-card>img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;background:#e9ecf2}
+.presentation-card h2{margin:0;font-size:20px}
+.presentation-card .file-row{display:grid;gap:8px;padding:14px;border:1px solid var(--line);border-radius:10px}
+.presentation-card .file-row input{width:100%;min-width:0}
+.presentation-card .file-row .hint{color:var(--mute);font-size:12px}
+.presentation-card .lang-fields{display:grid;gap:10px}
+@media(max-width:900px){.presentation-grid{grid-template-columns:1fr}}
 @media(max-width:1100px){.screen-head{align-items:flex-start;flex-direction:column}.screen-head .screen-actions{width:100%;justify-content:flex-start}}
 @media(max-width:640px){.screen-head .sub{white-space:normal;overflow:visible}.screen-head .search{width:100%;flex-basis:100%}.screen-head .screen-actions{justify-content:flex-start;min-width:0}.screen-head .screen-controls{max-width:100%;overflow-x:auto}}
 </style>
@@ -376,6 +386,7 @@ dialog .db .usd{font-size:11px;line-height:1.5;color:#73839a}
         <button role="tab" data-tab="airport">Аэропорт</button>
         <button role="tab" data-tab="settings">Курс и контакты</button>
         <button role="tab" data-tab="texts">Тексты сайта</button>
+        <button role="tab" data-tab="presentations">Презентации</button>
       </nav>
       <div class="act">
         <a href="../" target="_blank" rel="noopener">Открыть сайт ↗</a>
@@ -588,13 +599,32 @@ const airportType = f => f[window.adminI18n.language === 'uz' ? 'tu' : window.ad
 const areaFrom = sz => { let a=0; String(sz).replace(/,/g,'.').replace(/([\d.]+)\s*[×xх*]\s*([\d.]+)/gi,(m,w,h)=>{a+=parseFloat(w)*parseFloat(h);}); return Math.round(a*100)/100; };
 const numIn = v => { const t=String(v??'').replace(/[\s ]/g,'').replace(',','.'); return t==='' ? '' : Number(t); };
 let dirtyTexts = {};
+const liveNumbers = () => ({screens:D.screens.length, airport:D.airport.reduce((sum,item)=>sum+(+item.q||0),0), usdRate:D.settings.usdRate});
+const liveText = value => String(value??'').replace(/\{(screens|airport|usdRate)\}/g,(_,key)=>String(liveNumbers()[key]));
+const liveEditor = value => String(value??'').replace(/\{(screens|airport|usdRate)\}/g,(_,key)=>`<span class="live-token" contenteditable="false" data-live-token="${key}" title="${esc(window.adminI18n.translate('Обновляется автоматически'))}">${esc(liveNumbers()[key])}</span>`);
+function editorValue(editor){
+  const copy=editor.cloneNode(true);
+  $$('[data-live-token]',copy).forEach(chip=>chip.replaceWith(document.createTextNode(`{${chip.dataset.liveToken}}`)));
+  return copy.innerHTML;
+}
+function plainValue(value, original){
+  if(value===liveText(original)) return original;
+  let stored=value;
+  for(const key of ['screens','airport','usdRate']){
+    if(String(original).includes(`{${key}}`)){
+      const number=String(liveNumbers()[key]).replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+      stored=stored.replace(new RegExp(`(^|[^0-9])${number}(?=[^0-9]|$)`),(_,before)=>before+`{${key}}`);
+    }
+  }
+  return stored;
+}
 
 /* ---------- tabs ---------- */
 $$('.tabs button').forEach(b => b.addEventListener('click', () => {
   if(TAB==='texts' && Object.keys(dirtyTexts).length && !window.__leaveOk){ toast('Сначала сохраните или сбросьте изменения в текстах', true); return; }
   TAB=b.dataset.tab; $$('.tabs button').forEach(x=>x.setAttribute('aria-selected', String(x===b))); render();
 }));
-function render(){ ({screens:vScreens, flags:vFlags, airport:vAir, settings:vSettings, texts:vTexts})[TAB](); }
+function render(){ ({screens:vScreens, flags:vFlags, airport:vAir, settings:vSettings, texts:vTexts, presentations:vPresentations})[TAB](); }
 const viewModes = {screens:'table',flags:'table',airport:'grid'};
 function viewSwitch(section){
   return `<div class="view-toolbar"><div class="view-switch" role="group" aria-label="Вид списка"><button type="button" data-view="table" aria-pressed="${viewModes[section]==='table'}">▤ Таблица</button><button type="button" data-view="grid" aria-pressed="${viewModes[section]==='grid'}">▦ Карточки</button></div></div>`;
@@ -836,6 +866,48 @@ function vSettings(){
   });
 }
 
+/* ---------- PRESENTATIONS ---------- */
+function vPresentations(){
+  const cards=[
+    {key:'city', title:'LED CITY · экраны Ташкента', cover:'presentation-city.jpg', fallback:'c1.jpg', pdf:'ahadmix-led-city.pdf', prefix:'d1'},
+    {key:'airport', title:'Аэропорт «Ташкент»', cover:'presentation-airport.jpg', fallback:'a0.jpg', pdf:'ahadmix-airport.pdf', prefix:'d2'}
+  ];
+  $('#view').innerHTML=`<div class="head"><div><h1>Презентации</h1><p class="sub">Два предложения на сайте: PDF, обложка и подписи на трёх языках.</p></div></div>
+  <div class="presentation-grid">${cards.map(card=>{
+    const data=D.presentations[card.key]||{}, cover=data.coverVersion?card.cover:card.fallback;
+    return `<section class="card presentation-card" data-pkey="${card.key}">
+      <h2>${card.title}</h2><img src="../assets/img/${cover}?v=${data.coverVersion||1}" alt="Обложка презентации">
+      <div class="file-row"><label class="f">PDF-файл<input type="file" data-upload="pdf" accept="application/pdf,.pdf"></label>
+        <span class="hint">Текущий файл: ${card.pdf} · ${data.pdfBytes?(data.pdfBytes/1048576).toFixed(1).replace('.',',')+' МБ · ':''}до 50 МБ</span>
+        <a href="../docs/${card.pdf}?v=${data.pdfVersion||1}" target="_blank" rel="noopener">Открыть PDF ↗</a></div>
+      <div class="file-row"><label class="f">Обложка<input type="file" data-upload="cover" accept="image/jpeg,image/png,image/webp"></label><span class="hint">JPG, PNG или WEBP · до 12 МБ</span></div>
+      <form class="lang-fields" data-text-form>${[['h','Название'],['p','Описание'],['s','Подпись PDF (страницы и размер)']].map(([suffix,label])=>`<fieldset><legend>${label}</legend><div class="grid3">${[['ru','Русский'],['uz','Oʻzbekcha'],['en','English']].map(([lang,name])=>`<label class="f">${name}<input class="inp" name="${card.prefix}_${suffix}_${lang}" value="${esc(liveText(D.texts[card.prefix+'_'+suffix]?.[lang]||''))}"></label>`).join('')}</div>${suffix==='p'?'<p class="note">Число экранов и носителей обновляется на сайте автоматически.</p>':''}</fieldset>`).join('')}
+        <button type="submit" class="btn pri">Сохранить подписи</button></form>
+    </section>`;
+  }).join('')}</div>`;
+  $$('.presentation-card').forEach(section=>{
+    const key=section.dataset.pkey, prefix=key==='city'?'d1':'d2';
+    $$('[data-upload]',section).forEach(input=>input.addEventListener('change',async()=>{
+      const file=input.files[0]; if(!file) return;
+      const form=new FormData(); form.append('file',file); form.append('key',key); form.append('kind',input.dataset.upload);
+      input.disabled=true;
+      try{ const result=await api('upload_presentation',{form}); D.presentations=result.data; toast('Файл сохранён. На сайте изменения видны сразу'); vPresentations(); }
+      catch(error){ toast(error.message,true); input.disabled=false; input.value=''; }
+    }));
+    $('[data-text-form]',section).addEventListener('submit',async event=>{
+      event.preventDefault();
+      const changes={};
+      for(const suffix of ['h','p','s']){
+        const textKey=prefix+'_'+suffix;
+        changes[textKey]={};
+        for(const lang of ['ru','uz','en']) changes[textKey][lang]=plainValue(event.currentTarget.elements[textKey+'_'+lang].value.trim(),D.texts[textKey]?.[lang]||'');
+      }
+      try{ await save('texts',changes,event.submitter); vPresentations(); }
+      catch(error){ toast(error.message,true); }
+    });
+  });
+}
+
 /* ---------- TEXTS ---------- */
 const TSECT = [
   ['nav','Верхнее меню'], ['h_','Первый экран'], ['st','Цифры под табло'], ['f_','Флагманы'], ['c_','Каталог'],
@@ -852,7 +924,7 @@ function vTexts(){
     <input class="inp search" id="tq" placeholder="Поиск по тексту" value="${esc(txQ)}"></div>
   <p class="note">Выделите текст и выберите оформление. Кнопки с числами вставляют данные, которые обновляются на сайте автоматически.</p>
   ${Object.entries(groups).map(([g,ks])=>`<div class="tsec"><h3>${g}</h3>${ks.map(k=>{ const v=dirtyTexts[k]||T[k]; return `<div class="card titem ${dirtyTexts[k]?'dirty':''}" data-k="${k}">
-    <div class="k"><span>${esc(T[k].ru.replace(/<[^>]+>/g,'').slice(0,70))}</span><code>${k}</code></div>
+    <div class="k"><span>${esc(liveText(T[k].ru.replace(/<[^>]+>/g,'')).slice(0,70))}</span><code>${k}</code></div>
     <div class="tlangs">${['ru','uz','en'].map(lg=>`<div class="rich-field"><div class="rich-label">${{ru:'РУС',uz:'UZB',en:'ENG'}[lg]}</div>
       <div class="rich-tools" role="toolbar" aria-label="Оформление текста">
         <button type="button" data-rich="strong" title="Жирный текст" aria-label="Жирный текст"><b>B</b></button>
@@ -864,14 +936,14 @@ function vTexts(){
         <button type="button" data-insert="{airport}" title="Число носителей в аэропорту"># Аэропорт</button>
         <button type="button" data-insert="{usdRate}" title="Курс доллара">$ Курс</button>
       </div>
-      <div class="rich-editor" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Текст сайта" data-placeholder="Введите текст…" data-lg="${lg}" spellcheck="true">${v[lg]}</div>
+      <div class="rich-editor" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Текст сайта" data-placeholder="Введите текст…" data-lg="${lg}" spellcheck="true">${liveEditor(v[lg])}</div>
     </div>`).join('')}</div>
   </div>`; }).join('')}</div>`).join('') || '<div class="empty">Ничего не найдено</div>'}
   <div class="savebar" ${n?'':'hidden'} id="txBar"><span id="txN">Изменено текстов: ${n}</span><div class="bar"><button class="btn" id="txReset">Отменить изменения</button><button class="btn pri" id="txSave">Сохранить тексты</button></div></div>`;
   $('#tq').addEventListener('input',e=>{ txQ=e.target.value.trim().toLowerCase(); const p=e.target.selectionStart; vTexts(); $('#tq').focus(); $('#tq').setSelectionRange(p,p); });
   $$('.rich-editor').forEach(editor=>{
     editor.addEventListener('input',()=>{
-    const it=editor.closest('.titem'), k=it.dataset.k, cur={...(dirtyTexts[k]||T[k])}; cur[editor.dataset.lg]=editor.innerHTML;
+    const it=editor.closest('.titem'), k=it.dataset.k, cur={...(dirtyTexts[k]||T[k])}; cur[editor.dataset.lg]=editorValue(editor);
     if(cur.ru===T[k].ru && cur.uz===T[k].uz && cur.en===T[k].en) delete dirtyTexts[k]; else dirtyTexts[k]=cur;
     it.classList.toggle('dirty', !!dirtyTexts[k]);
     const c=Object.keys(dirtyTexts).length; $('#txBar').hidden=!c; $('#txN').textContent=`Изменено текстов: ${c}`;
@@ -890,7 +962,12 @@ function vTexts(){
       const editor=button.closest('.rich-field').querySelector('.rich-editor');
       const action=button.dataset.rich;
       if(action==='br') insertRich(editor,document.createElement('br'));
-      else if(button.dataset.insert) insertRich(editor,document.createTextNode(button.dataset.insert));
+      else if(button.dataset.insert){
+        const key=button.dataset.insert.slice(1,-1), chip=document.createElement('span');
+        chip.className='live-token'; chip.contentEditable='false'; chip.dataset.liveToken=key;
+        chip.title=window.adminI18n.translate('Обновляется автоматически'); chip.textContent=liveNumbers()[key];
+        insertRich(editor,chip);
+      }
       else wrapRich(editor,action==='red'?'span':action,action==='red'?'r':'');
     });
   });

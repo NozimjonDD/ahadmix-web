@@ -27,6 +27,11 @@ logger = logging.getLogger(__name__)
 DATA_DIR = Path(settings.BASE_DIR).parent / "templates" / "data"
 DATA_SEED_DIR = Path(settings.BASE_DIR).parent / "templates" / "data_seed"
 IMG_DIR = Path(settings.BASE_DIR).parent / "templates" / "assets" / "img"
+DOCS_DIR = Path(settings.BASE_DIR).parent / "docs"
+PRESENTATIONS = {
+    "city": {"pdf": "ahadmix-led-city.pdf", "cover": "presentation-city.jpg"},
+    "airport": {"pdf": "ahadmix-airport.pdf", "cover": "presentation-airport.jpg"},
+}
 
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "")
 
@@ -34,7 +39,7 @@ ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "")
 def ensure_site_data():
     """Populate a fresh checkout without replacing any admin-edited data."""
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    for name in ("screens", "airport", "settings", "texts"):
+    for name in ("screens", "airport", "settings", "texts", "presentations"):
         target = DATA_DIR / f"{name}.json"
         if not target.exists():
             seed = DATA_SEED_DIR / target.name
@@ -287,12 +292,14 @@ class SiteAdminAPIView(View):
                 airport = read_json_file("airport")
                 settings_data = read_json_file("settings")
                 texts = read_json_file("texts")
+                presentations = read_json_file("presentations")
                 return JsonResponse({
                     "ok": True,
                     "screens": screens,
                     "airport": airport,
                     "settings": settings_data,
                     "texts": texts,
+                    "presentations": presentations,
                 })
             except Exception as e:
                 logger.exception("Error loading site data")
@@ -441,5 +448,45 @@ class SiteAdminAPIView(View):
             except Exception as e:
                 logger.exception("Image processing failed")
                 return JsonResponse({"ok": False, "error": f"Ошибка обработки фото: {e}"}, status=400)
+
+        if action == "upload_presentation":
+            key = request.POST.get("key", "")
+            kind = request.POST.get("kind", "")
+            uploaded = request.FILES.get("file")
+            if key not in PRESENTATIONS or kind not in ("pdf", "cover") or not uploaded:
+                return JsonResponse({"ok": False, "error": "Invalid presentation upload"}, status=400)
+            if uploaded.size > (50 if kind == "pdf" else 12) * 1024 * 1024:
+                return JsonResponse({"ok": False, "error": "Файл слишком большой"}, status=400)
+            destination = (DOCS_DIR if kind == "pdf" else IMG_DIR) / PRESENTATIONS[key][kind]
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            temporary = destination.with_name(destination.name + f".{time.time_ns()}.tmp")
+            try:
+                if kind == "pdf":
+                    if uploaded.read(5) != b"%PDF-":
+                        raise ValueError("Нужен PDF-файл")
+                    uploaded.seek(0)
+                    with temporary.open("wb") as output:
+                        for chunk in uploaded.chunks():
+                            output.write(chunk)
+                else:
+                    image = Image.open(uploaded)
+                    if image.format not in ("JPEG", "PNG", "WEBP"):
+                        raise ValueError("Нужен JPG, PNG или WEBP")
+                    image = ImageOps.exif_transpose(image).convert("RGB")
+                    if image.width > 1600:
+                        image.thumbnail((1600, 1600), Image.Resampling.LANCZOS)
+                    image.save(temporary, "JPEG", quality=85, optimize=True)
+                temporary.replace(destination)
+                data = read_json_file("presentations")
+                data[key][kind + "Version"] = int(time.time() * 1000)
+                if kind == "pdf":
+                    data[key]["pdfBytes"] = uploaded.size
+                write_json_file("presentations", data)
+                return JsonResponse({"ok": True, "data": data})
+            except (OSError, ValueError) as exc:
+                logger.exception("Presentation upload failed")
+                return JsonResponse({"ok": False, "error": str(exc)}, status=400)
+            finally:
+                temporary.unlink(missing_ok=True)
 
         return JsonResponse({"ok": False, "error": f"Unknown POST action: {action}"}, status=400)

@@ -502,12 +502,12 @@ dialog.dd[open]{animation:pop .45s var(--ease)}
         <p data-i18n="d_p">Полные предложения в PDF: фото каждого экрана, карта расположения, технические параметры и прайс-лист.</p>
       </div>
       <div class="dgrid">
-        <a class="doc" href="docs/ahadmix-led-city.pdf" target="_blank" rel="noopener" download data-dl="docs/ahadmix-led-city.pdf" data-name="AHADMIX LED CITY — экраны Ташкента.pdf">
+        <a class="doc" data-presentation="city" href="docs/ahadmix-led-city.pdf" target="_blank" rel="noopener" download data-dl="docs/ahadmix-led-city.pdf" data-name="AHADMIX LED CITY — экраны Ташкента.pdf">
           <div class="dph"><img src="assets/img/c1.jpg" alt="Обложка презентации LED CITY" loading="lazy" decoding="async"></div>
           <div class="dmeta"><div><h3 data-i18n="d1_h">LED CITY · экраны Ташкента</h3><p data-i18n="d1_p">75 LED-экранов: фото, карта, размеры и цены</p></div><span class="dsz" data-i18n="d1_s">PDF · 78 стр. · 13 МБ</span></div>
           <span class="dbtn" data-i18n="d_btn">Скачать PDF <span class="ar">↓</span></span>
         </a>
-        <a class="doc" href="docs/ahadmix-airport.pdf" target="_blank" rel="noopener" download data-dl="docs/ahadmix-airport.pdf" data-name="AHADMIX — реклама в аэропорту Ташкента.pdf">
+        <a class="doc" data-presentation="airport" href="docs/ahadmix-airport.pdf" target="_blank" rel="noopener" download data-dl="docs/ahadmix-airport.pdf" data-name="AHADMIX — реклама в аэропорту Ташкента.pdf">
           <div class="dph"><img src="assets/img/a0.jpg" alt="Обложка презентации рекламы в аэропорту" loading="lazy" decoding="async"></div>
           <div class="dmeta"><div><h3 data-i18n="d2_h">Аэропорт «Ташкент»</h3><p data-i18n="d2_p">6 форматов, 54 носителя, охват и цены</p></div><span class="dsz" data-i18n="d2_s">PDF · 9 стр. · 2,4 МБ</span></div>
           <span class="dbtn" data-i18n="d_btn">Скачать PDF <span class="ar">↓</span></span>
@@ -565,7 +565,14 @@ dialog.dd[open]{animation:pop .45s var(--ease)}
 <script>
 (async () => {
 const getJSON = u => fetch(u, {cache:'no-cache'}).then(r => { if(!r.ok) throw new Error(u); return r.json(); });
-const [LOC, AIR, CFG, TX] = await Promise.all([getJSON('data/screens.json'), getJSON('data/airport.json'), getJSON('data/settings.json'), getJSON('data/texts.json')]);
+const [LOC, AIR, CFG, TX, DOCS] = await Promise.all([getJSON('data/screens.json'), getJSON('data/airport.json'), getJSON('data/settings.json'), getJSON('data/texts.json'), getJSON('data/presentations.json')]);
+for(const [key, filename, cover] of [['city','ahadmix-led-city.pdf','presentation-city.jpg'],['airport','ahadmix-airport.pdf','presentation-airport.jpg']]){
+  const card=document.querySelector(`[data-presentation="${key}"]`), info=DOCS[key];
+  if(!card || !info) continue;
+  const pdf=`docs/${filename}?v=${info.pdfVersion||1}`;
+  card.href=pdf; card.dataset.dl=pdf;
+  if(info.coverVersion) card.querySelector('img').src=`assets/img/${cover}?v=${info.coverVersion}`;
+}
 const FLAG = CFG.flagships.filter(id => LOC.some(l => l.id === id));
 const IMG = l => `assets/img/c${l.id}.jpg?v=${l.v||1}`;
 let LANG='ru';
